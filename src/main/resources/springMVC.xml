@@ -21,7 +21,11 @@
     <mvc:annotation-driven>
         <!-- spring mvc 消息转换 -->
         <mvc:message-converters>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+            <!-- 设置HttpMessageConverter处理String类型数据时采用的编码 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <!-- 用来处理json格式转换 -->
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
         </mvc:message-converters>
     </mvc:annotation-driven>
@@ -36,12 +40,10 @@
     <mvc:resources location="/js/" mapping="/js/**" /> &lt;!&ndash; 不设置此处js无法被引用 &ndash;&gt;
     <mvc:resources location="/css/" mapping="/css/**" /> &lt;!&ndash; 不设置此处css无法被引用 &ndash;&gt;-->
 
-    <!-- 在web.xml内springMVC的<url-pattern>为/时，DispatcherServlet中的静态资源请求会被转由Web应用服务器默认的Servlet处理，防止静态资源被拦截 -->
-    <mvc:default-servlet-handler />
-
     <!-- 访问静态资源时不被拦截 -->
     <!-- 与上面的 mvc:resources 效果类似，都配置时先执行上面的 -->
-    <!--<mvc:default-servlet-handler />-->
+    <!-- 在web.xml内springMVC的<url-pattern>为/时，DispatcherServlet中的静态资源请求会被转由Web应用服务器默认的Servlet处理，防止静态资源被拦截 -->
+    <mvc:default-servlet-handler />
 
     <!-- spring MVC的试图解析器ViewResolver JSP模板 -->
     <!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /test/1.json /test/1.xml -->
