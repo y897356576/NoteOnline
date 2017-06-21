@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by 石头 on 2017/6/20.
  */
 @Controller
-@RequestMapping("/testController")
+@RequestMapping("/asyncHandler")
 public class AsyncHandler {
 
     //使用@Controller等注解，要求必须存在空构造

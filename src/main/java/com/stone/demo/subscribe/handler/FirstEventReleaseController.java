@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by 石头 on 2017/6/20.
  */
 @Controller
-@RequestMapping("/listener")
+@RequestMapping("/listenerHandler")
 public class FirstEventReleaseController {
 
     @Autowired

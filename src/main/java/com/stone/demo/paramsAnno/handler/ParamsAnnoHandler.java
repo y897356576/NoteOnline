@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by 石头 on 2017/6/20.
  */
 @Controller
-@RequestMapping("/annotation")
+@RequestMapping("/annotationHandler")
 public class ParamsAnnoHandler {
 
     private Map map = new HashMap<String, String>(){{ put("result", "success"); }};
