@@ -16,9 +16,51 @@
     <button name="btClear" id="btClear">清空</button>
 </div>
 
+<link rel="import" href="../register/register.html">
+
 </body>
 
 <script>
+
+    $(function () {
+
+        /*获取登录与清空按钮并绑定事件*/
+        $("#mainDiv button[id='btLogin']").on("click", function () {
+            doLogin();
+        });
+        $("#mainDiv button[name='btClear']").on("click", function () {
+            doClear();
+        });
+
+        /*创建注册按钮*/
+        $("<span>", {
+            text: "注册",
+            id: "register",
+            name: "register"
+        }).css({
+            "color": "blue",
+            "font-size": "10px",
+            "text-decoration": "underline",
+            "cursor": "pointer"
+        }).on("click",function () {
+            window.location.href="../register/register.html";
+            //showRegister();
+        }).appendTo("#mainDiv");
+
+        /*创建遮罩层*/
+        $("<div>", {
+            id: "curtainLevel"
+        }).css({
+            "top": "0",
+            "left": "0",
+            "bottom": "0",
+            "right":"0",
+            "background": "url(../../img/bagd-hg.png) repeat",
+            "position": "absolute",
+            "z-index": "999",
+            "display": "none"
+        }).appendTo("body");
+    });
 
     function doLogin() {
         var userName = $.trim($("#mainDiv input[name='userName']").val());
@@ -38,21 +80,38 @@
             return;
         }
 
+        var paramsStr = {"userName":userName, "passWord":passWord};
+
         $.ajax({
             type:"post",
-            url:"${ctx}/front/user/doLogin",
-            data:{
-                "userName":userName,
-                "passWord":passWord
-            },
+            url:"/loginHandler/doLogin",
+            contentType:"application/json",
+            data:JSON.stringify(paramsStr),
             dataType:"json",
             success:function(rsData){
                 if(rsData.result){
-                    window.location.href="../../index.jsp";
+                    window.location.href="../index.jsp";
                 }else{
                     alert(rsData.msg);
                 }
             }
+        })
+    }
+
+    function doClear() {
+        var inputs = $("#mainDiv input");
+        for (var i = 0; i < inputs.length; i++) {
+            $(inputs[i]).val("");
+        }
+    }
+
+    function showRegister() {
+        $("#curtainLevel").show();
+        $("div[id=registerDiv]").show("fast");
+        $("#registerDiv").appendTo("#curtainLevel");
+        $("#registerDiv").css({
+            "top": "50%",
+            "left": "50%"
         })
     }
 
