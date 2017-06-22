@@ -16,14 +16,11 @@ import java.util.Map;
 @Service
 public class RegisterService {
 
-    @Autowired
-    private UserFactory userFactory;
-
     public Map<String, Object> doRegister(String userName, String passWord){
         Boolean flag = false;
         String msg;
 
-        User user = userFactory.generateUser();
+        User user = UserFactory.generateUser();
         user.setUserName(userName);
         user.setPassWord(DigestUtils.md5DigestAsHex(passWord.getBytes()));//对密码MD5加密
         user.setStatus(1);// 1启用 0禁用
