@@ -1,5 +1,19 @@
 <html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+</head>
 <body>
 <h2>Hello World!</h2>
+<span style="color: blue; font-size: 10px; text-decoration: underline; cursor: pointer">注销</span>
 </body>
+
+<script>
+    $("span").on("click",function () {
+        $.get("/loginHandler/doLogOut/74f77674-0457-4298-8d77-2850c6a78393",function(){
+            window.location.href="login/login.html";
+        })
+    })
+</script>
+
 </html>

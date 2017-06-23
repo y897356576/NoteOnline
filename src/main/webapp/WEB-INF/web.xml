@@ -42,7 +42,7 @@
     </filter-mapping>-->
 
 
-    <!-- 监听器配置（监听ServletContext是否加载，加载后初始化spring的bean文件内的对象并村日ServletContext） -->
+    <!-- 监听器配置（监听ServletContext是否加载，加载后初始化spring的bean文件内的对象并存入ServletContext） -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -117,6 +117,11 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+    
+    
+    <listener>
+        <listener-class>com.stone.common.listener.ServletContextListenerTest</listener-class>
+    </listener>
 
 
     <!-- 403错误页面 -->

@@ -2,6 +2,9 @@ package com.stone.login.handler;
 
 import com.stone.core.model.User;
 import com.stone.login.service.LoginService;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,7 @@ public class LoginController {
 
     @RequestMapping(value = "doLogin", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> doLogin(HttpServletRequest request, @RequestBody User user) {
+    public Map<String, Object> doLogin(@RequestBody User user) {
         Map<String, Object> rsMap = new HashMap<String, Object>();
 
         String userName = user.getUserName();
@@ -36,7 +39,7 @@ public class LoginController {
             rsMap.put("result", false);
             rsMap.put("msg", "用户名与密码不能为空！");
         } else {
-            String rsStr = loginServic.doLogin(userName, passWord, request);
+            String rsStr = loginServic.doLogin(userName, passWord);
             if (rsStr.equals("true")) {
                 rsMap.put("result", true);
                 logger.info("[" + userName + "]：登录成功");
@@ -51,11 +54,10 @@ public class LoginController {
 
     @RequestMapping(value = "doLogOut/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> doLogOut(HttpSession session, @PathVariable("id") String id) {
-        Map<String, Object> rsMap = new HashMap<String, Object>();
-        User user = (User) session.getAttribute("login_user");
-        session.removeAttribute("login_user");
+    public void doLogOut(@PathVariable("id") String id) {
+        Cache cache = CacheManager.create().getCache("ehcacheFir");
+        User user = (User)cache.get(id).getObjectValue();
+        cache.remove(id);
         logger.info("[" + user.getUserName() + "]：注销成功");
-        return rsMap;
     }
 }

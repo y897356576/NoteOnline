@@ -2,11 +2,12 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="ehcache.xsd">
 
-    <diskStore path="E:/Projects/TestProject/web/WEB-INF/ehcache" />
+    <diskStore path="E:/Projects/MavenProject_First/ehcache" />
+    <!--<diskStore path="../ehcache" />-->
 
     <defaultCache
-            maxElementsInMemory="1000"
-            maxElementsOnDisk="10000000"
+            maxElementsInMemory="10000"
+            maxElementsOnDisk="0"
             eternal="false"
             overflowToDisk="true"
             timeToIdleSeconds="120"
@@ -15,11 +16,34 @@
             memoryStoreEvictionPolicy="LRU">
     </defaultCache>
 
-    <cache name="ehcacheName"
-           maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="120"
-           timeToLiveSeconds="120"
-           overflowToDisk="true" />
+    <cache name="ehcacheFir"
+           maxElementsInMemory="10000"
+           eternal="true"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="0"
+           overflowToDisk="true"
+           maxElementsOnDisk="10000000"
+           diskPersistent="true"
+           diskSpoolBufferSizeMB="30"
+           diskExpiryThreadIntervalSeconds="120"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <!--
+        maxElementsInMemory：内存中存储的对象的最大个数
+        overflowToDisk：对象在内存中达到最大个数的时候，是否写入硬盘
+        maxElementsOnDisk：在硬盘上的对象的最大个数，默认值为0，就是没有限制
+        eternal：false表示cache中的对象会过期（按照配置中的时间），如果为true则表示该对象永远不过期
+        timeToIdleSeconds：多长时间不访问该缓存，那么ehcache就会清除该缓存，只对非永久性缓存对象有效，默认值为0即闲置至无限长时间
+        timeToLiveSeconds：从创建开始计时，当超过这个时间，这个元素将被从cache中清除，只对非永久性缓存对象有效，默认值为0即闲置至无限长时间
+        diskPersistent：是否持久化磁盘缓存，设定在虚拟机重启时是否进行磁盘存储，默认为false
+                        要想把cache真正持久化到磁盘，使用put(Element element)方法后要使用flush()方法
+        diskSpoolBufferSizeMB：存入磁盘时的缓冲区大小，默认30MB，每个缓存都有自己的缓冲区
+        diskExpiryThreadIntervalSeconds：负责失效监测以及清除工作的线程运行的间隔时间
+        emoryStoreEvictionPolicy：元素逐出缓存规则，共有三种
+                    (LRU) 缓存的元素有一个时间戳，缓存元素中时间戳离当前时间最远的元素将被清出缓存，默认。
+                    (FIFO) 先进先出。
+                    (LFU) 清除使用次数最少的，缓存的元素有一个hit属性，hit值最小的将会被清出缓存）
+     -->
+
 
 </ehcache>
