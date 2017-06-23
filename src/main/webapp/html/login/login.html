@@ -16,7 +16,34 @@
     <button name="btClear" id="btClear">清空</button>
 </div>
 
-<link rel="import" href="../register/register.html">
+<div id="registerDiv" class="dialog_box" style="display: none; margin-left:600px; margin-top:200px; width:300px; height:180px; background-color: aliceblue">
+    <div id="registerDiv_title" class="dialog_box_title" style="padding-left: 6px; padding-top: 3px">
+        用户注册
+    </div>
+    <div id="registerDiv_cont" style="padding-top: 10px; padding-left: 20px">
+        <table>
+            <tr>
+                <td style="text-align: right">用户名：</td>
+                <td><input type="text" name="regName" id="regName" size="21" maxlength="12" placeholder="请输入数字、字母、下划线"/></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">密&nbsp;&nbsp;码：</td>
+                <td><input type="password" name="regPasswd" id="regPasswd" size="21" maxlength="12"/></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">确认密码：</td>
+                <td><input type="password" name="reRegPasswd" id="reRegPasswd" size="21" maxlength="12"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="height: 46px">
+                    <input type="button" name="btRegister" value="注册"/>
+                    <input type="button" name="btCancel" value="取消"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 
 </body>
 
@@ -43,8 +70,7 @@
             "text-decoration": "underline",
             "cursor": "pointer"
         }).on("click",function () {
-            window.location.href="../register/register.html";
-            //showRegister();
+            showRegister();
         }).appendTo("#mainDiv");
 
         /*创建遮罩层*/
@@ -122,6 +148,47 @@
             doLogin();
         }
     };
+
+
+
+
+
+    $(function(){
+
+        $("#registerDiv_cont input[name='btRegister']").click(function(){
+            regDoRegister();
+        });
+
+        $("#registerDiv_cont input[name='btCancel']").click(function(){
+            regDoCancel();
+        });
+    })
+
+    function regDoRegister(){
+        var userName = $.trim($("#registerDiv_cont input[name='regName']").val());
+        var regpd = $.trim($("#registerDiv_cont input[name='regPasswd']").val());
+        var reregpd = $.trim($("#registerDiv_cont input[name='reRegPasswd']").val());
+        var textCheck = /^[A-z0-9_-]{3,12}$/
+        if(!textCheck.test(userName) || !textCheck.test(regpd)){
+            alert("用户名或密码格式不正确！");
+            return;
+        }
+        if(regpd!=reregpd){
+            alert("两次输入的密码不一致！");
+            return;
+        }
+        $.post("/registerHandler",{userName:userName, passWord:regpd}, function(rsData){
+            alert(rsData.msg);
+        })
+    }
+
+    function regDoCancel(){
+        $("#registerDiv").hide();
+        $("#curtainLevel").hide();//隐藏遮罩层
+        $("#registerDiv_cont input[name='regName']").val("");
+        $("#registerDiv_cont input[name='regPasswd']").val("");
+        $("#registerDiv_cont input[name='reRegPasswd']").val("");
+    }
 
 
 </script>
