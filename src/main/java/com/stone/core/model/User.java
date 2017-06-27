@@ -6,6 +6,7 @@ import com.stone.core.repository.UserMapperImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.util.DigestUtils;
 
 import java.util.Date;
 
@@ -46,7 +47,7 @@ public class User {
             return userMapperImpl.createUser(this);
         } catch (Exception e){
             logger.error("用户新增失败：" + e);
-            throw new MyException("用户新增失败");
+            throw new MyException("用户新增失败：" + e.getMessage());
         }
     }
 
@@ -72,7 +73,7 @@ public class User {
             return userMapperImpl.updateUser(this);
         } catch (Exception e){
             logger.error("用户信息更改失败：" + e);
-            throw new MyException("用户信息更改失败");
+            throw new MyException("用户信息更改失败：" + e.getMessage());
         }
     }
 

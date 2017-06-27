@@ -118,9 +118,21 @@
                 if(rsData.result){
                     window.location.href="../index.html";
                 }else{
-                    alert(rsData.msg);
+                    alert(rsData.message);
                 }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                /*alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+                alert(errorThrown);*/
             }
+            /* XMLHttpRequest.readyState: 状态码的意思
+             0 － （未初始化）还没有调用send()方法
+             1 － （载入）已调用send()方法，正在发送请求
+             2 － （载入完成）send()方法执行完成，已经接收到全部响应内容
+             3 － （交互）正在解析响应内容
+             4 － （完成）响应内容解析完成，可以在客户端调用了*/
         })
     }
 
@@ -178,7 +190,12 @@
             return;
         }
         $.post("/registerHandler",{userName:userName, passWord:regpd}, function(rsData){
-            alert(rsData.msg);
+            if(rsData.result){
+                alert("新增用戶成功");
+                regDoCancel();
+            } else {
+                alert(rsData.message);
+            }
         })
     }
 

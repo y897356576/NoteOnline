@@ -19,4 +19,8 @@ public class UserFactory {
         user.setUserMapperImpl(userMapperImpl);
         return user;
     }
+
+    public static void standardUser(User user){
+        user.setUserMapperImpl(userMapperImpl);
+    }
 }

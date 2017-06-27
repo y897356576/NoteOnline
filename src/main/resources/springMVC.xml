@@ -86,7 +86,7 @@
     </bean>
 
     <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="com.stone.core.viewResolver.HtmlViewResolver" />
+        <property name="viewClass" valcom.stone.common.viewResolverlver.HtmlViewResolver" />
         <property name="cache" value="false" />
         <property name="prefix" value="/html"/>
         <property name="suffix" value=".html"/>

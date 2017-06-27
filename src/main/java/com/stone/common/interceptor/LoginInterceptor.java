@@ -1,4 +1,4 @@
-package com.stone.core.interceptor;
+package com.stone.common.interceptor;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 

@@ -16,25 +16,13 @@ import java.util.Map;
 @Service
 public class RegisterService {
 
-    public Map<String, Object> doRegister(String userName, String passWord){
-        Boolean flag = false;
-        String msg;
+    public Boolean doRegister(User user){
 
-        User user = UserFactory.generateUser();
-        user.setUserName(userName);
-        user.setPassWord(DigestUtils.md5DigestAsHex(passWord.getBytes()));//对密码MD5加密
-        user.setStatus(1);// 1启用 0禁用
         try{
-            flag = user.persistUser();
-            msg = "操作成功";
+            return user.persistUser();
         } catch (MyException e){
-            msg = e.getMessage();
+            throw new MyException(e.getMessage());
         }
-
-        Map<String, Object> rsMap = new HashMap<String, Object>();
-        rsMap.put("result", flag);
-        rsMap.put("msg", msg);
-        return rsMap;
     }
 
 }

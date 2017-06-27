@@ -1,4 +1,4 @@
-package com.stone.core.filter;
+package com.stone.common.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

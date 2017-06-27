@@ -34,7 +34,7 @@
     <!-- 登录过滤，拦截所有jsp -->
     <!--<filter>
         <filter-name>loginFilter</filter-name>
-        <filter-class>com.stone.core.filter.LoginFilter</filter-class>
+        <filter-clcom.stone.common.filterlter.LoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>

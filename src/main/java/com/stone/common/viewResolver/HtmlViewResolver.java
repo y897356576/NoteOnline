@@ -1,4 +1,4 @@
-package com.stone.core.viewResolver;
+package com.stone.common.viewResolver;
 
 import org.springframework.web.servlet.view.InternalResourceView;
 
