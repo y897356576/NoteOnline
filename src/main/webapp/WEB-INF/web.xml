@@ -53,11 +53,11 @@
     </context-param>
 
 
-    <!-- 可用System.getProperty("testProject")来动态获项目的运行路径(log4j2内可试${testProject}) -->
-    <context-param>
+    <!-- 可用System.getProperty("testProject")来动态获项目的运行路径(log4j2.xml内可试${webappRoot}) -->
+    <!--<context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value>testProject</param-value>
-    </context-param>
+        <param-value>webappRoot</param-value>
+    </context-param>-->
 
 
     <!-- spring MVC 的配置 -->
@@ -81,7 +81,7 @@
 
     <!-- log4j2的监听器 -->
     <listener>
-        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
     <!-- log4j2文件的配置 -->
     <context-param>

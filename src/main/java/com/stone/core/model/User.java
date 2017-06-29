@@ -4,9 +4,8 @@ import com.stone.common.util.IdGenerator;
 import com.stone.core.exception.MyException;
 import com.stone.core.repository.UserMapperImpl;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.util.DigestUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.util.Date;
 
@@ -21,7 +20,7 @@ public class User {
     private Date registerTime;
     private String remark;
 
-    private Logger logger = LogManager.getLogger();
+    private Logger logger = LogManager.getLogger(this.getClass());
 
     private UserMapperImpl userMapperImpl;
     public void setUserMapperImpl(UserMapperImpl userMapperImpl) {

@@ -4,8 +4,8 @@ import com.stone.common.util.ResultMap;
 import com.stone.core.factory.UserFactory;
 import com.stone.core.model.User;
 import com.stone.register.service.RegisterService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,7 +23,7 @@ import java.util.Map;
 @RequestMapping("/registerHandler")
 public class RegisterController {
 
-    private Logger logger = LogManager.getLogger();
+    private Logger logger = LogManager.getLogger(this.getClass());
 
     @Autowired
     private RegisterService registerService;
