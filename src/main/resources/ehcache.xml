@@ -3,7 +3,13 @@
          xsi:noNamespaceSchemaLocation="ehcache.xsd">
 
     <diskStore path="E:/Projects/mavenCase_fir/ehcache" />
-    <!--<diskStore path="../ehcache" />-->
+
+    <!--<cacheManagerPeerProviderFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+            properties="peerDiscovery=manual, rmiUrls=//127.0.0.1:40002/ehcacheFir" />
+    <cacheManagerPeerListenerFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+            properties="hostName=127.0.0.1, port=40001, socketTimeoutMillis=60000" />-->
 
     <defaultCache
             maxElementsInMemory="10000"
@@ -26,7 +32,11 @@
            diskPersistent="true"
            diskSpoolBufferSizeMB="30"
            diskExpiryThreadIntervalSeconds="120"
-           memoryStoreEvictionPolicy="LRU"/>
+           memoryStoreEvictionPolicy="LRU">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+        <!-- 用于在初始化缓存，以及自动设置 -->
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" />
+    </cache>
 
     <!--
         maxElementsInMemory：内存中存储的对象的最大个数
