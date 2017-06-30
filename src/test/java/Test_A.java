@@ -11,23 +11,15 @@ import java.lang.reflect.*;
 import java.util.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Administrator
- * Date: 16-11-28
- * Time: 下午2:11
- * To change this template use File | Settings | File Templates.
+ * Created by 石头 on 2017/6/22.
  */
 @RunWith(JUnit4.class)
-@ContextConfiguration(locations = {"classpath:spring*.xml"})
+@ContextConfiguration(locations = {"classpath:spring.xml"})
 public class Test_A {
 
     @Test
     public void test_7(){
-        /*String s = ",,,1,,,";
-        String[] arr = s.split(",");
-        System.out.println("length:" + arr.length);*/
 
-        System.out.println(UUID.randomUUID());
     }
 
     @Test
@@ -148,3 +140,4 @@ public class Test_A {
     }
 
 }
+

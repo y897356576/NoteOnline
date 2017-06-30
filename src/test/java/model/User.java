@@ -1,6 +1,7 @@
 package model;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 
 import javax.persistence.Transient;
 import java.util.Date;
@@ -40,7 +41,7 @@ public class User {
     }
 
     public void setPassWord(String passWord) {
-        this.passWord = passWord;
+        this.passWord = DigestUtils.md5DigestAsHex(passWord.getBytes());
     }
 
     public Integer getStatus() {

@@ -26,22 +26,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <!-- spring mvc 静态资源 -->
-    <!-- 在web.xml内springMVC的<url-pattern>为/时，web下的文件夹，配置<mvc:resource>访问这些静态资源时不被拦截 -->
-    <!--<mvc:resources location="/common/" mapping="/common/**" />
-    <mvc:resources location="/admin/" mapping="/admin/**" />
-    <mvc:resources location="/front/" mapping="/front/**" />
-    <mvc:resources location="/html/" mapping="/html/**" />
-    <mvc:resources location="/image/" mapping="/image/**" />
-    <mvc:resources location="/js/" mapping="/js/**" /> &lt;!&ndash; 不设置此处js无法被引用 &ndash;&gt;
-    <mvc:resources location="/css/" mapping="/css/**" /> &lt;!&ndash; 不设置此处css无法被引用 &ndash;&gt;-->
-
-    <!-- 在web.xml内springMVC的<url-pattern>为/时，DispatcherServlet中的静态资源请求会被转由Web应用服务器默认的Servlet处理，防止静态资源被拦截 -->
     <mvc:default-servlet-handler />
-
-    <!-- 访问静态资源时不被拦截 -->
-    <!-- 与上面的 mvc:resources 效果类似，都配置时先执行上面的 -->
-    <!--<mvc:default-servlet-handler />-->
 
     <!-- spring MVC的试图解析器ViewResolver JSP模板 -->
     <!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /test/1.json /test/1.xml -->
@@ -82,33 +67,5 @@
         <!-- 视图的优先级，0为最优先 -->
         <property name="order" value="10" />
     </bean>
-
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="com.stone.core.viewResolver.HtmlViewResolver" />
-        <property name="cache" value="false" />
-        <property name="prefix" value="/html"/>
-        <property name="suffix" value=".html"/>
-        &lt;!&ndash; 视图的优先级，0为最优先 &ndash;&gt;
-        <property name="order" value="0" />
-    </bean>-->
-
-     <!--配置spring MVC的拦截器-->
-    <!-- 配置多个拦截器时，preHandle顺序执行，另两个倒序执行 -->
-    <!-- preHandle返回true后afterCompletion必定执行，返回false另两个都不执行 -->
-    <!--<mvc:interceptors>
-        <mvc:interceptor>
-            &lt;!&ndash; 拦截所有 &ndash;&gt;
-            <mvc:mapping path="/**"/>
-            &lt;!&ndash; exclude-mapping 不拦截的地址 &ndash;&gt;
-            <mvc:exclude-mapping path="/admin/login" />
-            <mvc:exclude-mapping path="/front/login" />
-            <bean clacom.stone.core.interceptorptor.LoginInterceptor"></bean>
-        </mvc:interceptor>
-        <mvc:interceptor>
-            &lt;!&ndash; 拦截所有 &ndash;&gt;
-            <mvc:mapping path="/**"/>
-            <bean clacom.stone.core.interceptorptor.LoginInterceptor"></bean>
-        </mvc:interceptor>
-    </mvc:interceptors>-->
 
 </beans>

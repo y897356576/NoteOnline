@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>maven_test</groupId>
-  <artifactId>MavenProject_Second</artifactId>
+  <groupId>mavenCase</groupId>
+  <artifactId>mavenCase_fir</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
 
-  <name>MavenProject_Second Maven Webapp</name>
+  <name>mavenCase_fir Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -177,6 +177,6 @@
   </dependencies>
 
   <build>
-    <finalName>MavenProject_Second</finalName>
+    <finalName>mavenCase_fir</finalName>
   </build>
 </project>

@@ -4,7 +4,7 @@
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="MavenProject_First" />
+          <element id="module-output" name="mavenCase_fir" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.9.RELEASE" />
@@ -41,7 +41,7 @@
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="MavenProject_First/web/Web" />
+      <element id="javaee-facet-resources" facet="mavenCase_fir/web/Web" />
     </root>
   </artifact>
 </component>

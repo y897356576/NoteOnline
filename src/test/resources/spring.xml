@@ -3,71 +3,22 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
-       xmlns:cache="http://www.springframework.org/schema/cache"
-       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
 	   http://www.springframework.org/schema/tx
 	   http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/cache
-       http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
-       http://mybatis.org/schema/mybatis-spring
-       http://mybatis.org/schema/mybatis-spring.xsd
-       http://www.springframework.org/schema/task
-       http://www.springframework.org/schema/task/spring-task.xsd">
+       http://www.springframework.org/schema/jdbc
+       http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
 
     <!--数据库连接-->
     <!--引入属性文件 -->
-    <context:property-placeholder location="classpath:jdbc.properties" />
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${jdbc.databaseurl}" />
-        <property name="username" value="${jdbc.username}" />
-        <property name="password" value="${jdbc.password}" />
-    </bean>
-    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
-        <!--&lt;!&ndash; 基本属性 url、user、password &ndash;&gt;-->
-        <!--<property name="driverClassName" value="${jdbc.driverClassName}" />-->
-        <!--<property name="url" value="${jdbc.databaseurl}" />-->
-        <!--<property name="username" value="${jdbc.username}"/>-->
-        <!--<property name="password" value="${jdbc.password}"/>-->
-        <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
-        <!--<property name="initialSize"><value>1</value></property>-->
-        <!--<property name="maxActive"><value>5</value></property>-->
-        <!--<property name="minIdle"><value>1</value></property>-->
-        <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
-        <!--<property name="maxWait"><value>60000</value></property>-->
-        <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
-        <!--<property name="filters"><value>stat</value></property>-->
-        <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
-        <!--<property name="timeBetweenEvictionRunsMillis"><value>60000</value></property>-->
-        <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
-        <!--<property name="minEvictableIdleTimeMillis"><value>300000</value></property>-->
-        <!--&lt;!&ndash;-->
-            <!--<property name="validationQuery"><value>SELECT 'x'</value></property>-->
-            <!--<property name="testWhileIdle"><value>true</value></property>-->
-            <!--<property name="testOnBorrow"><value>false</value></property>-->
-            <!--<property name="testOnReturn"><value>false</value></property>-->
-            <!--打开PSCache，并且指定每个连接上PSCache的大小-->
-            <!--<property name="poolPreparedStatements"><value>true</value></property>-->
-            <!--<property name="maxOpenPreparedStatements"><value>20</value></property>-->
-        <!--&ndash;&gt;-->
-    <!--</bean>-->
-
-    <!-- 扫描控制器; use-default-filters默认为true时会扫描@Component、@Controller、@Service、@Repository等,为false时不扫描(与include配对使用) -->
-    <!-- spring扫描全部(或者把Controller排除),springMVC只扫描Controller -->
-    <!-- springMVC中配置扫描Controller后，URL才能匹配到对应的Handler  -->
-    <!-- springMVC中配置自动扫描Service、Repository时可能会覆盖spring内加载的bean，导致事务失效 -->
-    <context:component-scan base-package="com.stone">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-    </context:component-scan>
+    <jdbc:embedded-database id="dataSource" type="HSQL">
+        <jdbc:script location="classpath:InstallDb.sql"/>
+    </jdbc:embedded-database>
 
     <!-- 事务; JDBC事物自动提交（需要对事务进行管理时(原子性)仍需要配置），hibernate、mybatis不配置事务时可查询不可更改 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -81,11 +32,7 @@
     <bean id="sqlSessionFactory" name="sqlSessionFactoryBeanName" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!-- 配置Mapper.xml文件所在目录的路径，在classpath后面的*必不可少，缺少型号的话后面的通配符不起作用。 -->
-        <!--<property name="mapperLocations" value="classpath*:com/**/*Mapper.xml" />-->
-        <!-- 需要另添加配置时可引入自己的配置文件 -->
-        <!--<property name="configLocation" value="classpath:config/mybatis.xml"/>-->
-        <!-- 为对象设置别名，可通过 Alias()实现 -->
-        <!--<property name="typeAliasesPackage" value="cms.kernel.entity"/>-->
+        <property name="mapperLocations" value="classpath*:mapper/**" />
     </bean>
 
     <!-- sql会话模板 -->
@@ -96,75 +43,12 @@
     <!-- 配置mybatis通用mapper -->
     <!-- 没有必要去指定 SqlSessionFactory 或 SqlSessionTemplate , 除非使用了一个以上的 DataSource -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cms.**.mapper" />
+        <property name="basePackage" value="model.**" />
         <property name="annotationClass" value="com.stone.common.annotation.MybatisMapper" /><!-- 为Mapper设定注解 -->
-        <!--<property name="markerInterface" value="tk.mybatis.mapper.common.Mapper" />-->
-        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />-->
-        <!--<property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />-->
-        <!--<property name="properties">
-            <value>
-                mappers=tk.mybatis.mapper.common.Mapper
-            </value>
-        </property>-->
     </bean>
 
-    <!-- 该包下的类支持注解，表示会被当作{@code mybatis mapper}处理 配置了之后表示可以自动引入mapper类-->
-    <!--<mybatis:scan base-package="cms.**.mapper" annotation="cms.kernel.annotation.MybatisMapper" factory-ref="" template-ref="" marker-interface=""/>-->
-
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="cms.**.mapper" p:sqlSessionFactory-ref="sqlSessionFactory" />-->
-
-    <!--<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource" />
-    </bean>-->
-
-    <!-- 上下文注解配置-->
-    <!-- 隐式地向 Spring 容器注册AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、PersistenceAnnotationBeanPostProcessor
-            以及 RequiredAnnotationBeanPostProcessor 这 4 个BeanPostProcessor。 -->
-    <!-- @AutoWired，@Resource、@PostConstruct、@Predestory，@PersistenceContext，@Required -->
-    <!-- 当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 移除了 -->
-    <context:annotation-config /><!-- 都是属性上的注解 -->
-
-    <!-- bean的初始化方法是在aop拦截器应用前调用的 -->
-    <!-- 切面代理(启用此项配置后，可在代码内用注解方式实现切面；@Aspectj、@Before(value=execution(* com.cms..service.*Service*.*(..)))...) -->
-    <aop:aspectj-autoproxy />
-    <!-- 切面配置 -->
-    <!--<aop:config>-->
-        <!--<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.cms..service.*Service*.*(..))" />-->
-    <!--</aop:config>-->
-
-    <!-- 切面配置事物 -->
-    <!-- 这个事物advice的管理者为transactionManager,
-        建议中规定了save方法的传输方式为required,也就是说没有sessionfactory的时候会自动建立，有的时候就不会建立了。
-        当然了这只是规定了一个advice，还需要指定一个aop:pointcut去引用他 -->
-    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
-        <!--<tx:attributes>-->
-            <!--<tx:method name="insert*" propagation="REQUIRED" />-->
-            <!--<tx:method name="update*" propagation="REQUIRED" />-->
-            <!--<tx:method name="delete*" propagation="REQUIRED" />-->
-            <!--<tx:method name="select*" propagation="SUPPORTS" read-only="true" />-->
-            <!--<tx:method name="get*" propagation="SUPPORTS" read-only="true" />-->
-        <!--</tx:attributes>-->
-    <!--</tx:advice>-->
-
-    <!-- 文件上传 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="utf-8" />
-        <property name="maxUploadSize" value="10240000" />
-    </bean>
-
-    <!-- spring-ehcache缓存管理工厂 -->
-    <bean id="ehcacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="classpath:ehcache.xml" />
-    </bean>
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-        <property name="cacheManager" ref="ehcacheManagerFactory" />
-    </bean>
-    <!-- 启用缓存注解开关 -->
-    <cache:annotation-driven cache-manager="cacheManager" />
-
-    <!-- 异步注解功能开启 -->
-    <task:annotation-driven/>
-
-    <!--<bean id="user" class="model.User" />-->
+    <context:component-scan base-package="model.**">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
 
 </beans>
