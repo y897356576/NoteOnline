@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="ehcache.xsd">
 
-    <diskStore path="E:/Projects/MavenProject_First/ehcache" />
+    <diskStore path="E:/Projects/mavenCase_fir/ehcache" />
     <!--<diskStore path="../ehcache" />-->
 
     <defaultCache

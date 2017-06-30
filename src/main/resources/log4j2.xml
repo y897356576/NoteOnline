@@ -6,8 +6,8 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %L %M - %msg%n" />
         </Console>
 
-        <RollingFile name="debug" fileName="D:/Projects/nginxTest_fir/log/debug.log"
-                     filePattern="D:/Projects/MavenProject_First/log/debug.%d{yyyy-MM-dd}.log"
+        <RollingFile name="debug" fileName="D:/Projects/mavenCase_fir/log/debug.log"
+                     filePattern="D:/Projects/mavenCase_fir/log/debug.%d{yyyy-MM-dd}.log"
                      append="true">
             <Filters>
                 <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -21,8 +21,8 @@
             <DefaultRolloverStrategy max="20" />
         </RollingFile>
 
-        <RollingFile name="info" fileName="D:/Projects/MavenProject_First/log/info.log"
-                     filePattern="D:/Projects/MavenProject_First/log/info.%d{yyyy-MM-dd}.log"
+        <RollingFile name="info" fileName="D:/Projects/mavenCase_fir/log/info.log"
+                     filePattern="D:/Projects/mavenCase_fir/log/info.%d{yyyy-MM-dd}.log"
                      append="true">
             <Filters>
                 <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -36,8 +36,8 @@
             <DefaultRolloverStrategy max="20" />
         </RollingFile>
 
-        <RollingFile name="warn" fileName="D:/Projects/MavenProject_First/log/warn.log"
-                     filePattern="D:/Projects/MavenProject_First/log/warn.%d{yyyy-MM-dd}.log"
+        <RollingFile name="warn" fileName="D:/Projects/mavenCase_fir/log/warn.log"
+                     filePattern="D:/Projects/mavenCase_fir/log/warn.%d{yyyy-MM-dd}.log"
                      append="true">
             <Filters>
                 <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -51,8 +51,8 @@
             <DefaultRolloverStrategy max="20" />
         </RollingFile>
 
-        <RollingFile name="error" fileName="D:/Projects/MavenProject_First/log/error.log"
-                     filePattern="D:/Projects/MavenProject_First/log/error.%d{yyyy-MM-dd}.log"
+        <RollingFile name="error" fileName="D:/Projects/mavenCase_fir/log/error.log"
+                     filePattern="D:/Projects/mavenCase_fir/log/error.%d{yyyy-MM-dd}.log"
                      append="true">
             <Filters>
                 <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
