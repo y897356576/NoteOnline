@@ -2,8 +2,6 @@ package com.stone.demo.paramsAnno.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.stone.core.model.User;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,8 +22,6 @@ import java.util.Map;
 @RequestMapping("/annotationHandler")
 public class ParamsAnnoHandler {
 
-    Logger logger = LogManager.getLogger(this.getClass());
-
     private Map map = new HashMap<String, String>(){{ put("result", "success"); }};
 
     @RequestMapping(method = RequestMethod.GET)
@@ -33,7 +29,6 @@ public class ParamsAnnoHandler {
                                          HttpServletRequest request, HttpServletResponse response){
         System.out.println("param1:" + param1);
         System.out.println("param2:" + param2);
-        logger.info("Annotation_Get : Complete");
 //        response.setHeader("ResponseHeaderTest", "responseHeaderContent");
 //        return "/html/front/index.html";
     }

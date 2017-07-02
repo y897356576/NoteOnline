@@ -34,11 +34,10 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.8" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.8" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
-          <element id="library" level="module" name="Maven: com.alibaba:jconsole:1.8.0" module-name="MavenProject_First" />
-          <element id="library" level="module" name="Maven: com.alibaba:tools:1.8.0" module-name="MavenProject_First" />
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:sources:1.7.25" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.7" />
+          <element id="library" level="module" name="Maven: com.alibaba:jconsole:1.8.0" module-name="mavenCase_fir" />
+          <element id="library" level="module" name="Maven: com.alibaba:tools:1.8.0" module-name="mavenCase_fir" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="mavenCase_fir/web/Web" />
