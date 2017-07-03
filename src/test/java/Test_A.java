@@ -14,12 +14,55 @@ import java.util.*;
  * Created by 石头 on 2017/6/22.
  */
 @RunWith(JUnit4.class)
-@ContextConfiguration(locations = {"classpath:spring.xml"})
+//@ContextConfiguration(locations = {"classpath:spring.xml"})
 public class Test_A {
 
     @Test
-    public void test_7(){
+    public void test_9(){
 
+    }
+
+    @Test
+    public void test_8(){
+        String str = this.test_8_assist1();
+        System.out.println("str : " + str);
+        User user = this.test_8_assist2();
+        System.out.println("userName : " + user.getUserName());
+    }
+    private String test_8_assist1(){
+        String str = "1";
+        try{
+            return str;
+        } catch (Exception e){
+            str = "2";
+            return str;
+        } finally {
+            str = "3";
+        }
+    }
+    private User test_8_assist2(){
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/spring.xml");
+        User user = (User) applicationContext.getBean("user");
+        try{
+            user.setUserName("test1");
+            return user;
+        } catch (Exception e){
+            user.setUserName("test2");
+            return user;
+        } finally {
+            user.setUserName("test3");
+        }
+    }
+
+    @Test
+    public void test_7(){
+        String[] strArr = {"1", "2", "3"};
+        System.out.println(Arrays.toString(strArr));
+        this.test_7_assist(strArr);
+        System.out.println(Arrays.toString(strArr));
+    }
+    private void test_7_assist(String[] strArr){
+        strArr[2] = "4";
     }
 
     @Test
@@ -44,7 +87,6 @@ public class Test_A {
             e.printStackTrace();
         }
     }
-
     private void test_5_assist(Date date) throws InterruptedException {
         Thread.sleep(2005);
 //        date = new Date();
