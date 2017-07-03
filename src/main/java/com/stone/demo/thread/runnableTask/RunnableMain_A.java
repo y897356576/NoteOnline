@@ -1,5 +1,7 @@
-package com.stone.demo.thread;
+package com.stone.demo.thread.runnableTask;
 
+import com.stone.core.factory.UserFactory;
+import com.stone.core.model.User;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import com.stone.demo.thread.runnableTask.RunnableTask_1;
 import com.stone.demo.thread.runnableTask.RunnableTask_2;
@@ -18,7 +20,7 @@ public class RunnableMain_A {
         executor.setKeepAliveSeconds(300);  //线程池维护线程所允许的空闲时间
         executor.initialize();
 
-        method_3A(executor);
+        method_4A(executor);
     }
 
     private static void method_1A(){
@@ -63,5 +65,33 @@ public class RunnableMain_A {
         Runnable runnable = new RunnableTask_3();
         executor.execute(runnable);
         executor.execute(runnable);
+    }
+
+    private static void method_4A(ThreadPoolTaskExecutor executor) {
+        User user = UserFactory.generateUser();
+        user.setUserName("test1");
+
+        RunnableTask_4 runnable = new RunnableTask_4();
+        runnable.setUser(user);
+
+        executor.execute(runnable);
+
+//        doSleep(2100);
+//        user.setUserName("test2");
+
+        for (int i=0; i<10; i++){
+            System.out.println(String.format("User'name is %s", user.getUserName()));
+            doSleep(500);
+        }
+    }
+
+
+
+    private static void doSleep(int ms){
+        try{
+            Thread.sleep(ms);
+        } catch (InterruptedException e){
+            System.out.println("***** In Exception");
+        }
     }
 }

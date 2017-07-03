@@ -1,4 +1,4 @@
-package com.stone.demo.thread;
+package com.stone.demo.thread.runnableTask;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
