@@ -12,7 +12,7 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <welcome-file-list>
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>/html/login/login.html</welcome-file>
     </welcome-file-list>
 
 
@@ -125,30 +125,30 @@
 
 
     <!-- 403错误页面 -->
-    <error-page>
+    <!--<error-page>
         <error-code>403</error-code>
         <location>/html/exception/403.html</location>
     </error-page>
-    <!-- 404错误页面 -->
+    &lt;!&ndash; 404错误页面 &ndash;&gt;
     <error-page>
         <error-code>404</error-code>
         <location>/html/exception/404.html</location>
     </error-page>
-    <!-- 405错误页面 -->
+    &lt;!&ndash; 405错误页面 &ndash;&gt;
     <error-page>
         <error-code>405</error-code>
         <location>/html/exception/405.html</location>
     </error-page>
-    <!-- 500错误页面 -->
+    &lt;!&ndash; 500错误页面 &ndash;&gt;
     <error-page>
         <error-code>500</error-code>
         <location>/html/exception/500.html</location>
     </error-page>
-    <!-- 403错误页面 -->
+    &lt;!&ndash; 403错误页面 &ndash;&gt;
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/html/exception/exception.html</location>
-    </error-page>
+    </error-page>-->
 
 
 </web-app>

@@ -67,10 +67,12 @@ public class MyLinkedList<T> {
     }
 
     public boolean contain(T t) {
-        for (int i = 0; i < size; i++) {
-            if (this.getNode(i).getItem().equals(t)) {
+        Node<T> node = first;
+        while(node != null){
+            if(node.getItem().equals(t)){
                 return true;
             }
+            node = node.getNext();
         }
         return false;
     }
@@ -111,6 +113,8 @@ public class MyLinkedList<T> {
     public void setLast(Node<T> last) {
         this.last = last;
     }
+
+
 
     class Node<T> {
         T item;
