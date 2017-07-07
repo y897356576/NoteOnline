@@ -1,79 +1,91 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Configuration status="OFF">
+<!--
+    status : 这个用于设置log4j2自身内部的信息输出,可以不设置,当设置成trace时,会看到log4j2内部各种详细输出
+    monitorInterval : Log4j能够自动检测修改配置文件和重新配置本身, 设置间隔秒数。
+-->
+<Configuration status="OFF" monitorInterval="3600">
+
+    <properties>
+        <property name="LOG_HOME">D:/Projects/mavenCase_fir/log</property>
+    </properties>
 
     <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
+        <Console name="consoleLog" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %L %M - %msg%n" />
         </Console>
 
-        <RollingFile name="debug" fileName="D:/Projects/mavenCase_fir/log/debug.log"
-                     filePattern="D:/Projects/mavenCase_fir/log/debug.%d{yyyy-MM-dd}.log"
-                     append="true">
+        <RollingRandomAccessFile name="debugLog" fileName="${LOG_HOME}/debug/debug.log"
+                     filePattern="${LOG_HOME}/debug/debug.%d{yyyy-MM-dd}.log" immediateFlush="true" append="true">
             <Filters>
-                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+                <!-- info以上直接拒绝，以下中立 -->
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/><!--符合的拒绝(已经拒绝不再往后传)，不符合的中立(后续继续过滤)-->
+                <!-- debug以上接受，以下拒绝 -->
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/><!--符合的接收(已经写入不再往后传)，不符合的拒绝(不再往后传)-->
             </Filters>
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %L %M - %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="24" />
-                <SizeBasedTriggeringPolicy size="51200KB" />
+                <TimeBasedTriggeringPolicy interval="1" /><!--filePattern最细精度为天，所以此处为1天生成一个文件-->
+                <SizeBasedTriggeringPolicy size="5 MB" /><!--当前日志文件超过5M，则新生成一个文件-->
             </Policies>
             <DefaultRolloverStrategy max="20" />
-        </RollingFile>
+        </RollingRandomAccessFile>
 
-        <RollingFile name="info" fileName="D:/Projects/mavenCase_fir/log/info.log"
-                     filePattern="D:/Projects/mavenCase_fir/log/info.%d{yyyy-MM-dd}.log"
-                     append="true">
+        <RollingRandomAccessFile name="infoLog" fileName="${LOG_HOME}/info/info.log"
+                     filePattern="${LOG_HOME}/info/info.%d{yyyy-MM-dd}.log" immediateFlush="true" append="true">
             <Filters>
                 <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %L %M - %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="24" />
-                <SizeBasedTriggeringPolicy size="51200KB" />
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="5 MB" />
             </Policies>
             <DefaultRolloverStrategy max="20" />
-        </RollingFile>
+        </RollingRandomAccessFile>
 
-        <RollingFile name="warn" fileName="D:/Projects/mavenCase_fir/log/warn.log"
-                     filePattern="D:/Projects/mavenCase_fir/log/warn.%d{yyyy-MM-dd}.log"
-                     append="true">
+        <RollingRandomAccessFile name="warnLog" fileName="${LOG_HOME}/warn/warn.log"
+                     filePattern="${LOG_HOME}/warn/warn.%d{yyyy-MM-dd}.log" immediateFlush="true" append="true">
             <Filters>
                 <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %L %M - %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="24" />
-                <SizeBasedTriggeringPolicy size="51200KB" />
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="5 MB" />
             </Policies>
             <DefaultRolloverStrategy max="20" />
-        </RollingFile>
+        </RollingRandomAccessFile>
 
-        <RollingFile name="error" fileName="D:/Projects/mavenCase_fir/log/error.log"
-                     filePattern="D:/Projects/mavenCase_fir/log/error.%d{yyyy-MM-dd}.log"
-                     append="true">
+        <RollingRandomAccessFile name="errorLog" fileName="${LOG_HOME}/error/error.log"
+                     filePattern="${LOG_HOME}/error/error.%d{yyyy-MM-dd}.log" append="true">
             <Filters>
                 <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} %L %M - %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="24" />
-                <SizeBasedTriggeringPolicy size="51200KB" />
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="5 MB" />
             </Policies>
             <DefaultRolloverStrategy max="20" />
-        </RollingFile>
+        </RollingRandomAccessFile>
 
     </Appenders>
 
     <Loggers>
         <Root level="debug">
-            <AppenderRef ref="console" />
-            <AppenderRef ref="debug" />
-            <AppenderRef ref="info" />
-            <AppenderRef ref="error" />
+            <AppenderRef ref="consoleLog" />
+            <AppenderRef ref="debugLog" />
+            <AppenderRef ref="infoLog" />
+            <AppenderRef ref="errorLog" />
         </Root>
+
+        <!-- 定义路径common下的文件采用此日志处理方式 -->
+        <!--<Logger name="com.stone.common" level="info" includeLocation="true" additivity="false">
+            &lt;!&ndash; additivity为false，信息在Root不再输出 &ndash;&gt;
+            <AppenderRef-ref ref="errorLog"/>
+        </Logger>-->
     </Loggers>
 
 </Configuration>
