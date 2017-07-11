@@ -5,13 +5,13 @@ import java.io.*;
 /**
  * Created by 石头 on 2017/7/6.
  */
-public class FileReadWriteCase {
+public class FileStreamReadWriteCase {
 
     public static void main(String[] args){
-        Class clazz = new FileReadWriteCase().getClass();
+        Class clazz = new FileStreamReadWriteCase().getClass();
         String rootPath = clazz.getResource("/").getFile();
         String hereClassPath = clazz.getResource("").getFile() + clazz.getSimpleName() + ".class";
-        String hereJavaPath = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\FileReadWriteCase.java";
+        String hereJavaPath = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\FileStreamReadWriteCase.java";
 //        getFiles(rootPath);
 //        readFileByBufferedInputStream(hereJavaPath);
 //        readFileByBufferedReader(hereJavaPath);
@@ -23,6 +23,7 @@ public class FileReadWriteCase {
         File file = new File(filePath);
         File[] files = file.listFiles();
         System.out.println("ClassesPosition : " + filePath);
+        System.out.println("FileGetName : " + file.getName());
         for(File fileSingle : files){
             System.out.println("FileName : " + fileSingle.getName());
         }
@@ -99,7 +100,7 @@ public class FileReadWriteCase {
         BufferedWriter bw = null;
         try{
             String content = readFileByBufferedReader(pathName);
-            content = content.replaceAll("FileReadWriteCase", "FileReadWriteCaseCopy1");
+            content = content.replaceAll("FileReadWriteCase", "FileStreamReadWriteCaseCopy1");
             bw = new BufferedWriter(new FileWriter(pathName.replace(".java", "Copy.java")));
             bw.write(content, 0, content.length());
         } catch (IOException e) {
