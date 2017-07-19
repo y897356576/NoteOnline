@@ -2,6 +2,7 @@ package com.stone.demo.httpClient;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.Consts;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.CookieSpecs;
@@ -12,6 +13,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.config.*;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -182,7 +184,6 @@ public class HttpClientUtil {
 
     /**
      * 通过http协议的POST发送带参数的一次性的请求
-     *
      * @throws IOException
      */
     public static String httpJsonParamPost(String uri, JSONObject jsonParam, String charset) throws IOException {
@@ -195,10 +196,24 @@ public class HttpClientUtil {
             entity.setContentEncoding("UTF-8");
             httpPost.setEntity(entity);
         }
-        httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).setConnectionManager(connManager).build();
-        CloseableHttpResponse response = httpClient.execute(httpPost);
-        String content = EntityUtils.toString(response.getEntity(), charset);
-        HttpClientUtils.closeQuietly(response);
+//        CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).setConnectionManager(connManager).build();
+        CloseableHttpClient httpClient = HttpClients.custom().build();
+        CloseableHttpResponse response;
+        String content = "";
+        try{
+            response = httpClient.execute(httpPost);
+            //response.getStatusLine() : HTTP/1.1 302 Moved Temporarily
+            System.out.println("status code:" + response.getStatusLine().getStatusCode());
+            //状态码为302则转发，获取响应头中的转发地址
+            if(response.getStatusLine().getStatusCode() == 302) {
+                System.out.println(response.getHeaders("Location")[0]);
+            }
+            content = EntityUtils.toString(response.getEntity(), charset);
+            HttpClientUtils.closeQuietly(response);
+        } catch (HttpHostConnectException e) {
+            //访问的站点不存在时(对方服务器宕机)，捕获此异常
+            System.out.println("Exception : " + e.getMessage());
+        }
         httpPost.releaseConnection();
         return content;
     }

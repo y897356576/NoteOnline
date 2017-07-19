@@ -13,15 +13,6 @@ import javax.net.ssl.X509TrustManager;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-/**
- * Copyright (C) 1990 2013 南京擎天科技集团
- * SSLClient.java
- * 创建人:zhouzhilong
- * 日期:2016-11-17 10:54
- * 描述:用于进行Https请求的HttpClient
- * 历史:
- */
-
 public class SSLClient extends DefaultHttpClient {
 
     private static Logger logger = Logger.getLogger(SSLClient.class);
@@ -29,19 +20,17 @@ public class SSLClient extends DefaultHttpClient {
     public SSLClient() {
         super();
         try {
-            SSLContext ctx = SSLContext.getInstance("SSL");
+            SSLContext ctx = SSLContext.getInstance("TLS");
 
             X509TrustManager tm = new X509TrustManager() {
                 @Override
                 public void checkClientTrusted(X509Certificate[] chain,
                                                String authType) throws CertificateException {
                 }
-
                 @Override
                 public void checkServerTrusted(X509Certificate[] chain,
                                                String authType) throws CertificateException {
                 }
-
                 @Override
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
@@ -49,13 +38,9 @@ public class SSLClient extends DefaultHttpClient {
             };
 
             ctx.init(null, new TrustManager[]{tm}, null);
-
             SSLSocketFactory ssf = new SSLSocketFactory(ctx, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-
             ClientConnectionManager ccm = this.getConnectionManager();
-
             SchemeRegistry sr = ccm.getSchemeRegistry();
-
             sr.register(new Scheme("https", 443, ssf));
 
         } catch (Exception ex) {
