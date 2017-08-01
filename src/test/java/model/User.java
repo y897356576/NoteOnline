@@ -10,15 +10,30 @@ import java.util.Date;
  * Created by 石头 on 2017/6/20.
  */
 @Component
-public class User {
+public class User extends Object1 {
     private String id;
     private String userName;
     private String passWord;
-    private Integer status;
+    private Integer status = 1;
     private Date registerTime;
     private String remark;
+    private Object2 object2 = new Object2();
     @Transient  //在持久化时，此字段不参与
     private String testCol;
+
+    public static void doPrint(){
+        System.out.println("this is in User's static method");
+    }
+
+    static {
+        System.out.println("this is in User's static block");
+    }
+
+    public User () {
+        System.out.println("status:" + status);
+        System.out.println("User in Constructor:" + this);
+        System.out.println("this is in User's Constructor");
+    }
 
     public String getId() {
         return id;

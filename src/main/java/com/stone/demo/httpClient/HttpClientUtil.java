@@ -182,6 +182,8 @@ public class HttpClientUtil {
         return content;
     }
 
+
+
     /**
      * 通过http协议的POST发送带参数的一次性的请求
      * @throws IOException

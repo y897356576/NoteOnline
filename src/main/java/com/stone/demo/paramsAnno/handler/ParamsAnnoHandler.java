@@ -35,10 +35,20 @@ public class ParamsAnnoHandler {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Map postRequestAnnotationTest(@RequestBody User user, String nameInUrl){
+    public Map postRequestAnnotationTest_User(@RequestBody User user, String nameInUrl){
         System.out.println("userNameInUrl:" + nameInUrl);
         System.out.println("user:" + user);
         System.out.println("userNameInModel:" + user.getUserName());
+        return map;
+    }
+
+
+    @RequestMapping(value = "/JSONObject", method = RequestMethod.POST)
+    @ResponseBody
+    public Map postRequestAnnotationTest_JSONObject(@RequestBody JSONObject obj, String nameInUrl){
+        System.out.println("userNameInUrl:" + nameInUrl);
+        System.out.println("user:" + obj);
+        System.out.println("userName:" + obj.get("userName"));
         return map;
     }
 
@@ -71,5 +81,4 @@ public class ParamsAnnoHandler {
         headersResponse.add("responseHeaderTest", "responseHeaderContent");
         return new ResponseEntity<String>("Hello, this is responseBody.", headersResponse, HttpStatus.CREATED);
     }
-
 }

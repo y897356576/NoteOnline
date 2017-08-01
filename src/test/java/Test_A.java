@@ -1,14 +1,17 @@
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import model.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by 石头 on 2017/6/22.
@@ -17,9 +20,62 @@ import java.util.*;
 //@ContextConfiguration(locations = {"classpath:spring.xml"})
 public class Test_A {
 
-    @Test
-    public void test_9(){
+    public ApplicationContext applicationContext;
 
+    @Before
+    public void beforeMethod() {
+//        applicationContext = new ClassPathXmlApplicationContext("/spring.xml");
+    }
+
+
+    @Test
+    public void test_12() throws InterruptedException, ClassNotFoundException {
+
+//        User.doPrint();
+//        System.out.println(new User().getClass().getName());
+//        Class.forName("model.User");
+        User user = new User();
+//        System.out.println("User:" + user);
+//        user = new User();
+//        System.out.println("User:" + user);
+    }
+
+    @Test
+    public void test_11() throws InterruptedException {
+        Map<String, String> map = new HashMap<>();
+        System.out.println(map.put("1", "a"));
+        System.out.println(map.put("1", "b"));
+    }
+
+    @Test
+    public void test_10() throws InterruptedException {
+        User user0 = new User();
+        User user1 = user0; //此处赋的值为引用
+        User user2 = user1;
+        User user3 = user2;
+        user3 = null;
+        System.out.println("User0:" + user0);
+        System.out.println("User1:" + user1);
+        System.out.println("User2:" + user2);
+        System.out.println("User3:" + user3);
+    }
+
+    @Test
+    public void test_9() throws InterruptedException {
+        Object obj =  applicationContext.getBean("user");
+        System.out.println("1:" + obj);
+        test_9_assist(obj);
+        TimeUnit.SECONDS.sleep(1);
+        System.out.println("3:" + obj);
+        User user = (User) obj;
+        obj = null;
+        System.out.println("4:" + obj);
+        System.out.println("5:" + user);
+    }
+
+    private static void test_9_assist(Object obj){
+        obj = new User();   //传过来的obj的内容为堆中obj对象的地址，将obj重新赋值是将地址覆盖掉了，对堆中的对象无影响
+        System.out.println("2:" + obj);
     }
 
     @Test
@@ -122,7 +178,13 @@ public class Test_A {
     //java反射
     public void test_1(){
         try{
-            Class cla = Class.forName("cms.kernel.entity.User");
+            Class cla = Class.forName("model.User");
+            Object obj = cla.newInstance();
+            if(obj instanceof User) {
+                System.out.println(" this obj is instanceof User");
+                System.out.println((User)obj);
+            }
+
             System.out.println("packageName:" + cla.getPackage().getName());
             System.out.println("modifiers:" + Modifier.toString(cla.getModifiers()));
             System.out.println("className:" + cla.getSimpleName());
