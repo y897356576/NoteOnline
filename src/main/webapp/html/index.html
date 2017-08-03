@@ -11,14 +11,58 @@
 </body>
 
 <script>
+
     $("span").on("click",function () {
         $.post("/loginHandler/doLogOut/74f77674-0457-4298-8d77-2850c6a78393",function(){
             window.location.href="/html/login/login.html";
         })
     });
 
+
     function doReload(){
         $("form").submit();
+    }
+
+
+    function doReloadByXHR() {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", "/indexHandler", false);    //同步发送请求
+        xhr.send(null);
+        if (xhr != null) {
+            xhr.onreadystatechange = function() {
+
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    alert("ResponseText: " + xhr.responseText);
+                } else {
+                    alert("Request was unsuccessful: " + xhr.status);
+                }
+            }
+        };
+
+        xhr.open("get", "/indexHandler", true);     //异步发送请求
+        xhr.send(null);
+        if (xhr != null) {
+            xhr.onreadystatechange = function() {
+                // 校验此次异步请求是否全部完成
+                if (xhr.readyState == 4) {
+                    /*  readyState
+                     0 未初始化；尚未调用open()方法
+                     1 启动；尚未调用send()方法
+                     2 已发送；但尚未收到响应
+                     3 接收；已经收到部分响应数据
+                     4 完成；收到全部响应数据  */
+                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                        alert("ResponseText: " + xhr.responseText);
+                    }
+                    else {
+                        alert("Request was unsuccessful: " + xhr.status);
+                    }
+                }
+            };
+            xhr.open("GET", "/indexHandler", true);
+            xhr.send(null);
+        }
     }
 </script>
 
