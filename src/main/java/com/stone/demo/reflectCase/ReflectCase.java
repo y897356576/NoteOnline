@@ -1,4 +1,4 @@
-package com.stone.demo.reflect;
+package com.stone.demo.reflectCase;
 
 import com.stone.core.model.User;
 

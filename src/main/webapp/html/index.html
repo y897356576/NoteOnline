@@ -25,10 +25,11 @@
 
 
     function doReloadByXHR() {
-
+        /*  http://www.cnblogs.com/rush/archive/2012/05/15/2502264.html
+            https://segmentfault.com/a/1190000002782175 */
         var xhr = new XMLHttpRequest();
         xhr.open("get", "/indexHandler", false);    //同步发送请求
-        xhr.send(null);
+//        xhr.send(null);
         if (xhr != null) {
             xhr.onreadystatechange = function() {
 
@@ -39,9 +40,9 @@
                 }
             }
         };
+        xhr.send(null); //为xhr对象绑定事件需要在send之前？
 
         xhr.open("get", "/indexHandler", true);     //异步发送请求
-        xhr.send(null);
         if (xhr != null) {
             xhr.onreadystatechange = function() {
                 // 校验此次异步请求是否全部完成
@@ -63,6 +64,7 @@
             xhr.open("GET", "/indexHandler", true);
             xhr.send(null);
         }
+        xhr.send(null);
     }
 </script>
 

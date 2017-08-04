@@ -24,13 +24,11 @@ public class Shard<S> { // S类封装了机器节点的信息 ，如name、passw
 
     private void init() { // 初始化一致性hash环
         nodes = new TreeMap<Long, S>();
-        for (int i = 0; i != shards.size(); ++i) { // 每个真实机器节点都需要关联虚拟节点
-            final S shardInfo = shards.get(i);
-
-            for (int n = 0; n < NODE_NUM; n++)
+        for (S shardInfo : shards) { // 每个真实机器节点都需要关联虚拟节点
+            for (int n = 0; n < NODE_NUM; n++) {
                 // 一个真实机器节点关联NODE_NUM个虚拟节点
-                nodes.put(hash("SHARD-" + i + "-NODE-" + n), shardInfo);
-
+                nodes.put(hash(shardInfo.toString() + "-NODE-" + n), shardInfo);
+            }
         }
     }
 
@@ -96,7 +94,8 @@ public class Shard<S> { // S类封装了机器节点的信息 ，如name、passw
         buf.order(byteOrder);
         return h;
     }
-    /*1、Map.Entry firstEntry():返回最小key所对应的键值对，如Map为空，则返回null。
+    /* TreeMap
+      1、Map.Entry firstEntry():返回最小key所对应的键值对，如Map为空，则返回null。
       2、Object firstKey():返回最小key，如果为空，则返回null。
       3、Map.Entry lastEntry():返回最大key所对应的键值对，如Map为空，则返回null。
       4、Object lastKey():返回最大key，如果为空，则返回null。
@@ -106,6 +105,6 @@ public class Shard<S> { // S类封装了机器节点的信息 ，如name、passw
       8、NavigableMap subMap(Object fromKey,boolean fromlnclusive,Object toKey,boolean toInciusive):返回该Map的子Map，其key范围从fromKey到toKey。
       9、SortMap subMap(Object fromKey,Object toKey );返回该Map的子Map，其key范围从fromkey（包括）到tokey（不包括）。
       10、SortMap tailMap（Object fromkey ,boolean inclusive）:返回该Map的子Map，其key范围大于fromkey（是否包括取决于第二个参数）的所有key。
-      11、 SortMap headMap（Object tokey ,boolean inclusive）:返回该Map的子Map，其key范围小于tokey（是否包括取决于第二个参数）的所有key。*/
+      11、SortMap headMap（Object tokey ,boolean inclusive）:返回该Map的子Map，其key范围小于tokey（是否包括取决于第二个参数）的所有key。*/
 
 }

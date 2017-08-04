@@ -26,6 +26,7 @@ public class MergeSort {
         System.out.println((new Date().getTime()-date));
     }
 
+
     private static Integer[] mergeSort(Integer[] is) {
         int len = is.length;
         if ( len/2 < 1 ) {

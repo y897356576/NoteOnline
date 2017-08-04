@@ -1,13 +1,12 @@
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -29,16 +28,47 @@ public class Test_A {
 
 
     @Test
-    public void test_12() throws InterruptedException, ClassNotFoundException {
+    public void test_15() {
+    }
 
+
+    @Test
+    public void test_14() {
+        JSONObject json = new JSONObject();
+        json.put("1","A");
+        json.put("2","B");
+        json.put("3","C");
+        json.put("4","D");
+        json.put("5","E");
+        System.out.println(JSONObject.toJSONString(json));
+
+        String str = "{3:\"C\",2:\"B\",1:\"A\",5:\"E\",4:\"D\"}";
+        JSONObject jsonObj = JSONObject.parseObject(str, JSONObject.class);
+        System.out.println(jsonObj + ";" + json.get("1"));
+    }
+
+
+    @Test
+    public void test_13() {
+        Integer[] ints = new Integer[]{1, 3, 2, 5, 4, 6, 8, 7, 5, 0, -1};
+        Integer[] leftArrs = Arrays.copyOfRange(ints, 0, ints.length/2);
+        Integer[] rightArrs = Arrays.copyOfRange(ints, ints.length/2, ints.length);
+        System.out.println(Arrays.toString(leftArrs));
+        System.out.println(Arrays.toString(rightArrs));
+    }
+
+
+    @Test
+    public void test_12() throws InterruptedException, ClassNotFoundException {
 //        User.doPrint();
 //        System.out.println(new User().getClass().getName());
 //        Class.forName("model.User");
-        User user = new User();
+//        User user = new User();
 //        System.out.println("User:" + user);
 //        user = new User();
 //        System.out.println("User:" + user);
     }
+
 
     @Test
     public void test_11() throws InterruptedException {
@@ -46,6 +76,7 @@ public class Test_A {
         System.out.println(map.put("1", "a"));
         System.out.println(map.put("1", "b"));
     }
+
 
     @Test
     public void test_10() throws InterruptedException {
@@ -60,6 +91,7 @@ public class Test_A {
         System.out.println("User3:" + user3);
     }
 
+
     @Test
     public void test_9() throws InterruptedException {
         Object obj =  applicationContext.getBean("user");
@@ -72,18 +104,33 @@ public class Test_A {
         System.out.println("4:" + obj);
         System.out.println("5:" + user);
     }
-
     private static void test_9_assist(Object obj){
         obj = new User();   //传过来的obj的内容为堆中obj对象的地址，将obj重新赋值是将地址覆盖掉了，对堆中的对象无影响
         System.out.println("2:" + obj);
     }
 
+
     @Test
     public void test_8(){
+        Integer i = this.test_8_assist0();
+        System.out.println("int : " + i);
         String str = this.test_8_assist1();
         System.out.println("str : " + str);
         User user = this.test_8_assist2();
         System.out.println("userName : " + user.getUserName());
+    }
+    private int test_8_assist0() {
+        int x = 1;
+        try {
+            x++;
+            return x;
+        } finally {
+            ++x;
+            /*在try语句中，在执行return语句时，要返回的结果已经准备好了，就在此时，程序转到finally执行了。
+            在转去之前，try中先把要返回的结果存放到不同于x的局部变量中去，执行完finally之后，在从中取出返回结果，
+            因此，即使finally中对变量x进行了改变，但是不会影响返回结果。
+            它应该使用栈保存返回值。*/
+        }
     }
     private String test_8_assist1(){
         String str = "1";
@@ -94,6 +141,7 @@ public class Test_A {
             return str;
         } finally {
             str = "3";
+            return "3.1";
         }
     }
     private User test_8_assist2(){
@@ -110,6 +158,7 @@ public class Test_A {
         }
     }
 
+
     @Test
     public void test_7(){
         String[] strArr = {"1", "2", "3"};
@@ -121,6 +170,7 @@ public class Test_A {
         strArr[2] = "4";
     }
 
+
     @Test
     public void test_6(){
         List<Integer> l1 = new ArrayList<Integer>(){{add(1);add(2);add(3);add(1);}};
@@ -130,6 +180,7 @@ public class Test_A {
         l1.removeAll(l2);
         System.out.println(l1.size());
     }
+
 
     @Test
     public void test_5(){
@@ -150,11 +201,13 @@ public class Test_A {
         System.out.println("3:" + date.getTime());
     }
 
+
     @Test
     public void test_4(){
         System.out.println(StringUtils.leftPad("1",4,"0"));
         System.out.println(StringUtils.rightPad("1",4,"0"));
     }
+
 
     @Test
     public void test_3(){
@@ -162,6 +215,7 @@ public class Test_A {
         User user = (User) applicationContext.getBean("user");
         System.out.println("User:" + user);
     }
+
 
     @Test
     public void test_2(){
@@ -244,4 +298,3 @@ public class Test_A {
     }
 
 }
-
