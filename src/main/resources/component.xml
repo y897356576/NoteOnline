@@ -8,6 +8,9 @@
 
     <bean id="userFactory" class="com.stone.core.factory.UserFactory">
         <property name="userMapperImpl" ref="userMapperImpl"/>
+        <!--<property name="userMapperImpl">
+            <bean class="com.stone.core.repository.UserMapperImpl"/>
+        </property>-->
     </bean>
 
     <bean id="userMapperImpl" class="com.stone.core.repository.UserMapperImpl"/>
