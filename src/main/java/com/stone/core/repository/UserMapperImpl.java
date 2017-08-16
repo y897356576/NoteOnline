@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapperImpl {
 
+    public UserMapperImpl () {
+        System.out.println("----------Object_UserMapperImpl: " + this);
+    }
+
     @Autowired
     private UserMapper userMapper;
 

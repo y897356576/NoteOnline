@@ -8,6 +8,10 @@ import com.stone.core.repository.UserMapperImpl;
  */
 public class UserFactory {
 
+    public UserFactory () {
+        System.out.println("----------Object_UserFactory: " + this);
+    }
+
     private static UserMapperImpl userMapperImpl;
 
     public void setUserMapperImpl(UserMapperImpl userMapperImpl) {
