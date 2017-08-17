@@ -50,7 +50,6 @@ public class ParamsAnnoHandler {
         return map;
     }
 
-
     @RequestMapping(value = "/JSONObject", method = RequestMethod.POST)
     @ResponseBody
     public Map postRequestAnnotationTest_JSONObject(@RequestBody JSONObject obj, String nameInUrl){
@@ -59,6 +58,7 @@ public class ParamsAnnoHandler {
         System.out.println("userName:" + obj.get("userName"));
         return map;
     }
+
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
