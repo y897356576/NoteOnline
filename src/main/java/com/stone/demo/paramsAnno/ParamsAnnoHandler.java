@@ -1,4 +1,4 @@
-package com.stone.demo.paramsAnno.handler;
+package com.stone.demo.paramsAnno;
 
 import com.alibaba.fastjson.JSONObject;
 import com.stone.core.model.User;
@@ -29,6 +29,14 @@ public class ParamsAnnoHandler {
                                          HttpServletRequest request, HttpServletResponse response){
         System.out.println("param1:" + param1);
         System.out.println("param2:" + param2);
+//        response.setHeader("ResponseHeaderTest", "responseHeaderContent");
+//        return "/html/front/index.html";
+    }
+
+    @RequestMapping(value = "/PathVal/{param}", method = RequestMethod.GET)
+    public void getRequestAnnotationTest_PathVal(@PathVariable String param,
+                                         HttpServletRequest request, HttpServletResponse response){
+        System.out.println("param1:" + param);
 //        response.setHeader("ResponseHeaderTest", "responseHeaderContent");
 //        return "/html/front/index.html";
     }
