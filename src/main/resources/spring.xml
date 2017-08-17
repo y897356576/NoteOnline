@@ -61,14 +61,6 @@
         <!--&ndash;&gt;-->
     <!--</bean>-->
 
-    <!-- 扫描控制器; use-default-filters默认为true时会扫描@Component、@Controller、@Service、@Repository等,为false时不扫描(与include配对使用) -->
-    <!-- spring扫描全部(或者把Controller排除),springMVC只扫描Controller -->
-    <!-- springMVC中配置扫描Controller后，URL才能匹配到对应的Handler  -->
-    <!-- springMVC中配置自动扫描Service、Repository时可能会覆盖spring内加载的bean，导致事务失效 -->
-    <context:component-scan base-package="com.stone">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-    </context:component-scan>
-
     <!-- 事务; JDBC事物自动提交（需要对事务进行管理时(原子性)仍需要配置），hibernate、mybatis不配置事务时可查询不可更改 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
@@ -117,12 +109,22 @@
         <constructor-arg ref="dataSource" />
     </bean>-->
 
+
+    <!-- 扫描控制器; use-default-filters默认为true时会扫描@Component、@Controller、@Service、@Repository等,为false时不扫描(与include配对使用) -->
+    <!-- spring扫描全部(或者把Controller排除),springMVC只扫描Controller -->
+    <!-- springMVC中配置扫描Controller后，URL才能匹配到对应的Handler  -->
+    <!-- springMVC中配置自动扫描Service、Repository时可能会覆盖spring内加载的bean，导致事务失效 -->
+    <context:component-scan base-package="com.stone">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+
     <!-- 上下文注解配置-->
     <!-- 隐式地向 Spring 容器注册AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、PersistenceAnnotationBeanPostProcessor
             以及 RequiredAnnotationBeanPostProcessor 这 4 个BeanPostProcessor。 -->
     <!-- @AutoWired，@Resource、@PostConstruct、@Predestory，@PersistenceContext，@Required -->
     <!-- 当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 移除了 -->
     <context:annotation-config /><!-- 都是属性上的注解 -->
+
 
     <!-- bean的初始化方法是在aop拦截器应用前调用的 -->
     <!-- 切面代理(启用此项配置后，可在代码内用注解方式实现切面；@Aspectj、@Before(value=execution(* com.cms..service.*Service*.*(..)))...) -->
