@@ -1,5 +1,6 @@
 package com.stone.common.listener;
 
+import com.stone.common.util.EhcacheUtil;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 
@@ -38,10 +39,9 @@ public class ServletContextListenerTest implements ServletContextListener {
 //        // 在整个web应用销毁之前调用，将所有应用空间所设置的内容清空
 //        servletContext.removeAttribute("dataSource");
 
-        CacheManager cacheManager = CacheManager.create();
-        Cache cache = cacheManager.getCache("ehcacheFir");
+        Cache cache = EhcacheUtil.getCache("ehcacheFir");
         cache.flush();
-        cacheManager.shutdown();
+        EhcacheUtil.shutdown();
 
         System.out.println("ServletContext销毁完成...");
     }

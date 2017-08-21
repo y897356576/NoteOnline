@@ -10,11 +10,17 @@ public class EhcacheUtil {
 
     private static CacheManager cacheManager;
 
-    public static Cache getCache(String cacheName){
-        if(cacheManager == null){
+    public static Cache getCache(String cacheName) {
+        if (cacheManager == null) {
             cacheManager = CacheManager.create();
         }
         return cacheManager.getCache(cacheName);
+    }
+
+    public static void shutdown() {
+        if (cacheManager != null) {
+            cacheManager.shutdown();
+        }
     }
 
 }
