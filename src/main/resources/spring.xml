@@ -167,5 +167,6 @@
     <!-- 异步注解功能开启 -->
     <task:annotation-driven/>
 
-    <import resource="component.xml"/>
+    <import resource="component.xml" />
+    <import resource="sendDing.xml" />
 </beans>

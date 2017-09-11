@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="restlet_httpClient" class="com.stone.demo.sendDing.httpclient.RestletHttpClient"/>
+
+    <bean id="sendDingFor_MD" class="com.stone.demo.sendDing.SendDingForMD">
+        <constructor-arg ref="restlet_httpClient"/>
+        <constructor-arg value=""/>
+        <!--<constructor-arg value="https://oapi.dingtalk.com/robot/send?access_token=4197d2bfcd0725d3b38997442283c449aed847caf0960edbcef1f233baf08c9a"/>-->
+    </bean>
+</beans>

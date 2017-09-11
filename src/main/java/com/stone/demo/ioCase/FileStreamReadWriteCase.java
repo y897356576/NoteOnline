@@ -87,8 +87,8 @@ public class FileStreamReadWriteCase {
     private static void readFileByStringReader(String str){
         StringReader sr = new StringReader(str);
         try{
-            int i=100;
-            while(i-->0){
+            int i = 100;
+            while(i-- > 0){
                 System.out.println((char)sr.read());
             }
         } catch (IOException e) {
@@ -107,6 +107,7 @@ public class FileStreamReadWriteCase {
             e.printStackTrace();
         } finally {
             try{
+                bw.flush();
                 bw.close();
             } catch (IOException e) {
                 e.printStackTrace();

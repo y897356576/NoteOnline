@@ -93,5 +93,8 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.4" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.restlet.jse:org.restlet:2.3.9" level="project" />
+    <orderEntry type="library" name="Maven: org.restlet.jse:org.restlet.lib.org.json:2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.restlet.jse:org.restlet.ext.json:2.3.3" level="project" />
   </component>
 </module>

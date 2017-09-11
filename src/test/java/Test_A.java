@@ -29,6 +29,8 @@ public class Test_A {
 
     @Test
     public void test_15() {
+        Integer result = null;
+        System.out.println( 1 == result);
     }
 
 
