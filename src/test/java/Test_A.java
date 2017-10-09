@@ -1,3 +1,4 @@
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import model.User;
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.*;
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -28,9 +30,33 @@ public class Test_A {
 
 
     @Test
+    public void test_16() {
+        List<String> list = new ArrayList<String>(){{
+            add("1");
+            add("2");
+            add("3");
+            add("4");
+            add("5");
+        }};
+
+        while (list.size() >= 2) {
+            System.out.println(Arrays.toString(list.subList(0, 2).toArray()));
+            list.removeAll(list.subList(0, 2));
+        }
+        if (!list.isEmpty()) {
+            System.out.println(Arrays.toString(list.toArray()));
+        }
+    }
+
+
+    @Test
     public void test_15() {
-        Integer result = null;
-        System.out.println( 1 == result);
+        String str = "{'fhm':'0000', 'data':[{data1: 'content1', 'data2': 'content2'}, {dataA: 'contentA'}]}";
+        String str1 = "{fhm:\"0000\", data:null}";
+        JSONObject obj = JSONObject.parseObject(str1);
+        System.out.println(obj.get("fhm"));
+        JSONArray arr = obj.getJSONArray("data");
+        System.out.println(arr);
     }
 
 
