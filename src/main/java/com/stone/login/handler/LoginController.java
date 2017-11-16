@@ -33,9 +33,13 @@ public class LoginController {
 
     @RequestMapping(value = "doLogin", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> doLogin(@RequestBody User user, HttpServletResponse response) {
+    public Map<String, Object> doLogin(String userName, String passWord, HttpServletResponse response) {
 
         Map<String, Object> rsMap = new HashMap<String, Object>();
+
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassWord(passWord);
 
         try{
             UserFactory.standardUser(user);

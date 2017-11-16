@@ -106,13 +106,14 @@
             return;
         }
 
-        var paramsStr = {userName:userName, "passWord":passWord};
 
         $.ajax({
             type:"post",
             url:"/loginHandler/doLogin",
-            contentType:"application/json",
-            data:JSON.stringify(paramsStr),
+            data:{
+                userName:userName,
+                "passWord":passWord
+            },
             dataType:"json",
             success:function(rsData){
                 if(rsData.result){
@@ -121,12 +122,48 @@
                     alert(rsData.message);
                 }
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            /*error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert(XMLHttpRequest.status);
-                /*alert(XMLHttpRequest.responseText);
+                alert(XMLHttpRequest.responseText);
                 alert(textStatus);
-                alert(errorThrown);*/
+                alert(errorThrown);
+            }*/
+
+            error: function (XMLHttpRequest, status) {
+                var responseText = XMLHttpRequest.responseText;
+
+                if (responseText.indexOf("description") > 0) {
+                    var response = jQuery.parseJSON(responseText);
+                    alert("错误描述1：" + response.description);
+                }
+                else
+                    alert("错误描述2：" + XMLHttpRequest.responseText);
+
+                /*function showErrorMsg() {
+                    var responseText = XMLHttpRequest.responseText;
+
+                    if (responseText.indexOf("description") > 0) {
+                        var response = jQuery.parseJSON(responseText);
+                        alert("错误描述1：" + response.description);
+                    }
+                    else
+                        alert("错误描述2：" + XMLHttpRequest.responseText);
+                }
+
+                if (status == "parsererror")
+                    WEBDIALOG.tipMsg('请求的资源不存在!');
+                else {
+                    if (p.error) p.error(XMLHttpRequest.responseText);
+                    else {
+                        if (status == 401)
+                            WEBDIALOG.tipMsg('请求的资源不存在!');
+                        else
+                            showErrorMsg();
+                    }
+                }
+                hideMask();*/
             }
+
             /* XMLHttpRequest.readyState: 状态码的意思
              0 － （未初始化）还没有调用send()方法
              1 － （载入）已调用send()方法，正在发送请求
@@ -162,11 +199,7 @@
     };
 
 
-
-
-
     $(function(){
-
         $("#registerDiv_cont input[name='btRegister']").click(function(){
             regDoRegister();
         });
@@ -206,7 +239,6 @@
         $("#registerDiv_cont input[name='regPasswd']").val("");
         $("#registerDiv_cont input[name='reRegPasswd']").val("");
     }
-
 
 </script>
 
