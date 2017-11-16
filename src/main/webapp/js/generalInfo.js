@@ -251,3 +251,8 @@ function Request(key) {
 function goWgDt() {
     window.location.href = "../wgMap/wgMap.html";
 }
+
+function Request(key) {
+    var retValue = (window.location.search.match(new RegExp("(?:^\\?|&)" + key + "=(.*?)(?=&|$)")) || ['', null])[1];
+    return (retValue == null ? "" : retValue);
+}

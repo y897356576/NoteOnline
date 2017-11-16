@@ -11,6 +11,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.*;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +28,27 @@ public class Test_A {
     @Before
     public void beforeMethod() {
 //        applicationContext = new ClassPathXmlApplicationContext("/spring.xml");
+    }
+
+
+    @Test
+    public void test_18() {
+        String a = (String) null;
+        System.out.println(a);
+    }
+
+
+    @Test
+    public void test_17() {
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse("2016-02-28"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 1);
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
     }
 
 

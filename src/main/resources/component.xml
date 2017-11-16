@@ -5,6 +5,13 @@
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="unionPayProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath*:acp_sdk.properties</value>
+            </list>
+        </property>
+    </bean>
 
     <bean id="userFactory" class="com.stone.core.factory.UserFactory">
         <property name="userMapperImpl" ref="userMapperImpl"/>
