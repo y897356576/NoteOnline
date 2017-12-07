@@ -40,7 +40,7 @@ public class User {
             throw new MyException("新增失败，用户名已存在");
         }
 
-        id = IdGenerator.generateId();
+        id = IdGenerator.generateId_16();
         registerTime = new Date();
         try{
             return userMapperImpl.createUser(this);

@@ -1,5 +1,6 @@
 package com.stone.common.util;
 
+import java.security.SecureRandom;
 import java.util.UUID;
 
 /**
@@ -7,8 +8,14 @@ import java.util.UUID;
  */
 public class IdGenerator {
 
-    public static String generateId(){
+    private static SecureRandom secureRandom = new SecureRandom();
+
+    public static String generateId_36(){
         return UUID.randomUUID().toString();
+    }
+
+    public static String generateId_16(){
+        return Long.toHexString(secureRandom.nextLong());
     }
 
 }

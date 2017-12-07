@@ -73,7 +73,7 @@
     <bean id="sqlSessionFactory" name="sqlSessionFactoryBeanName" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!-- 配置Mapper.xml文件所在目录的路径，在classpath后面的*必不可少，缺少型号的话后面的通配符不起作用。 -->
-        <property name="mapperLocations" value="classpath:mybatis/**/*Mapper.xml" />
+        <property name="mapperLocations" value="classpath*:mybatis/**/*Mapper.xml" />
         <!-- 需要另添加配置时可引入自己的配置文件 -->
         <!--<property name="configLocation" value="classpath:config/mybatis.xml"/>-->
         <!-- 为对象设置别名，可通过 Alias()实现 -->

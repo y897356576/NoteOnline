@@ -20,6 +20,6 @@
         </property>-->
     </bean>
 
-    <bean id="userMapperImpl" class="com.stone.core.repository.UserMapperImpl"/>
+    <!--<bean id="userMapperImpl" class="com.stone.core.repository.UserMapperImpl"/>-->
 
 </beans>
