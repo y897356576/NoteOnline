@@ -28,7 +28,7 @@
     <context:property-placeholder location="classpath:jdbc.properties" />
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${jdbc.databaseurl}" />
+        <property name="url" value="${jdbc.databaseUrl}" />
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
     </bean>
@@ -73,7 +73,12 @@
     <bean id="sqlSessionFactory" name="sqlSessionFactoryBeanName" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!-- 配置Mapper.xml文件所在目录的路径，在classpath后面的*必不可少，缺少型号的话后面的通配符不起作用。 -->
-        <property name="mapperLocations" value="classpath*:mybatis/**/*Mapper.xml" />
+        <!--<property name="mapperLocations" value="classpath*:mybatis/**/*Mapper.xml" />-->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:mybatis/**/*Mapper.xml</value>
+            </list>
+        </property>
         <!-- 需要另添加配置时可引入自己的配置文件 -->
         <!--<property name="configLocation" value="classpath:config/mybatis.xml"/>-->
         <!-- 为对象设置别名，可通过 Alias()实现 -->
@@ -88,8 +93,10 @@
     <!-- 配置mybatis通用mapper -->
     <!-- 没有必要去指定 SqlSessionFactory 或 SqlSessionTemplate , 除非使用了一个以上的 DataSource -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.stone.**" />
+        <property name="basePackage" value="com.stone" />
+        <!--<property name="basePackage" value="com.stone.login.**.mapper, com.stone.register.**.mapper" />-->
         <property name="annotationClass" value="com.stone.common.annotation.MybatisMapper" /><!-- 为Mapper设定注解 -->
+        <!--<property name="annotationClass" value="org.apache.ibatis.annotations.Mapper" />-->
         <!--<property name="markerInterface" value="tk.mybatis.mapper.common.Mapper" />-->
         <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />-->
         <!--<property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />-->

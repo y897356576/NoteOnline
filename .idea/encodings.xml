@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/conf" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/conf/axis2.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/modules" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/modules" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/services" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/services/services.list" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/services/version.aar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/stone/demo/payment" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/acp_sdk.properties" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/bcprov-jdk15on-1.54.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/js/generalInfo.js" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
