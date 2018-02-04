@@ -3,12 +3,82 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
 </head>
-<body>
-<h2>Hello World!</h2>
-<input type="button" value="刷新" onclick="doReload()"/>
-<span style="color: blue; font-size: 10px; text-decoration: underline; cursor: pointer">注销</span>
-<form action="/indexHandler" method="get"></form>
+
+<style>
+    .ul_label {
+        list-style-type: none; padding: 0 10px; font-size: 20px;
+    }
+
+    .ul_label .label {
+        border: 1px solid #cdcdcd; line-height: 39px; padding-left: 20px;
+    }
+
+    .ul_label .first {
+        padding-top: 3px;
+    }
+
+    .ul_label .second {
+        border-top: 0; border-right: 0; margin-left: 20px; margin-top: 5px;
+    }
+
+</style>
+
+<body class="header-page" style="margin: 0;">
+    <div class="header" style="background-color: #5f5f5f; height: 8%; width: 100%;">
+        <div style="float: left; margin-top: 1.2%; margin-left: 1.2%;">
+            <span style="color: #dedede; font-size: 24px; font-weight: bold;">石头的线上笔记</span>
+        </div>
+        <div style="float: right; margin-top: 1.5%; margin-right: 1.5%;">
+                <span style="color: #dedede; font-size: 16px; text-decoration: underline; cursor: pointer;
+                text-align: right; display: block;">注销</span>
+        </div>
+        <!--<input type="button" value="刷新" onclick="doReload()"/>
+        <form action="/indexHandler" method="get"></form>-->
+    </div>
+
+    <div class="container" style="height: 90%; width: 100%">
+        <div class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
+            <ul id="noteMgtUL" class="ul_label">
+                <li class="label first">
+                    笔记管理
+                </li>
+                <li class="label second">笔记列表</li>
+                <li class="label second">笔记新增</li>
+            </ul>
+            <ul id="userMgtUL" class="ul_label">
+                <li class="label first">
+                    用户管理
+                </li>
+                <li class="label second">用户列表</li>
+                <li class="label second">用户注册</li>
+            </ul>
+        </div>
+        <div class="content" style="height: 100%; width: 88%;">
+
+        </div>
+    </div>
+
+    <div class="footer" style="background-color: #5f5f5f; height: 2%; width: 100%">
+    </div>
 </body>
+
+<script>
+    $(function () {
+
+    });
+
+    $(".content").load("note/noteList.html");
+
+    $(".header-page .container .sidebar .second").hide();
+
+    $("#noteMgtUL .first").on("click", function () {
+        $("#noteMgtUL .second").toggle();
+    });
+
+    $("#userMgtUL .first").on("click", function () {
+        $("#userMgtUL .second").toggle();
+    });
+</script>
 
 <script>
 
