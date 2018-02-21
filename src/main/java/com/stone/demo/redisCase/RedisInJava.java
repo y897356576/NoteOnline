@@ -2,13 +2,15 @@ package com.stone.demo.redisCase;
 
 import redis.clients.jedis.Jedis;
 
+import java.util.Set;
+
 /**
  * Created by 石头 on 2017/7/15.
  */
 public class RedisInJava {
 
     public static void main(String[] args) {
-        Jedis jedis = new Jedis("192.168.43.56", 6379);
+        Jedis jedis = new Jedis("106.14.200.149", 6379);
         jedis.auth("pwd");
         System.out.println("Redis连接状态: " + jedis.ping());
 
@@ -24,6 +26,10 @@ public class RedisInJava {
 
     private static void doRedis_0(Jedis jedis) {
         System.out.println(jedis.keys("*"));
+        Set<String> keys = jedis.keys("*");
+        for (String key : keys) {
+            System.out.println(key + " : " + jedis.get(key));
+        }
     }
 
     private static void doRedis_1(Jedis jedis) {
