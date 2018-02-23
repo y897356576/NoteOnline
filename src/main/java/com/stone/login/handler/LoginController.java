@@ -1,23 +1,27 @@
 package com.stone.login.handler;
 
-import com.stone.common.util.EhcacheUtil;
+import com.stone.common.redis.RedisShard;
 import com.stone.common.util.ResultMap;
 import com.stone.core.factory.UserFactory;
 import com.stone.core.model.User;
 import com.stone.login.service.LoginService;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by 石头 on 2017/6/20.
@@ -70,7 +74,17 @@ public class LoginController {
     @ResponseBody
     public void doLogOut(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
 
-        Cache cache = EhcacheUtil.getCache("ehcacheFir");
+        //注销时清除redis中的用户信息
+        String sessionId = request.getSession().getId();
+        Jedis jedis = RedisShard.getRedisNode(sessionId);
+        Set<String> columns = jedis.hkeys(sessionId + "_user");
+        if (CollectionUtils.isNotEmpty(columns)) {
+            jedis.hdel(sessionId + "_user", columns.toArray(new String[]{}));
+        }
+        this.clearLoginCookie(request, response);
+
+
+        /*Cache cache = EhcacheUtil.getCache("ehcacheFir");
         Element element = cache.get(id);
         StringBuilder userId = new StringBuilder();
         if(element != null){
@@ -80,10 +94,10 @@ public class LoginController {
             logger.info("[" + user.getUserName() + "]：注销成功");
         }
 
-        this.clearLoginCookie(request, response, userId.toString());
+        this.clearLoginCookie(request, response, userId.toString());*/
     }
 
-    private void clearLoginCookie(HttpServletRequest request, HttpServletResponse response, String userId){
+    private void clearLoginCookie(HttpServletRequest request, HttpServletResponse response){
         Cookie[] cookies = request.getCookies() == null ? new Cookie[0] : request.getCookies();
         for (Cookie cookie : cookies){
             if(cookie.getName().equals("userId")){
