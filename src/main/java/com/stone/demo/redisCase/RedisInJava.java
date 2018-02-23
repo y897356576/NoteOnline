@@ -1,6 +1,7 @@
 package com.stone.demo.redisCase;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Tuple;
 
 import java.util.Set;
 
@@ -20,6 +21,10 @@ public class RedisInJava {
 //            doRedis_2(jedis);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        Set<Tuple> vals = jedis.zrangeByScoreWithScores("keyA_z0", 0, 10);
+        for (Tuple val : vals) {
+            System.out.println("val:" + val.getElement() + "; score:" + val.getScore());
         }
     }
 

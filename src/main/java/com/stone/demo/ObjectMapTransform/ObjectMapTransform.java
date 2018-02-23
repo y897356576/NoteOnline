@@ -23,8 +23,17 @@ public class ObjectMapTransform {
     private static final Object mapToObj(Map<String, Object> map, Class clazz) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
+            if (map == null || map.size() == 0) {
+                return clazz.newInstance();
+            }
+            for (Map.Entry entry : map.entrySet()) {
+                if (entry.getValue() == null) {
+                    map.remove(entry.getKey());
+                }
+            }
+
             return objectMapper.readValue(objectMapper.writeValueAsString(map), clazz);
-        } catch (IOException e) {
+        } catch (IOException | IllegalAccessException | InstantiationException  e) {
             throw new RuntimeException(e.getMessage());
         }
     }
