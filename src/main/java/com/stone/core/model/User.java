@@ -20,7 +20,7 @@ public class User {
     private Date registerTime;
     private String remark;
 
-    private Logger logger = LogManager.getLogger(this.getClass());
+    private static Logger logger = LogManager.getLogger(User.class);
 
     private UserMapperImpl userMapperImpl;
     public void setUserMapperImpl(UserMapperImpl userMapperImpl) {
