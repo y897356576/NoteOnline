@@ -1,17 +1,19 @@
 package com.stone.login.service;
 
-import com.stone.common.util.EhcacheUtil;
+import com.stone.common.redis.RedisShard;
+import com.stone.common.util.ObjMapTransUtil;
 import com.stone.core.exception.MyException;
 import com.stone.core.model.User;
 import com.stone.core.repository.UserMapperImpl;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import redis.clients.jedis.Jedis;
+
+import java.util.Map;
 
 /**
  * Created by 石头 on 2017/6/20.
@@ -24,7 +26,7 @@ public class LoginService {
     @Autowired
     private UserMapperImpl userMapperImpl;
 
-    public User doLogin(User user) {
+    public User doLogin(User user, String sessionId) {
         try{
             if (user==null || StringUtils.isBlank(user.getUserName())
                     || StringUtils.isBlank(user.getPassWord())) {
@@ -43,8 +45,14 @@ public class LoginService {
                 throw new MyException("密码错误");
             }
 
-            Cache cache = EhcacheUtil.getCache("ehcacheFir");
-            cache.put(new Element(user.getId(), user));
+            //Ehcache保存用户登陆信息
+            /*Cache cache = EhcacheUtil.getCache("ehcacheFir");
+            cache.put(new Element(user.getId(), user));*/
+
+            //redis保存用户登陆信息
+            Jedis jedis = RedisShard.getRedisNode(sessionId);
+            Map<String, String> userMap = ObjMapTransUtil.objToStringMap(user);
+            jedis.hmset(sessionId + "_user", userMap);
 
             return user;
         }catch (Exception e){
