@@ -6,6 +6,7 @@ import com.stone.core.model.User;
 import redis.clients.jedis.Jedis;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,14 +28,9 @@ public class LoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String path = request.getRequestURI();
-        String sessionId = request.getSession().getId();
 
-        User user = null;
-        Jedis jedis = RedisShard.getRedisNode(sessionId);
-        Map userMap = jedis.hgetAll(sessionId + "_user");
-        if (userMap != null && userMap.size() > 0) {
-            user = (User) ObjMapTransUtil.mapToObj(userMap, User.class);
-        }
+        User user = this.getUserFromRedis(request);
+
         if(user == null && !path.contains("/login.html")){
             response.sendRedirect("/login.html");
         } else if(user != null && path.contains("/login.html")) {
@@ -45,6 +41,28 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             //System.out.println("请求执行后")
         }
+    }
+
+    /**
+     * 从cookie中获取userId，根据userId从redis中获取用户信息
+     * @param request
+     * @return
+     */
+    private User getUserFromRedis(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies() == null ? new Cookie[0] : request.getCookies();
+        String userId = "";
+        for (Cookie cookie : cookies){
+            if(cookie.getName().equals("userId")){
+                userId = cookie.getValue();
+            }
+        }
+        User user = null;
+        Jedis jedis = RedisShard.getRedisNode(userId);
+        Map userMap = jedis.hgetAll(userId + "_user");
+        if (userMap != null && userMap.size() > 0) {
+            user = (User) ObjMapTransUtil.mapToObj(userMap, User.class);
+        }
+        return user;
     }
 
     @Override

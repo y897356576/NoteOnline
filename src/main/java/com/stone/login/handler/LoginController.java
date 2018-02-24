@@ -37,10 +37,9 @@ public class LoginController {
 
     @RequestMapping(value = "doLogin", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> doLogin(String userName, String passWord, HttpServletRequest request, HttpServletResponse response) {
+    public Map<String, Object> doLogin(String userName, String passWord, HttpServletResponse response) {
 
         Map<String, Object> rsMap = new HashMap<String, Object>();
-        String sessionId = request.getSession().getId();
 
         User user = new User();
         user.setUserName(userName);
@@ -48,7 +47,7 @@ public class LoginController {
 
         try{
             UserFactory.standardUser(user);
-            user = loginServic.doLogin(user, sessionId);
+            user = loginServic.doLogin(user, response);
         } catch (Exception e){
             user = null;
             rsMap = ResultMap.generateMap(false, e.getMessage());
@@ -58,53 +57,14 @@ public class LoginController {
             rsMap = ResultMap.generateMap(true);
             logger.info("[" + user.getUserName() + "]：登录成功");
 
-            this.setLoginCookie(response, user);
         }
         return rsMap;
-    }
-
-    private void setLoginCookie(HttpServletResponse response, User user){
-        Cookie cookie = new Cookie("userId", user.getId());
-        cookie.setPath("/");
-        response.addCookie(cookie);
     }
 
 
     @RequestMapping(value = "doLogOut/{id}", method = RequestMethod.POST)
     @ResponseBody
     public void doLogOut(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
-
-        //注销时清除redis中的用户信息
-        String sessionId = request.getSession().getId();
-        Jedis jedis = RedisShard.getRedisNode(sessionId);
-        Set<String> columns = jedis.hkeys(sessionId + "_user");
-        if (CollectionUtils.isNotEmpty(columns)) {
-            jedis.hdel(sessionId + "_user", columns.toArray(new String[]{}));
-        }
-        this.clearLoginCookie(request, response);
-
-
-        /*Cache cache = EhcacheUtil.getCache("ehcacheFir");
-        Element element = cache.get(id);
-        StringBuilder userId = new StringBuilder();
-        if(element != null){
-            User user = (User)element.getObjectValue();
-            userId = userId.append(user.getId());
-            cache.remove(id);
-            logger.info("[" + user.getUserName() + "]：注销成功");
-        }
-
-        this.clearLoginCookie(request, response, userId.toString());*/
-    }
-
-    private void clearLoginCookie(HttpServletRequest request, HttpServletResponse response){
-        Cookie[] cookies = request.getCookies() == null ? new Cookie[0] : request.getCookies();
-        for (Cookie cookie : cookies){
-            if(cookie.getName().equals("userId")){
-                cookie.setPath("/");
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-            }
-        }
+        loginServic.doLogOut(id, request, response);
     }
 }

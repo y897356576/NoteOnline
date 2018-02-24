@@ -25,7 +25,7 @@ public class HttpSessionListenerProcessor implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent event) {
         numMark--;
-        this.removeRedisVal(event);
+        //this.removeRedisVal(event);
     }
 
     /**
