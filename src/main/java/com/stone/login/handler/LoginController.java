@@ -1,11 +1,9 @@
 package com.stone.login.handler;
 
-import com.stone.common.redis.RedisShard;
 import com.stone.common.util.ResultMap;
 import com.stone.core.factory.UserFactory;
 import com.stone.core.model.User;
 import com.stone.login.service.LoginService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import redis.clients.jedis.Jedis;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by 石头 on 2017/6/20.
