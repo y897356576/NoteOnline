@@ -7,6 +7,9 @@ public class MyException extends RuntimeException {
 
     //错误代码
     private String code;
+    public String getCode() {
+        return code;
+    }
 
     public MyException(String message){
         super(message);

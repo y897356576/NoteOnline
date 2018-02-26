@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stone.core.repository.NoteMapper">
+
+    <insert id="createNote" parameterType="note">
+        INSERT INTO note
+        VALUES (#{id}, #{noteName}, #{noteGenreId}, #{noteFileId}, #{createUserId}, #{createTime},
+            #{modifyTime}, #{status})
+    </insert>
+
+    <insert id="createNoteContent" parameterType="noteContent">
+        INSERT INTO noteContent
+        VALUES (#{id}, #{noteId}, #{index}, #{content})
+    </insert>
+
+    <insert id="createNoteContents" parameterType="list">
+        INSERT INTO noteContent
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.noteId}, #{item.index}, #{item.content})
+        </foreach>
+    </insert>
+
+    <insert id="createNoteGenre" parameterType="noteGenre">
+        INSERT INTO noteGenre
+        VALUES (#{id}, #{userId}, #{typeName})
+    </insert>
+
+    <insert id="createNoteFile" parameterType="noteFile">
+        INSERT INTO noteFile
+        VALUES (#{id}, #{noteId}, #{fileName}, #{filePath}, #{fileContentType}, #{fileType})
+    </insert>
+
+    <select id="getGenreByName" resultType="noteGenre">
+        SELECT * FROM noteGenre
+        WHERE userId = #{userId}
+        AND typeName = #{name}
+    </select>
+
+</mapper>

@@ -2,6 +2,7 @@ package com.stone.common.filter;
 
 import com.stone.common.redis.RedisShard;
 import com.stone.common.util.ObjMapTransUtil;
+import com.stone.common.util.UserInfoUtil;
 import com.stone.core.model.User;
 import redis.clients.jedis.Jedis;
 
@@ -29,7 +30,7 @@ public class LoginFilter implements Filter {
 
         String path = request.getRequestURI();
 
-        User user = this.getUserFromRedis(request);
+        User user = UserInfoUtil.getUserFromRedis(request);
 
         if(user == null && !path.contains("/login.html")){
             response.sendRedirect("/login.html");
@@ -41,28 +42,6 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             //System.out.println("请求执行后")
         }
-    }
-
-    /**
-     * 从cookie中获取userId，根据userId从redis中获取用户信息
-     * @param request
-     * @return
-     */
-    private User getUserFromRedis(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies() == null ? new Cookie[0] : request.getCookies();
-        String userId = "";
-        for (Cookie cookie : cookies){
-            if(cookie.getName().equals("userId")){
-                userId = cookie.getValue();
-            }
-        }
-        User user = null;
-        Jedis jedis = RedisShard.getRedisNode(userId);
-        Map userMap = jedis.hgetAll(userId + "_user");
-        if (userMap != null && userMap.size() > 0) {
-            user = (User) ObjMapTransUtil.mapToObj(userMap, User.class);
-        }
-        return user;
     }
 
     @Override

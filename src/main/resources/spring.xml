@@ -82,7 +82,7 @@
         <!-- 需要另添加配置时可引入自己的配置文件 -->
         <!--<property name="configLocation" value="classpath:config/mybatis.xml"/>-->
         <!-- 为对象设置别名，可通过 Alias()实现 -->
-        <property name="typeAliasesPackage" value="com.stone.core.model"/>
+        <property name="typeAliasesPackage" value="com.stone"/>
     </bean>
 
     <!-- sql会话模板 -->

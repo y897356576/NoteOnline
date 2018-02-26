@@ -12,7 +12,7 @@ public class ProducerAndConsumer {
     public static void main(String[] args) {
         Depo mDepot = new Depo();
         Producer mPro = new Producer(mDepot);
-        Customer mCus = new Customer(mDepot);
+        Consumer mCus = new Consumer(mDepot);
         mPro.produce(60);
         mPro.produce(120);
         mCus.consume(90);
@@ -112,10 +112,10 @@ class Producer {
     }
 }
 
-class Customer {
+class Consumer {
     private Depo depo;
 
-    public Customer(Depo depo){
+    public Consumer(Depo depo){
         this.depo = depo;
     }
 
