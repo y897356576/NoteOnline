@@ -1,11 +1,9 @@
 package com.stone.noteManage.service;
 
-import com.stone.common.util.UserInfoUtil;
 import com.stone.core.exception.MyException;
-import com.stone.core.model.Note;
-import com.stone.core.model.NoteFile;
-import com.stone.core.model.NoteGenre;
-import com.stone.core.model.User;
+import com.stone.core.model.*;
+import com.stone.core.repository.NoteMapperImpl;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 
@@ -24,28 +21,33 @@ import java.io.IOException;
 public class NoteService {
 
     @Autowired
+    private NoteMapperImpl noteMapperImpl;
+
+    @Autowired
     private NotePersistProcessor persistProcessor;
 
     Logger logger = LoggerFactory.getLogger(NoteService.class);
 
     /**
      * 笔记文件导入
-     * @param request
+     * @param user
      * @param genreName
      * @param file
      * @return
      */
-    public Boolean noteImport(HttpServletRequest request, String genreName, MultipartFile file) {
+    public Boolean noteImport(User user, String genreName, MultipartFile file) {
         if (file == null || file.getSize() <= 0) {
-            throw new MyException("文件上传失败：上传的文件不存在");
+            throw new MyException("文件上传失败：上传的文件不存在。");
         }
+        if (user == null) {
+            throw new MyException("文件上传失败：当前用户不可用，请重新登录。");
+        }
+
+        Note note = new Note();
+        NoteGenre noteGenre = note.getNoteGenre();
+        NoteFile noteFile = note.getNoteFile();
+
         try {
-            User user = UserInfoUtil.getUserFromRedis(request);
-
-            Note note = new Note();
-            NoteGenre noteGenre = note.getNoteGenre();
-            NoteFile noteFile = note.getNoteFile();
-
             String originalName = file.getOriginalFilename();
             note.setNoteName(originalName.substring(0, originalName.lastIndexOf(".")));
             note.setCreateUserId(user.getId());
@@ -86,6 +88,32 @@ public class NoteService {
         }
         file.transferTo(new File(filePath));
         noteFile.setFilePath(filePath);
+    }
+
+    /**
+     * 获取笔记详情
+     * @param user
+     * @param noteId
+     * @return
+     */
+    public Note noteDetail(User user, String noteId) {
+        Note note = noteMapperImpl.getNoteById(user.getId(), noteId);
+        this.composeContent(note);
+        return note;
+    }
+
+    /**
+     * 根据Note的NoteContent列表合成Content字段
+     * @param note
+     */
+    private void composeContent(Note note) {
+        StringBuilder content = new StringBuilder();
+        if (CollectionUtils.isNotEmpty(note.getContents())) {
+            for (NoteContent temp : note.getContents()) {
+                content.append(temp.getContent());
+            }
+        }
+        note.setContent(content.toString());
     }
 
 }

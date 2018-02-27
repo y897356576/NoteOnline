@@ -27,4 +27,6 @@ public interface NoteMapper {
 
     NoteGenre getGenreByName(@Param("userId") String userId, @Param("name") String name);
 
+    Note getNoteById(@Param("userId") String userId, @Param("noteId") String noteId);
+
 }

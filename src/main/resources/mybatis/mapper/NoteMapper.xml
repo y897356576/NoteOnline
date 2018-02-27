@@ -39,4 +39,52 @@
         AND typeName = #{name}
     </select>
 
+    <select id="getNoteById" resultMap="noteMap">
+        SELECT n.id AS note_id, n.*,
+            g.id AS genre_id, g.*,
+            f.id AS file_id, f.*,
+            c.id AS content_id, c.*
+        FROM note n
+        INNER JOIN noteGenre g
+        ON n.noteGenreId = g.id AND g.userId = #{userId}
+        LEFT JOIN notefile f
+        ON n.id = f.noteId
+        LEFT JOIN notecontent c
+        ON n.id = c.noteId
+        WHERE n.createUserId = #{userId}
+        AND n.id = #{noteId}
+        ORDER BY c.index ASC
+    </select>
+
+    <resultMap id="noteMap" type="note">
+        <id column="note_id" property="id"/>
+        <result column="noteName" property="noteName"/>
+        <result column="noteGenreId" property="noteGenreId"/>
+        <result column="noteFileId" property="noteFileId"/>
+        <result column="createUserId" property="createUserId"/>
+        <result column="createUserName" property="createUserName"/>
+        <result column="createTime" property="createTime"/>
+        <result column="modifyTime" property="modifyTime"/>
+        <result column="status" property="status"/>
+        <association property="noteGenre" javaType="noteGenre">
+            <id column="genre_id" property="id"/>
+            <result column="userId" property="userId"/>
+            <result column="typeName" property="typeName"/>
+        </association>
+        <association property="noteFile" javaType="noteFile">
+            <id column="file_id" property="id"/>
+            <result column="noteId" property="noteId"/>
+            <result column="fileName" property="fileName"/>
+            <result column="filePath" property="filePath"/>
+            <result column="fileContentType" property="fileContentType"/>
+            <result column="fileType" property="fileType"/>
+        </association>
+        <collection property="contents" javaType="List" ofType="noteContent">
+            <id column="content_id" property="id"/>
+            <result column="noteId" property="noteId"/>
+            <result column="index" property="index"/>
+            <result column="content" property="content"/>
+        </collection>
+    </resultMap>
+
 </mapper>

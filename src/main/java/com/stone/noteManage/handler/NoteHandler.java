@@ -1,5 +1,9 @@
 package com.stone.noteManage.handler;
 
+import com.stone.common.util.ObjMapTransUtil;
+import com.stone.common.util.UserInfoUtil;
+import com.stone.core.model.Note;
+import com.stone.core.model.User;
 import com.stone.noteManage.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,11 +31,22 @@ public class NoteHandler {
     @ResponseBody
     public Map noteImport(HttpServletRequest request, String genreName,
                           @RequestParam("noteUpload") MultipartFile file) {
-        final Boolean result = service.noteImport(request, genreName, file);
+        User user = UserInfoUtil.getUserFromRedis(request);
+
+        final Boolean result = service.noteImport(user, genreName, file);
+
         Map<String, Object> resultMap = new HashMap<String, Object>() {{
             put("result", result);
         }};
         return resultMap;
+    }
+
+    @RequestMapping(value = "noteDetail", method = RequestMethod.GET)
+    @ResponseBody
+    public Map noteDetail(HttpServletRequest request, String noteId) {
+        User user = UserInfoUtil.getUserFromRedis(request);
+        Note note = service.noteDetail(user, noteId);
+        return ObjMapTransUtil.objToMap(note);
     }
 
 }

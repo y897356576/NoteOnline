@@ -16,15 +16,12 @@ public class NoteMapperImpl {
     @Autowired
     private NoteMapper noteMapper;
 
-    /*public Note getNoteById(String id){
-        Note note = noteMapper.getNoteById(id);
-        if (note!=null) {
-            note.setNoteMapperImpl(this);
-        }
+    public Note getNoteById(String userId, String id) {
+        Note note = noteMapper.getNoteById(userId, id);
         return note;
     }
 
-    public Note getNoteByName(String noteName){
+    /*public Note getNoteByName(String noteName){
         Note note = noteMapper.getNoteByName(noteName);
         if (note!=null) {
             note.setNoteMapperImpl(this);
@@ -32,7 +29,7 @@ public class NoteMapperImpl {
         return note;
     }*/
 
-    public Boolean createNote(Note note){
+    public Boolean createNote(Note note) {
         if (note == null) {
             return false;
         }
