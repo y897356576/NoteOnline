@@ -109,10 +109,11 @@
         $.ajax({
             type:"post",
             url:"/loginHandler/doLogin",
-            data:{
+            contentType:"application/json",
+            data:JSON.stringify({
                 userName:userName,
                 "passWord":passWord
-            },
+            }),
             dataType:"json",
             success:function(rsData){
                 if(rsData.result){
