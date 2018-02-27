@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by 石头 on 2018/2/24.
@@ -88,6 +89,15 @@ public class NoteService {
         }
         file.transferTo(new File(filePath));
         noteFile.setFilePath(filePath);
+    }
+
+    /**
+     * 获取笔记列表
+     * @param user
+     * @return
+     */
+    public List<Note> noteList(User user) {
+        return noteMapperImpl.getNotesByUserId(user.getId());
     }
 
     /**

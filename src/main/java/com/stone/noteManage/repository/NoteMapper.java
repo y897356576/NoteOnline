@@ -29,4 +29,6 @@ public interface NoteMapper {
 
     Note getNoteById(@Param("userId") String userId, @Param("noteId") String noteId);
 
+    List<Note> getNotesByUserId(String userId);
+
 }

@@ -56,7 +56,19 @@
         ON n.id = c.noteId
         WHERE n.createUserId = #{userId}
         AND n.id = #{noteId}
+        AND n.status = 1
         ORDER BY c.index ASC
+    </select>
+
+    <select id="getNotesByUserId" resultMap="noteMap">
+        SELECT n.id AS note_id, n.*,
+            g.id AS genre_id, g.*
+        FROM note n
+        INNER JOIN noteGenre g
+        ON n.noteGenreId = g.id AND g.userId = #{0}
+        WHERE n.createUserId = #{0}
+        AND n.status = 1
+        ORDER BY n.noteGenreId, n.createTime DESC
     </select>
 
     <resultMap id="noteMap" type="note">

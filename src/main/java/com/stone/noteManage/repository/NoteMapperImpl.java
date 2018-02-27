@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by 石头 on 2017/6/22.
  */
@@ -17,17 +19,12 @@ public class NoteMapperImpl {
     private NoteMapper noteMapper;
 
     public Note getNoteById(String userId, String id) {
-        Note note = noteMapper.getNoteById(userId, id);
-        return note;
+        return noteMapper.getNoteById(userId, id);
     }
 
-    /*public Note getNoteByName(String noteName){
-        Note note = noteMapper.getNoteByName(noteName);
-        if (note!=null) {
-            note.setNoteMapperImpl(this);
-        }
-        return note;
-    }*/
+    public List<Note> getNotesByUserId(String userId) {
+        return noteMapper.getNotesByUserId(userId);
+    }
 
     public Boolean createNote(Note note) {
         if (note == null) {
@@ -60,11 +57,5 @@ public class NoteMapperImpl {
         Integer result = noteMapper.createNoteGenre(genre);
         return result == 1;
     }
-
-    /*public Boolean updateUser(Note note){
-        note.setModifyTime(sdf.format(new Date()));
-        int result = noteMapper.updateNote(note);
-        return result == 1;
-    }*/
 
 }
