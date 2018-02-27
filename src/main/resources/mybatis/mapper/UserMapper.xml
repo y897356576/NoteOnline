@@ -4,21 +4,31 @@
 
 <mapper namespace="com.stone.core.repository.UserMapper">
 
-    <select id="getUserById" parameterType="String" resultType="user">
+    <select id="getUserById" parameterType="String" resultMap="userMap">
         select * from user where id = #{id}
     </select>
 
-    <select id="getUserByName" parameterType="String" resultType="user">
+    <select id="getUserByName" parameterType="String" resultMap="userMap">
         select * from user where userName = #{userName}
     </select>
 
+    <resultMap id="userMap" type="user">
+        <id column="id" property="id"/>
+        <result column="userName" property="userName"/>
+        <result column="passWord" property="passWord"/>
+        <result column="status" property="status" typeHandler="dataStatusHandler"/>
+        <result column="registerTime" property="registerTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
     <insert id="createUser" parameterType="user">
         insert into user (id, userName, passWord, status, registerTime, remark)
-        values (#{id}, #{userName}, #{passWord}, #{status}, #{registerTime}, #{remark})
+        values (#{id}, #{userName}, #{passWord}, #{status, typeHandler = dataStatusHandler}, #{registerTime}, #{remark})
     </insert>
 
     <update id="updateUser" parameterType="user">
-        UPDATE user SET userName=#{userName}, passWord=#{passWord}, status=#{status}, registerTime=#{registerTime}, remark=#{remark}
+        UPDATE user SET userName=#{userName}, passWord=#{passWord}, status=#{status, typeHandler = dataStatusHandler},
+        registerTime=#{registerTime}, remark=#{remark}
         WHERE id=#{id}
     </update>
 

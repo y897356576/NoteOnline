@@ -1,5 +1,6 @@
 package com.stone.register.handler;
 
+import com.stone.common.model.DataStatus;
 import com.stone.common.util.ResultMap;
 import com.stone.core.factory.UserFactory;
 import com.stone.core.model.User;
@@ -40,7 +41,7 @@ public class RegisterController {
         User user = UserFactory.generateUser();
         user.setUserName(userName);
         user.setPassWord(DigestUtils.md5DigestAsHex(passWord.getBytes()));
-        user.setStatus(1);
+        user.setStatus(DataStatus.启用);
 
         Map<String, Object> rsMap;
         try{

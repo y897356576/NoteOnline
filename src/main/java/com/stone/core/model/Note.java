@@ -1,5 +1,7 @@
 package com.stone.core.model;
 
+import com.stone.common.model.DataStatus;
+
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class Note {
 
     private String modifyTime;    //修改时间
 
-    private Integer status;    //文件状态 1启用 0删除
+    private DataStatus status;    //文件状态 1启用 0删除
 
     @Transient
     private String createUserName;  //创建人名称
@@ -94,11 +96,11 @@ public class Note {
         this.modifyTime = modifyTime;
     }
 
-    public Integer getStatus() {
+    public DataStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(DataStatus status) {
         this.status = status;
     }
 

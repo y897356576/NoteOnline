@@ -1,5 +1,6 @@
 package com.stone.login.service;
 
+import com.stone.common.model.DataStatus;
 import com.stone.common.redis.RedisShard;
 import com.stone.common.util.EhcacheUtil;
 import com.stone.common.util.ObjMapTransUtil;
@@ -47,7 +48,7 @@ public class LoginService {
 
             if (user == null) {
                 throw new MyException("用户名不存在");
-            } else if (user.getStatus() == 0) {
+            } else if (user.getStatus().equals(DataStatus.禁用)) {
                 throw new MyException("该用户已被禁用");
             } else if (!DigestUtils.md5DigestAsHex(currentPwd.getBytes()).equals(user.getPassWord())) {
                 throw new MyException("密码错误");

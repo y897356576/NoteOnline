@@ -1,4 +1,4 @@
-package com.stone.core.repository;
+package com.stone.noteManage.repository;
 
 import com.stone.core.model.Note;
 import com.stone.core.model.NoteGenre;

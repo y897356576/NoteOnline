@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.stone.core.repository.NoteMapper">
+<mapper namespace="com.stone.noteManage.repository.NoteMapper">
 
     <insert id="createNote" parameterType="note">
         INSERT INTO note
         VALUES (#{id}, #{noteName}, #{noteGenreId}, #{noteFileId}, #{createUserId}, #{createTime},
-            #{modifyTime}, #{status})
+            #{modifyTime}, #{status, typeHandler = dataStatusHandler})
     </insert>
 
     <insert id="createNoteContent" parameterType="noteContent">
@@ -43,13 +43,16 @@
         SELECT n.id AS note_id, n.*,
             g.id AS genre_id, g.*,
             f.id AS file_id, f.*,
-            c.id AS content_id, c.*
+            c.id AS content_id, c.*,
+            u.userName AS createUserName
         FROM note n
         INNER JOIN noteGenre g
         ON n.noteGenreId = g.id AND g.userId = #{userId}
-        LEFT JOIN notefile f
+        INNER JOIN user u
+        ON n.createUserId = u.id
+        LEFT JOIN noteFile f
         ON n.id = f.noteId
-        LEFT JOIN notecontent c
+        LEFT JOIN noteContent c
         ON n.id = c.noteId
         WHERE n.createUserId = #{userId}
         AND n.id = #{noteId}
@@ -65,7 +68,7 @@
         <result column="createUserName" property="createUserName"/>
         <result column="createTime" property="createTime"/>
         <result column="modifyTime" property="modifyTime"/>
-        <result column="status" property="status"/>
+        <result column="status" property="status" typeHandler="dataStatusHandler"/>
         <association property="noteGenre" javaType="noteGenre">
             <id column="genre_id" property="id"/>
             <result column="userId" property="userId"/>

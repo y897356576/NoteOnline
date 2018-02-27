@@ -1,5 +1,6 @@
 package com.stone.core.model;
 
+import com.stone.common.model.DataStatus;
 import com.stone.common.util.IdGenerator;
 import com.stone.core.exception.MyException;
 import com.stone.core.repository.UserMapperImpl;
@@ -16,7 +17,7 @@ public class User {
     private String id;
     private String userName;
     private String passWord;
-    private Integer status;
+    private DataStatus status;
     private Date registerTime;
     private String remark;
 
@@ -136,11 +137,11 @@ public class User {
         this.passWord = passWord;
     }
 
-    public Integer getStatus() {
+    public DataStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(DataStatus status) {
         this.status = status;
     }
 

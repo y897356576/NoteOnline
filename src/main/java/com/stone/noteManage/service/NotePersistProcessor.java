@@ -1,12 +1,13 @@
 package com.stone.noteManage.service;
 
+import com.stone.common.model.DataStatus;
 import com.stone.common.util.IdGenerator;
 import com.stone.core.exception.MyException;
 import com.stone.core.model.Note;
 import com.stone.core.model.NoteContent;
 import com.stone.core.model.NoteFile;
 import com.stone.core.model.NoteGenre;
-import com.stone.core.repository.NoteMapperImpl;
+import com.stone.noteManage.repository.NoteMapperImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,7 @@ public class NotePersistProcessor {
     public void persistNote(Note note){
         note.setId(IdGenerator.generateId_16());
         note.setCreateTime(sdf.format(new Date()));
-        note.setStatus(1);
+        note.setStatus(DataStatus.启用);
 
         //生成笔记内容对象
         this.generateNoteContent(note);

@@ -2,7 +2,7 @@ package com.stone.noteManage.service;
 
 import com.stone.core.exception.MyException;
 import com.stone.core.model.*;
-import com.stone.core.repository.NoteMapperImpl;
+import com.stone.noteManage.repository.NoteMapperImpl;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
