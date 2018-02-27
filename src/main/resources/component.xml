@@ -20,10 +20,6 @@
         </property>-->
     </bean>
 
-    <bean id="noteFactory" class="com.stone.core.factory.NoteFactory">
-        <property name="noteMapperImpl" ref="noteMapperImpl"/>
-    </bean>
-
     <!--<bean id="userMapperImpl" class="com.stone.core.repository.UserMapperImpl"/>-->
 
 </beans>
