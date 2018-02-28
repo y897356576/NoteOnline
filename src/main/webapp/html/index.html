@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
 </head>
 
 <style>
@@ -52,13 +53,16 @@
                 <li class="label second">用户注册</li>
             </ul>
         </div>-->
-        <div class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
+        <div id="sidebar" class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
             <ul id="noteMgtUL" class="ul_label">
-                <li class="label first">
-                    默认
-                </li>
-                <li class="label second">笔记一</li>
-                <li class="label second">笔记二</li>
+                <template v-for="(notes, noteType) in noteTypes">
+                    <li class="label first">
+                        {{ noteType }}
+                    </li>
+                    <li class="label second" v-for="note in notes">
+                        {{ note.noteName }}
+                    </li>
+                </template>
             </ul>
         </div>
         <div class="content" style="height: 100%; width: 88%;">
@@ -87,11 +91,67 @@
 
 <script>
     $(function () {
-
+        noteList();
+        sessionStorage.setItem("", "");
     });
+
+    function noteList() {
+        $.ajax({
+            type: "get",
+            url: "/noteHandler/noteList",
+            dataType: "json",
+            success: function (result) {
+                var notes = result.notes;
+                var noteTypes = {};
+                for (var i in notes) {
+                    var note = notes[i];
+                    var typeName = note.noteGenre.typeName;
+                    if (!noteTypes[typeName]) {
+                        noteTypes[typeName] = [];
+                        noteTypes[typeName].push(note);
+                    } else {
+                        noteTypes[typeName].push(note);
+                    }
+                }
+                initVue(noteTypes);
+            }
+        })
+    }
+
+    function initVue(noteTypes) {
+        new Vue({
+            el: "#sidebar",
+            data: {
+                noteTypes: noteTypes
+            }
+        });
+    }
 
     $(".content").load("note/noteList.html");
 
+    //文件上传
+    $("#doNoteUpload").on("click", function () {
+        $.ajaxFileUpload({
+            type: "post",
+            url: "/noteHandler/noteImport",
+            fileElementId: "noteUpload",
+            dataType: "json",
+            success: function () {
+                alert("文件上传成功");
+            }
+        })
+    });
+
+    //用户注销
+    $("#doLogout").on("click",function () {
+        $.post("/loginHandler/doLogOut/74f77674-0457-4298-8d77-2850c6a78393",function(){
+            window.location.href="/login.html";
+        })
+    });
+
+</script>
+
+<script>
     $(".header-page .container .sidebar .second").hide();
 
     $("#noteMgtUL .first").on("click", function () {
@@ -109,34 +169,12 @@
         $("#noteShow").val($("#noteUpload").val());
     });
 
-    $("#doNoteUpload").on("click", function () {
-        $.ajaxFileUpload({
-            url: "/noteHandler/noteImport",
-            type: "post",
-            fileElementId: "noteUpload",
-            dataType: "json",
-            success: function () {
-                alert(1);
-            },
-            error: function () {
-                alert(2);
-            }
-        })
-    });
-
     function closeUploadDiv() {
         $("#noteUploadDiv").hide();
     }
-
-    $("#doLogout").on("click",function () {
-        $.post("/loginHandler/doLogOut/74f77674-0457-4298-8d77-2850c6a78393",function(){
-            window.location.href="/login.html";
-        })
-    });
-
 </script>
-<script>
 
+<script>
     /*function doReloadByXHR() {
         /!*  http://www.cnblogs.com/rush/archive/2012/05/15/2502264.html
             https://segmentfault.com/a/1190000002782175 *!/
