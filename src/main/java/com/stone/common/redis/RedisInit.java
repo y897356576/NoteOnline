@@ -17,11 +17,17 @@ public class RedisInit {
     public static void doRedisInit() {
         final Jedis jedis_0 = new Jedis("106.14.200.149", 6379);
         jedis_0.auth("pwd");
-        final Jedis jedis_1 = new Jedis("106.14.200.149", 6380);
+        final Jedis jedis_1 = new Jedis("106.14.200.149", 6379);
         jedis_1.auth("pwd");
+        final Jedis jedis_2 = new Jedis("106.14.200.149", 6380);
+        jedis_2.auth("pwd");
+        final Jedis jedis_3 = new Jedis("106.14.200.149", 6380);
+        jedis_3.auth("pwd");
         List<Jedis> js = new ArrayList<Jedis>(){{
             add(jedis_0);
             add(jedis_1);
+            add(jedis_2);
+            add(jedis_3);
         }};
         new RedisShard(js);
     }

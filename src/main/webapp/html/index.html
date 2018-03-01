@@ -23,6 +23,10 @@
         border-top: 0; border-right: 0; margin-left: 20px; margin-top: 5px;
     }
 
+    .noteUploadDiv {
+        display: none; height: 20%; width: 30%; background-color: #cdcdcd; position: absolute; top: 30%; left: 35%
+    }
+
 </style>
 
 <body class="header-page" style="margin: 0;">
@@ -60,7 +64,7 @@
                         {{ noteType }}
                     </li>
                     <li class="label second" v-for="note in notes">
-                        {{ note.noteName }}
+                        <span style="cursor: pointer;" @click="showNoteDetail(note.id)">{{ note.noteName }}</span>
                     </li>
                 </template>
             </ul>
@@ -74,28 +78,34 @@
     </div>
 
     <div style="position: absolute; top: 90%; left: 95%; width: 60px; height: 40px; background-color: #CDCDCD;">
-        <div id="showUploadDiv" style="color: #000000; font-size: 20px; margin-top: 8px; margin-left: 8px;">上传</div>
+        <div id="showUploadDiv" style="color: #000000; font-size: 20px; margin-top: 8px; margin-left: 8px; cursor: pointer;">上传</div>
     </div>
 
-    <div id="noteUploadDiv" style="display: none; height: 20%; width: 30%; background-color: #cdcdcd; position: absolute; top: 30%; left: 35%">
-        <div style="position: relative; float: right; padding: 3px;" onclick="closeUploadDiv()">×</div>
-        <div style="margin-top: 10%; text-align: center;">
-            <input id="noteShow" size="50" style="font-size: 16px; height: 30px" readonly/>
-            <input id="noteUpload" name="noteUpload" type="file" style="width: 14%; font-size: 16px;"/>
-            <br/>
-            <br/>
-            <input id="doNoteUpload" type="button" value="上传" style="font-size: 18px;"/>
-        </div>
+    <div class="noteUploadDiv">
     </div>
 </body>
 
 <script>
     $(function () {
-        noteList();
+        showNoteList();
+        $(".noteUploadDiv").load("note/noteFileUpload.html");
+        $(".content").load("note/noteList.html");
         sessionStorage.setItem("", "");
     });
 
-    function noteList() {
+    var vm = new Vue({
+        el: "#sidebar",
+        data: {
+            noteTypes: {}
+        },
+        methods: {
+            showNoteDetail: function (noteId) {
+                alert(noteId);
+            }
+        }
+    });
+
+    function showNoteList() {
         $.ajax({
             type: "get",
             url: "/noteHandler/noteList",
@@ -113,24 +123,17 @@
                         noteTypes[typeName].push(note);
                     }
                 }
-                initVue(noteTypes);
+
+                vm.noteTypes = noteTypes;
             }
         })
     }
 
-    function initVue(noteTypes) {
-        new Vue({
-            el: "#sidebar",
-            data: {
-                noteTypes: noteTypes
-            }
-        });
-    }
-
-    $(".content").load("note/noteList.html");
-
     //文件上传
     $("#doNoteUpload").on("click", function () {
+        if ($("#noteUpload").val()) {
+            alert("请选择需上传的文件");
+        }
         $.ajaxFileUpload({
             type: "post",
             url: "/noteHandler/noteImport",
@@ -163,15 +166,8 @@
     });
 
     $("#showUploadDiv").on("click", function () {
-        $("#noteUploadDiv").show();
+        $(".noteUploadDiv").toggle();
     });
-    $("#noteUpload").on("change", function () {
-        $("#noteShow").val($("#noteUpload").val());
-    });
-
-    function closeUploadDiv() {
-        $("#noteUploadDiv").hide();
-    }
 </script>
 
 <script>

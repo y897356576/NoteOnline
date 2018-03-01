@@ -1,5 +1,6 @@
 package com.stone.common.redis;
 
+import org.apache.commons.collections4.CollectionUtils;
 import redis.clients.jedis.Jedis;
 
 import java.nio.ByteBuffer;
@@ -20,10 +21,9 @@ public class RedisShard { // S类封装了机器节点的信息 ，如name、pas
 
     public RedisShard(List<Jedis> shards) {
         super();
-        if (nodes == null || nodes.size() == 0) {
-            this.shards = shards;
-            init();
-        }
+        this.disConnect();
+        this.shards = shards;
+        this.init();
     }
 
     private void init() { // 初始化一致性hash环
@@ -32,6 +32,14 @@ public class RedisShard { // S类封装了机器节点的信息 ，如name、pas
             for (int n = 0; n < NODE_NUM; n++) {
                 // 一个真实机器节点关联NODE_NUM个虚拟节点
                 nodes.put(hash(shardInfo.toString() + "-NODE-" + n), shardInfo);
+            }
+        }
+    }
+
+    private void disConnect() {
+        if (CollectionUtils.isNotEmpty(shards)) {
+            for (Jedis jedis : shards) {
+                jedis.disconnect();
             }
         }
     }
