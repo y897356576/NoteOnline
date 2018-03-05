@@ -1,9 +1,12 @@
-<div style="width: 100%; height: 26%; border-bottom: 1px solid grey; text-align: center; padding-top: 10%" onclick="indexMove(this, 1)">上移</div>
-<div style="width: 100%; height: 26%; border-bottom: 1px solid grey; text-align: center; padding-top: 10%" onclick="indexMove(this, -1)">下移</div>
-<div style="width: 100%; text-align: center; padding-top: 10%" onclick="deleteNote(this)">删除</div>
+<div style="width: 100%; height: 26%; border-bottom: 1px solid grey; text-align: center; padding-top: 10%; cursor: pointer"
+     onclick="indexMove(this, 1)">上移</div>
+<div style="width: 100%; height: 26%; border-bottom: 1px solid grey; text-align: center; padding-top: 10%; cursor: pointer"
+     onclick="indexMove(this, -1)">下移</div>
+<div style="width: 100%; text-align: center; padding-top: 10%; cursor: pointer" onclick="deleteNote(this)">删除</div>
 
 <script>
     function indexMove(obj, changeIndex) {
+
         var noteId = $(obj.parentElement).attr("noteId");
         alert(noteId);
         location.reload();
@@ -14,7 +17,18 @@
             return;
         }
         var noteId = $(obj.parentElement).attr("noteId");
-        alert(noteId);
-        location.reload();
+        $.ajax({
+            type: "delete",
+            url: "/noteHandler/noteDelete/" + noteId,
+            dataType: "json",
+            success: function (result) {
+                if (result.flag) {
+                    alert("删除成功");
+                    showNoteList();
+                } else {
+                    alert(result.errMsg);
+                }
+            }
+        });
     }
 </script>

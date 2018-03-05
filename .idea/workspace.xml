@@ -7,21 +7,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f361d141-308a-4903-9864-16b667532b83" name="Default" comment="注销操作时清除redis中的用户信息">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/mavenCase_fir_war.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/html/note/noteContent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/html/note/noteInit.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/html/note/noteListRightMenu.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stone/common/util/UserInfoUtil.java" afterPath="$PROJECT_DIR$/src/main/java/com/stone/common/util/UserInfoUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stone/core/model/Note.java" afterPath="$PROJECT_DIR$/src/main/java/com/stone/core/model/Note.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stone/index/handler/IndexController.java" afterPath="$PROJECT_DIR$/src/main/java/com/stone/index/handler/IndexController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stone/noteManage/handler/NoteHandler.java" afterPath="$PROJECT_DIR$/src/main/java/com/stone/noteManage/handler/NoteHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapper.java" afterPath="$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapperImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapperImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NoteService.java" afterPath="$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NoteService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/jdbc.properties" afterPath="$PROJECT_DIR$/src/main/resources/jdbc.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteMapper.xml" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/html/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/html/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/html/note/noteFileUpload.html" afterPath="$PROJECT_DIR$/src/main/webapp/html/note/noteFileUpload.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/html/note/noteContent.html" afterPath="$PROJECT_DIR$/src/main/webapp/html/note/noteContent.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/html/note/noteListRightMenu.html" afterPath="$PROJECT_DIR$/src/main/webapp/html/note/noteListRightMenu.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/Test_A.java" afterPath="$PROJECT_DIR$/src/test/java/Test_A.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -46,8 +41,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/html/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1482">
-              <caret line="263" column="24" lean-forward="true" selection-start-line="263" selection-start-column="24" selection-end-line="263" selection-end-column="24" />
+            <state relative-caret-position="47">
+              <caret line="132" column="25" lean-forward="false" selection-start-line="132" selection-start-column="13" selection-end-line="132" selection-end-column="25" />
               <folding>
                 <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#span#0;n#li#0;n#div#0;n#template#0;n#ul#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -64,8 +59,8 @@
       <file leaf-file-name="noteListRightMenu.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/html/note/noteListRightMenu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+            <state relative-caret-position="286">
+              <caret line="26" column="35" lean-forward="false" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
@@ -75,31 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log4j2.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="spring.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/spring.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4550">
-              <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="noteContent.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="noteContent.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/html/note/noteContent.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="24" column="26" lean-forward="false" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+            <state relative-caret-position="271">
+              <caret line="24" column="37" lean-forward="false" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="37" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -113,8 +88,8 @@
       <file leaf-file-name="NoteHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/handler/NoteHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+            <state relative-caret-position="185">
+              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -123,20 +98,31 @@
       <file leaf-file-name="NoteService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NoteService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2236">
-              <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+            <state relative-caret-position="165">
+              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding>
-                <element signature="e#3077#3078#0" expanded="true" />
+                <element signature="e#3489#3490#0" expanded="true" />
+                <element signature="e#3552#3553#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NoteMapperImpl.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NotePersistProcessor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NotePersistProcessor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NoteMapperImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapperImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="29" column="27" lean-forward="false" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
+            <state relative-caret-position="347">
+              <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -145,8 +131,8 @@
       <file leaf-file-name="NoteMapper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="676">
-              <caret line="33" column="19" lean-forward="false" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="19" />
+            <state relative-caret-position="500">
+              <caret line="31" column="47" lean-forward="true" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -155,18 +141,19 @@
       <file leaf-file-name="NoteMapper.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2002">
-              <caret line="77" column="59" lean-forward="false" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
+            <state relative-caret-position="1144">
+              <caret line="50" column="19" lean-forward="true" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
               <folding>
-                <marker date="1519908633908" expanded="true" signature="279:465" ph="INSERT INTO note... " />
-                <marker date="1519908633908" expanded="true" signature="553:591" ph="INSERT INTO noteContent... " />
-                <marker date="1519908633908" expanded="true" signature="553:632" ph="INSERT INTO noteContent... " />
-                <marker date="1519908633908" expanded="true" signature="990:1058" ph="INSERT INTO noteGenre... " />
-                <marker date="1519908633908" expanded="true" signature="1140:1253" ph="INSERT INTO noteFile... " />
-                <marker date="1519908633908" expanded="true" signature="1333:1420" ph="SELECT * FRO... noteGenre" />
-                <marker date="1519908633908" expanded="true" signature="1494:2075" ph="SELECT n.id note" />
-                <marker date="1519908633908" expanded="true" signature="2154:2430" ph="SELECT n.id note" />
-                <marker date="1519908633908" expanded="true" signature="4118:4200" ph="UPDATE note " />
+                <marker date="1520217487445" expanded="true" signature="483:683" ph="INSERT INTO note... " />
+                <marker date="1520217487445" expanded="true" signature="515:683" ph="(##{id}, ##{no... " />
+                <marker date="1520217487445" expanded="true" signature="771:809" ph="INSERT INTO noteContent... " />
+                <marker date="1520217487445" expanded="true" signature="771:850" ph="INSERT INTO noteContent... " />
+                <marker date="1520217487445" expanded="true" signature="1208:1276" ph="INSERT INTO noteGenre... " />
+                <marker date="1520217487445" expanded="true" signature="1358:1471" ph="INSERT INTO noteFile... " />
+                <marker date="1520217487445" expanded="true" signature="1551:1638" ph="SELECT * FRO... noteGenre" />
+                <marker date="1520217487445" expanded="true" signature="1712:2307" ph="SELECT n.id note" />
+                <marker date="1520217487445" expanded="true" signature="2386:2662" ph="SELECT n.id note" />
+                <marker date="1520217487445" expanded="true" signature="4350:4442" ph="UPDATE note " />
               </folding>
             </state>
           </provider>
@@ -187,15 +174,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>defaultEncoding</find>
-      <find>maxUploadSize</find>
       <find>fileElementId</find>
       <find>noteGenre</find>
       <find>contentType</find>
       <find>doLogout</find>
       <find>getGenreByName</find>
       <find>createNoteGenre</find>
-      <find>createNote</find>
       <find>请重新登录</find>
       <find>noteType</find>
       <find>noteList</find>
@@ -211,12 +195,15 @@
       <find>secTempToggle</find>
       <find>second</find>
       <find>content</find>
-      <find>showNoteDetail</find>
       <find>noteContent</find>
       <find>noteParticulars</find>
       <find>noteDetail</find>
       <find>noteUploadDiv</find>
       <find>rightMenuDiv</find>
+      <find>showNoteDetail</find>
+      <find>noteDelete</find>
+      <find>showNoteContent</find>
+      <find>createNote</find>
     </findStrings>
     <replaceStrings>
       <replace>MavenProject_First</replace>
@@ -247,7 +234,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/stone/demo/redisCase/RedisInJava.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/common/redis/Shard.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/demo/ObjectMapTransform/ObjectMapTransform.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/common/util/ObjectMapTransUtil.java" />
@@ -276,7 +262,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NotePersistProcessor.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/common/model/Status.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/common/model/DataStatus.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/stone/core/model/Note.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/core/model/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/login/service/LoginService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/register/handler/RegisterController.java" />
@@ -287,17 +272,19 @@
         <option value="$PROJECT_DIR$/src/main/java/com/stone/common/redis/RedisShard.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/common/redis/RedisInit.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/note/noteInit.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/html/note/noteContent.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/note/noteFileUpload.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NoteService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapperImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/stone/common/util/UserInfoUtil.java" />
         <option value="$PROJECT_DIR$/src/main/resources/jdbc.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/com/stone/noteManage/handler/NoteHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/html/note/noteListRightMenu.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/index.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/note/noteContent.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/stone/noteManage/handler/NoteHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/note/noteListRightMenu.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/stone/core/model/Note.java" />
       </list>
     </option>
   </component>
@@ -1816,14 +1803,7 @@
       <workItem from="1520042537587" duration="1369000" />
       <workItem from="1520072677095" duration="3151000" />
       <workItem from="1520143970199" duration="12562000" />
-      <workItem from="1520211623354" duration="72000" />
-    </task>
-    <task id="LOCAL-00030" summary="Junit4测试demo">
-      <created>1500430852790</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1500430852790</updated>
+      <workItem from="1520211623354" duration="5838000" />
     </task>
     <task id="LOCAL-00031" summary="HttpClient测试demo">
       <created>1500445538968</created>
@@ -2161,7 +2141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1519886962151</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="笔记服务完善">
+      <created>1520211842860</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1520211842861</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2197,7 +2184,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="890501000" />
+    <option name="totallyTimeSpent" value="896267000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -2225,6 +2212,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33960047" sideWeight="0.4892704" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -2233,7 +2221,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3372503" sideWeight="0.49356222" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26984978" sideWeight="0.4822695" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26984978" sideWeight="0.4822695" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26877683" sideWeight="0.5065913" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26609442" sideWeight="0.5177305" order="7" side_tool="true" content_ui="tabs" />
@@ -2242,7 +2230,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2265,7 +2252,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修改ID生成方式" />
     <MESSAGE value="新增Hsql数据库链接方式" />
     <MESSAGE value="新增Hsql数据库链接方式(In-Process)" />
     <MESSAGE value="ajax通过jsonp跨域" />
@@ -2290,14 +2276,15 @@
     <MESSAGE value="笔记列表查询服务" />
     <MESSAGE value="vue初步试用" />
     <MESSAGE value="jedis初始化时销毁之前的jedis链接" />
-    <option name="LAST_COMMIT_MESSAGE" value="jedis初始化时销毁之前的jedis链接" />
+    <MESSAGE value="笔记服务完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="笔记服务完善" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="251" />
+      <option name="time" value="257" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
@@ -2349,20 +2336,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="14" column="58" lean-forward="true" selection-start-line="14" selection-start-column="58" selection-end-line="14" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/core/model/Note.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-130">
-          <caret line="98" column="35" lean-forward="false" selection-start-line="98" selection-start-column="35" selection-end-line="98" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NotePersistProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -2467,6 +2440,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
           <caret line="41" column="8" lean-forward="false" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2491,18 +2465,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="676">
-          <caret line="33" column="19" lean-forward="false" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/common/filter/LoginFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2527,46 +2494,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2002">
-          <caret line="77" column="59" lean-forward="false" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
-          <folding>
-            <marker date="1519908633908" expanded="true" signature="279:465" ph="INSERT INTO note... " />
-            <marker date="1519908633908" expanded="true" signature="553:591" ph="INSERT INTO noteContent... " />
-            <marker date="1519908633908" expanded="true" signature="553:632" ph="INSERT INTO noteContent... " />
-            <marker date="1519908633908" expanded="true" signature="990:1058" ph="INSERT INTO noteGenre... " />
-            <marker date="1519908633908" expanded="true" signature="1140:1253" ph="INSERT INTO noteFile... " />
-            <marker date="1519908633908" expanded="true" signature="1333:1420" ph="SELECT * FRO... noteGenre" />
-            <marker date="1519908633908" expanded="true" signature="1494:2075" ph="SELECT n.id note" />
-            <marker date="1519908633908" expanded="true" signature="2154:2430" ph="SELECT n.id note" />
-            <marker date="1519908633908" expanded="true" signature="4118:4200" ph="UPDATE note " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../Maven/repository/org/springframework/spring-web/4.3.9.RELEASE/spring-web-4.3.9.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="307">
           <caret line="121" column="84" lean-forward="false" selection-start-line="121" selection-start-column="84" selection-end-line="121" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NoteService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2236">
-          <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
-          <folding>
-            <element signature="e#3077#3078#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapperImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="29" column="27" lean-forward="false" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2622,24 +2553,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="41" lean-forward="true" selection-start-line="0" selection-start-column="41" selection-end-line="0" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/jdbc.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
           <caret line="14" column="43" lean-forward="true" selection-start-line="14" selection-start-column="43" selection-end-line="15" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2660,14 +2577,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/spring.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4550">
-          <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3091">
@@ -2676,10 +2585,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/spring.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j2.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="141" column="0" lean-forward="true" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/note/noteContent.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="24" column="37" lean-forward="false" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="37" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/html/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1482">
-          <caret line="263" column="24" lean-forward="true" selection-start-line="263" selection-start-column="24" selection-end-line="263" selection-end-column="24" />
+        <state relative-caret-position="47">
+          <caret line="132" column="25" lean-forward="false" selection-start-line="132" selection-start-column="13" selection-end-line="132" selection-end-column="25" />
           <folding>
             <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#span#0;n#li#0;n#div#0;n#template#0;n#ul#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -2694,8 +2640,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/html/note/noteListRightMenu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+        <state relative-caret-position="286">
+          <caret line="26" column="35" lean-forward="false" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
@@ -2704,24 +2650,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/handler/NoteHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/core/model/Note.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+        <state relative-caret-position="2447">
+          <caret line="156" column="31" lean-forward="false" selection-start-line="156" selection-start-column="31" selection-end-line="156" selection-end-column="31" />
+          <folding>
+            <element signature="e#3202#3203#0" expanded="true" />
+            <element signature="e#3245#3246#0" expanded="true" />
+            <element signature="e#3279#3280#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="31" column="47" lean-forward="true" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/note/noteContent.html">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="24" column="26" lean-forward="false" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+        <state relative-caret-position="1144">
+          <caret line="50" column="19" lean-forward="true" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <marker date="1520217487445" expanded="true" signature="483:683" ph="INSERT INTO note... " />
+            <marker date="1520217487445" expanded="true" signature="515:683" ph="(##{id}, ##{no... " />
+            <marker date="1520217487445" expanded="true" signature="771:809" ph="INSERT INTO noteContent... " />
+            <marker date="1520217487445" expanded="true" signature="771:850" ph="INSERT INTO noteContent... " />
+            <marker date="1520217487445" expanded="true" signature="1208:1276" ph="INSERT INTO noteGenre... " />
+            <marker date="1520217487445" expanded="true" signature="1358:1471" ph="INSERT INTO noteFile... " />
+            <marker date="1520217487445" expanded="true" signature="1551:1638" ph="SELECT * FRO... noteGenre" />
+            <marker date="1520217487445" expanded="true" signature="1712:2307" ph="SELECT n.id note" />
+            <marker date="1520217487445" expanded="true" signature="2386:2662" ph="SELECT n.id note" />
+            <marker date="1520217487445" expanded="true" signature="4350:4442" ph="UPDATE note " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/handler/NoteHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NoteService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding>
+            <element signature="e#3489#3490#0" expanded="true" />
+            <element signature="e#3552#3553#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/service/NotePersistProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/stone/noteManage/repository/NoteMapperImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>

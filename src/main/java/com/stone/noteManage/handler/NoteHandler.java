@@ -98,6 +98,7 @@ public class NoteHandler {
             service.noteDelete(user, noteId);
             result.put("flag", true);
         } catch (Exception e) {
+            logger.error("笔记删除失败", e);
             result.put("flag", false);
             result.put("errMsg", "笔记删除失败");
         }

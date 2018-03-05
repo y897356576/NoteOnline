@@ -25,6 +25,8 @@ public class Note {
 
     private String modifyTime;    //修改时间
 
+    private Integer index;  //序号
+
     private DataStatus status;    //文件状态 1启用 0删除
 
     @Transient
@@ -150,5 +152,13 @@ public class Note {
 
     public void setNoteFile(NoteFile noteFile) {
         this.noteFile = noteFile;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 }

@@ -154,9 +154,15 @@
         })
     }
 
+    var notInitedContentDiv = false;
     function showNoteDetail(noteId) {
         sessionStorage.setItem("noteId", noteId);
-        $(".noteDetail").load("note/noteContent.html");
+        if (!notInitedContentDiv) {
+            $(".noteDetail").load("note/noteContent.html");
+            notInitedContentDiv = true;
+        } else {
+            showNoteContent();
+        }
     }
 
     //用户注销

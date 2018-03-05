@@ -5,9 +5,12 @@
 <mapper namespace="com.stone.noteManage.repository.NoteMapper">
 
     <insert id="createNote" parameterType="note">
+        <selectKey keyProperty="index" resultType="Integer" order="BEFORE">
+            SELECT IFNULL(MAX(n.index), 0) FROM note n WHERE createUserId = #{createUserId} AND status = 1
+        </selectKey>
         INSERT INTO note
         VALUES (#{id}, #{noteName}, #{noteGenreId}, #{noteFileId}, #{createUserId}, #{createTime},
-            #{modifyTime}, #{status, typeHandler = dataStatusHandler})
+            #{modifyTime}, #{index} + 1, #{status, typeHandler = dataStatusHandler})
     </insert>
 
     <insert id="createNoteContent" parameterType="noteContent">
@@ -57,7 +60,7 @@
         WHERE n.createUserId = #{userId}
         AND n.id = #{noteId}
         AND n.status = 1
-        ORDER BY c.index ASC
+        ORDER BY n.index desc, c.index ASC
     </select>
 
     <select id="getNotesByUserId" resultMap="noteMap">
@@ -104,8 +107,8 @@
 
     <update id="noteDelete">
         UPDATE note SET status = 0
-        WHERE createUserId = #{0}
-        AND id = #{1}
+        WHERE createUserId = #{userId}
+        AND id = #{noteId}
     </update>
 
 </mapper>

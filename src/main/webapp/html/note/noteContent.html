@@ -9,12 +9,15 @@
 
 <script>
 
-    $(function(){
+    $(function () {
         showNoteContent();
     });
 
     function showNoteContent() {
         var noteId = sessionStorage.getItem("noteId");
+        if (!noteId) {
+            return;
+        }
         $.ajax({
             type: "get",
             url: "/noteHandler/noteDetail/" + noteId,
