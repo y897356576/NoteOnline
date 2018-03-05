@@ -5,11 +5,24 @@
 <div style="width: 100%; text-align: center; padding-top: 10%; cursor: pointer" onclick="deleteNote(this)">删除</div>
 
 <script>
-    function indexMove(obj, changeIndex) {
-
+    function indexMove(obj, indexModify) {
         var noteId = $(obj.parentElement).attr("noteId");
-        alert(noteId);
-        location.reload();
+        $.ajax({
+            type: "put",
+            url: "/noteHandler/noteList",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "noteId": noteId,
+                "indexModify": indexModify
+            }),
+            dataType: "json",
+            success: function (result) {
+                if (result.flag) {
+                    $(obj).parent().hide();
+                    showNoteList();
+                }
+            }
+        });
     }
 
     function deleteNote(obj) {
@@ -19,7 +32,7 @@
         var noteId = $(obj.parentElement).attr("noteId");
         $.ajax({
             type: "delete",
-            url: "/noteHandler/noteDelete/" + noteId,
+            url: "/noteHandler/noteDetail/" + noteId,
             dataType: "json",
             success: function (result) {
                 if (result.flag) {

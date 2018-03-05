@@ -1,5 +1,6 @@
 package com.stone.noteManage.handler;
 
+import com.alibaba.fastjson.JSONObject;
 import com.stone.common.util.UserInfoUtil;
 import com.stone.core.exception.MyException;
 import com.stone.core.model.Note;
@@ -66,6 +67,32 @@ public class NoteHandler {
         return result;
     }
 
+    @RequestMapping(value = "noteList", method = RequestMethod.PUT)
+    @ResponseBody
+    public Map noteIndexModify(HttpServletRequest request, @RequestBody JSONObject paramJson) {
+        Map<String, Object> result = new HashMap<>();
+        User user = UserInfoUtil.getUserFromRedis(request);
+        this.checkUserAvailable(user);
+
+        String noteId = paramJson.getString("noteId");
+        Integer indexModify = paramJson.getInteger("indexModify");
+
+        if (StringUtils.isBlank(noteId) || indexModify == null) {
+            throw new MyException("BadRequest", "笔记顺序调整失败");
+        }
+
+        try {
+            service.noteIndexModify(user, noteId, indexModify);
+            result.put("flag", true);
+        } catch (Exception e) {
+            logger.error("笔记顺序调整失败", e);
+            result.put("flag", false);
+            result.put("errMsg", "笔记顺序调整失败");
+        }
+
+        return result;
+    }
+
     @RequestMapping(value = "noteDetail/{noteId}", method = RequestMethod.GET)
     @ResponseBody
     public Map noteDetail(HttpServletRequest request, @PathVariable String noteId) {
@@ -73,7 +100,7 @@ public class NoteHandler {
         this.checkUserAvailable(user);
 
         if (StringUtils.isBlank(noteId)) {
-            throw new MyException("笔记内容加载失败！");
+            throw new MyException("BadRequest", "笔记内容加载失败");
         }
 
         Note note = service.noteDetail(user, noteId);
@@ -83,14 +110,14 @@ public class NoteHandler {
         return result;
     }
 
-    @RequestMapping(value = "noteDelete/{noteId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "noteDetail/{noteId}", method = RequestMethod.DELETE)
     @ResponseBody
     public Map noteDelete(HttpServletRequest request, @PathVariable String noteId) {
         User user = UserInfoUtil.getUserFromRedis(request);
         this.checkUserAvailable(user);
 
         if (StringUtils.isBlank(noteId)) {
-            throw new MyException("笔记删除失败！");
+            throw new MyException("BadRequest", "笔记删除失败");
         }
 
         Map<String, Object> result = new HashMap<>();
@@ -111,7 +138,7 @@ public class NoteHandler {
      */
     private void checkUserAvailable(User user) {
         if (user == null) {
-            throw new MyException("当前用户不可用，请重新登录。");
+            throw new MyException("BadRequest", "当前用户不可用，请重新登录");
         }
     }
 

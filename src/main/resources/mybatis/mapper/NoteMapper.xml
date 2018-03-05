@@ -5,12 +5,12 @@
 <mapper namespace="com.stone.noteManage.repository.NoteMapper">
 
     <insert id="createNote" parameterType="note">
-        <selectKey keyProperty="index" resultType="Integer" order="BEFORE">
-            SELECT IFNULL(MAX(n.index), 0) FROM note n WHERE createUserId = #{createUserId} AND status = 1
+        <selectKey keyProperty="noteIndex" resultType="Integer" order="BEFORE">
+            SELECT IFNULL(MAX(n.noteIndex), 0) FROM note n WHERE createUserId = #{createUserId} AND status = 1
         </selectKey>
         INSERT INTO note
         VALUES (#{id}, #{noteName}, #{noteGenreId}, #{noteFileId}, #{createUserId}, #{createTime},
-            #{modifyTime}, #{index} + 1, #{status, typeHandler = dataStatusHandler})
+            #{modifyTime}, #{noteIndex} + 1, #{status, typeHandler = dataStatusHandler})
     </insert>
 
     <insert id="createNoteContent" parameterType="noteContent">
@@ -60,7 +60,7 @@
         WHERE n.createUserId = #{userId}
         AND n.id = #{noteId}
         AND n.status = 1
-        ORDER BY n.index desc, c.index ASC
+        ORDER BY c.index ASC
     </select>
 
     <select id="getNotesByUserId" resultMap="noteMap">
@@ -71,7 +71,7 @@
         ON n.noteGenreId = g.id AND g.userId = #{0}
         WHERE n.createUserId = #{0}
         AND n.status = 1
-        ORDER BY n.noteGenreId, n.createTime DESC
+        ORDER BY n.noteGenreId, n.noteIndex DESC, n.createTime DESC
     </select>
 
     <resultMap id="noteMap" type="note">
@@ -83,6 +83,7 @@
         <result column="createUserName" property="createUserName"/>
         <result column="createTime" property="createTime"/>
         <result column="modifyTime" property="modifyTime"/>
+        <result column="noteIndex" property="noteIndex"/>
         <result column="status" property="status" typeHandler="dataStatusHandler"/>
         <association property="noteGenre" javaType="noteGenre">
             <id column="genre_id" property="id"/>
@@ -109,6 +110,34 @@
         UPDATE note SET status = 0
         WHERE createUserId = #{userId}
         AND id = #{noteId}
+    </update>
+
+    <update id="noteIndexModify">
+
+        <selectKey keyProperty="noteIndex" resultType="Integer" order="BEFORE">
+            SELECT IFNULL(
+                (SELECT noteIndex FROM note
+                WHERE createUserId = #{userId}
+                AND noteIndex =
+                  (SELECT noteIndex FROM note WHERE id = #{noteId})
+                  + #{indexModify})
+            , -1) FROM DUAL
+        </selectKey>
+
+        <if test="noteIndex == -1">
+            SELECT 1 FROM DUAL
+        </if>
+
+        <if test="noteIndex != -1">
+            UPDATE note SET noteIndex = #{noteIndex} - #{indexModify}
+            WHERE createUserId = #{userId}
+            AND noteIndex = #{noteIndex};
+
+            UPDATE note SET noteIndex = noteIndex + #{indexModify}
+            WHERE createUserId = #{userId}
+            AND id = #{noteId}
+        </if>
+
     </update>
 
 </mapper>

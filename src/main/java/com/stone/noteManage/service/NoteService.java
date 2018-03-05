@@ -2,7 +2,7 @@ package com.stone.noteManage.service;
 
 import com.stone.core.exception.MyException;
 import com.stone.core.model.*;
-import com.stone.noteManage.repository.NoteMapperImpl;
+import com.stone.noteManage.repository.NoteMapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import java.util.List;
 public class NoteService {
 
     @Autowired
-    private NoteMapperImpl noteMapperImpl;
+    private NoteMapper noteMapper;
 
     @Autowired
     private NotePersistProcessor persistProcessor;
@@ -97,7 +97,7 @@ public class NoteService {
      * @return
      */
     public List<Note> noteList(User user) {
-        return noteMapperImpl.getNotesByUserId(user.getId());
+        return noteMapper.getNotesByUserId(user.getId());
     }
 
     /**
@@ -107,9 +107,19 @@ public class NoteService {
      * @return
      */
     public Note noteDetail(User user, String noteId) {
-        Note note = noteMapperImpl.getNoteById(user.getId(), noteId);
+        Note note = noteMapper.getNoteById(user.getId(), noteId);
         this.composeContent(note);
         return note;
+    }
+
+    /**
+     * 笔记顺序调整
+     * @param user
+     * @param noteId
+     * @return
+     */
+    public void noteIndexModify(User user, String noteId, Integer indexModify) {
+        noteMapper.noteIndexModify(user.getId(), noteId, indexModify);
     }
 
     /**
@@ -119,7 +129,7 @@ public class NoteService {
      * @return
      */
     public void noteDelete(User user, String noteId) {
-        noteMapperImpl.noteDelete(user.getId(), noteId);
+        noteMapper.noteDelete(user.getId(), noteId);
     }
 
     /**

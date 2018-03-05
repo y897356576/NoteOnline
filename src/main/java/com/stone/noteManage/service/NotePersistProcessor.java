@@ -96,6 +96,9 @@ public class NotePersistProcessor {
      */
     private void generateNoteGenre(NoteGenre noteGenre, String createUserId, Note note) {
         String genreTypeName = noteGenre.getTypeName();
+        if (StringUtils.isBlank(genreTypeName)) {
+            throw new MyException("BadRequest", "笔记类别新增失败");
+        }
         noteGenre = noteMapperImpl.getGenreByName(createUserId, noteGenre.getTypeName());
         if (noteGenre == null) {
             noteGenre = new NoteGenre();

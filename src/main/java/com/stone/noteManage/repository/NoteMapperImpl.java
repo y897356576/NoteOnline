@@ -2,6 +2,7 @@ package com.stone.noteManage.repository;
 
 import com.stone.core.model.Note;
 import com.stone.core.model.NoteGenre;
+import com.stone.core.model.User;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,21 +11,13 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Created by 石头 on 2017/6/22.
+ * Created by 石头 on 2018/2/22.
  */
 @Component
 public class NoteMapperImpl {
 
     @Autowired
     private NoteMapper noteMapper;
-
-    public Note getNoteById(String userId, String id) {
-        return noteMapper.getNoteById(userId, id);
-    }
-
-    public List<Note> getNotesByUserId(String userId) {
-        return noteMapper.getNotesByUserId(userId);
-    }
 
     public Boolean createNote(Note note) {
         if (note == null) {
@@ -56,10 +49,6 @@ public class NoteMapperImpl {
         }
         Integer result = noteMapper.createNoteGenre(genre);
         return result == 1;
-    }
-
-    public void noteDelete(String userId, String noteId) {
-        noteMapper.noteDelete(userId, noteId);
     }
 
 }
