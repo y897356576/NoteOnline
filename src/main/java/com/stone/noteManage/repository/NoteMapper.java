@@ -31,4 +31,6 @@ public interface NoteMapper {
 
     List<Note> getNotesByUserId(String userId);
 
+    void noteDelete(String userId, String noteId);
+
 }

@@ -15,4 +15,23 @@
     function closeUploadDiv() {
         $(".noteUploadDiv").hide();
     }
+
+    //文件上传
+    $("#doNoteUpload").on("click", function () {
+        if (!$("#noteUpload").val()) {
+            alert("请选择需上传的文件");
+        }
+        $.ajaxFileUpload({
+            type: "post",
+            url: "/noteHandler/noteImport",
+            fileElementId: "noteUpload",
+            dataType: "json",
+            success: function (result) {
+                alert("文件上传成功");
+                sessionStorage.setItem("noteId", result.noteId);
+                closeUploadDiv();
+                location.reload();
+            }
+        })
+    });
 </script>

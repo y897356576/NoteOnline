@@ -8,11 +8,18 @@
 
 <style>
     .ul_label {
-        list-style-type: none; padding: 0 10px; font-size: 20px;
+        list-style-type: none;
+        padding: 0 10px;
+        font-size: 20px;
     }
 
     .ul_label .label {
-        border: 1px solid #cdcdcd; line-height: 39px; padding-left: 20px;
+        border: 1px solid #cdcdcd;
+        line-height: 39px;
+        padding-left: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .ul_label .first {
@@ -20,77 +27,92 @@
     }
 
     .ul_label .second {
-        border-top: 0; border-right: 0; margin-left: 20px; margin-top: 5px;
+        border-top: 0;
+        border-right: 0;
+        margin-left: 20px;
+        margin-top: 5px;
     }
 
     .noteUploadDiv {
-        display: none; height: 20%; width: 30%; background-color: #cdcdcd; position: absolute; top: 30%; left: 35%
+        display: none;
+        height: 20%;
+        width: 30%;
+        background-color: #cdcdcd;
+        position: absolute;
+        top: 30%;
+        left: 35%
+    }
+
+    .rightMenuDiv {
+        width: 60px;
+        height: 100px;
+        background-color: rgb(245, 245, 245);
+        position: absolute;
+        display: none;
+        border: 1px solid rgba(162,162,162,0.27);
     }
 
 </style>
 
 <body class="header-page" style="margin: 0;">
-    <div class="header" style="background-color: #5f5f5f; height: 8%; width: 100%;">
-        <div style="float: left; margin-top: 1.2%; margin-left: 1.2%;">
-            <span style="color: #dedede; font-size: 24px; font-weight: bold;">石头的线上笔记</span>
-        </div>
-        <div style="float: right; margin-top: 1.5%; margin-right: 1.5%;">
+<div class="header" style="background-color: #5f5f5f; height: 8%; width: 100%;">
+    <div style="float: left; margin-top: 1.2%; margin-left: 1.2%;">
+        <span style="color: #dedede; font-size: 24px; font-weight: bold;">石头的线上笔记</span>
+    </div>
+    <div style="float: right; margin-top: 1.5%; margin-right: 1.5%;">
                 <span id="doLogout" style="color: #dedede; font-size: 16px; text-decoration: underline; cursor: pointer;
                 text-align: right; display: block;">注销</span>
-        </div>
     </div>
+</div>
 
-    <div class="container" style="height: 90%; width: 100%">
-        <!--<div class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
-            <ul id="noteMgtUL" class="ul_label">
-                <li class="label first">
-                    笔记管理
+<div class="container" style="height: 90%; width: 100%">
+    <div id="sidebar" class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
+        <ul id="noteMgtUL" class="ul_label">
+            <template v-for="(notes, noteType) in noteTypes">
+                <li class="label first" @click="secTempToggle('secTemp' + noteType)">
+                    {{ noteType }}
                 </li>
-                <li class="label second">笔记列表</li>
-                <li class="label second">笔记新增</li>
-            </ul>
-            <ul id="userMgtUL" class="ul_label">
-                <li class="label first">
-                    用户管理
-                </li>
-                <li class="label second">用户列表</li>
-                <li class="label second">用户注册</li>
-            </ul>
-        </div>-->
-        <div id="sidebar" class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
-            <ul id="noteMgtUL" class="ul_label">
-                <template v-for="(notes, noteType) in noteTypes">
-                    <li class="label first">
-                        {{ noteType }}
+                <div v-bind:id="'secTemp' + noteType">
+                    <li class="label second" v-bind:id="note.id" v-for="note in notes">
+                            <span style="cursor: pointer;" v-bind:title="note.noteName" @click="getNoteDetail(note.id)">
+                                {{ note.noteName }}
+                            </span>
                     </li>
-                    <li class="label second" v-for="note in notes">
-                        <span style="cursor: pointer;" @click="showNoteDetail(note.id)">{{ note.noteName }}</span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-        <div class="content" style="height: 100%; width: 88%;">
-
-        </div>
+                </div>
+            </template>
+        </ul>
     </div>
-
-    <div class="footer" style="background-color: #5f5f5f; height: 2%; width: 100%">
+    <div class="noteDetail" style="height: 100%; width: 87%; float: right;">
     </div>
+</div>
 
-    <div style="position: absolute; top: 90%; left: 95%; width: 60px; height: 40px; background-color: #CDCDCD;">
-        <div id="showUploadDiv" style="color: #000000; font-size: 20px; margin-top: 8px; margin-left: 8px; cursor: pointer;">上传</div>
-    </div>
+<div class="footer" style="background-color: #5f5f5f; height: 2%; width: 100%">
+</div>
 
-    <div class="noteUploadDiv">
+<div style="position: absolute; top: 90%; left: 95%; width: 60px; height: 40px; background-color: #CDCDCD;">
+    <div id="showUploadDiv"
+         style="color: #000000; font-size: 20px; margin-top: 8px; margin-left: 8px; cursor: pointer;">上传
     </div>
+</div>
+
+<div class="noteUploadDiv">
+</div>
+
+<div class="rightMenuDiv">
+</div>
+
 </body>
 
 <script>
     $(function () {
         showNoteList();
         $(".noteUploadDiv").load("note/noteFileUpload.html");
-        $(".content").load("note/noteList.html");
-        sessionStorage.setItem("", "");
+        $(".rightMenuDiv").load("note/noteListRightMenu.html");
+        if (sessionStorage.getItem("noteId")) {
+            showNoteDetail(sessionStorage.getItem("noteId"));
+        } else {
+            $(".noteDetail").load("note/noteInit.html");
+        }
     });
 
     var vm = new Vue({
@@ -99,8 +121,11 @@
             noteTypes: {}
         },
         methods: {
-            showNoteDetail: function (noteId) {
-                alert(noteId);
+            getNoteDetail: function (noteId) {
+                showNoteDetail(noteId);
+            },
+            secTempToggle: function (tempId) {
+                $("#" + tempId).toggle();
             }
         }
     });
@@ -129,103 +154,144 @@
         })
     }
 
-    //文件上传
-    $("#doNoteUpload").on("click", function () {
-        if ($("#noteUpload").val()) {
-            alert("请选择需上传的文件");
-        }
-        $.ajaxFileUpload({
-            type: "post",
-            url: "/noteHandler/noteImport",
-            fileElementId: "noteUpload",
-            dataType: "json",
-            success: function () {
-                alert("文件上传成功");
-            }
-        })
-    });
+    function showNoteDetail(noteId) {
+        sessionStorage.setItem("noteId", noteId);
+        $(".noteDetail").load("note/noteContent.html");
+    }
 
     //用户注销
-    $("#doLogout").on("click",function () {
-        $.post("/loginHandler/doLogOut/74f77674-0457-4298-8d77-2850c6a78393",function(){
-            window.location.href="/login.html";
+    $("#doLogout").on("click", function () {
+        $.post("/loginHandler/doLogOut/74f77674-0457-4298-8d77-2850c6a78393", function () {
+            window.location.href = "/login.html";
         })
-    });
-
-</script>
-
-<script>
-    $(".header-page .container .sidebar .second").hide();
-
-    $("#noteMgtUL .first").on("click", function () {
-        $("#noteMgtUL .second").toggle();
-    });
-
-    $("#userMgtUL .first").on("click", function () {
-        $("#userMgtUL .second").toggle();
     });
 
     $("#showUploadDiv").on("click", function () {
         $(".noteUploadDiv").toggle();
+        reloadSidebarClick();
     });
+
+    $(".rightMenuDiv").on("mouseleave", function () {
+        $(".rightMenuDiv").hide();
+    });
+
+</script>
+
+<script>
+    //去除 sidebar 中浏览器自带的点击事件
+    $("#sidebar").unbind("mousedown").bind("contextmenu", function (e) {
+        e.preventDefault();
+        return false;
+    });
+    $(".rightMenuDiv").unbind("mousedown").bind("contextmenu", function (e) {
+        e.preventDefault();
+        return false;
+    });
+    //为 sidebar 添加自定义的点击事件
+    $("#sidebar").bind("mousedown", function (e) {
+        $("#sidebar").unbind("mousedown");  //去除sidebar的点击事件
+        reloadSidebarClick(e);  //为所有 second 元素添加右击事件
+    });
+
+    function reloadSidebarClick(e) {
+        //为所有 second 元素添加右击事件
+        $(".second").unbind("mousedown").bind("mousedown", function (event) {
+            showRightMenu(event, "second");
+        });
+        //触发右击事件
+        showRightMenu(e, "sidebar");
+    }
+    function showRightMenu(event, resource) {
+        if (event.which === 3) {
+            var noteId;
+            var mouseX;
+            var mouseY;
+            if(event.pageX || event.pageY){
+                mouseX = event.pageX + 'px';
+                mouseY = event.pageY + 'px';
+            } else {
+                mouseX = ev.clientX + document.body.scrollLeft - document.body.clientLeft + 'px';
+                mouseY = ev.clientY + document.documentElement.scrollTop + 'px';
+            }
+            if (resource === "sidebar" && event.target.tagName === "SPAN") {
+                noteId = event.target.parentNode.id;
+                showRightMenuDiv(noteId, mouseX, mouseY);
+            } else if (resource === "second") {
+                noteId = event.currentTarget.id;
+                showRightMenuDiv(noteId, mouseX, mouseY);
+            }
+        }
+    }
+
+    /**
+    * 显示右键菜单div
+    */
+    function showRightMenuDiv(noteId, mouseX, mouseY){
+        var rdiv = $(".rightMenuDiv")[0];
+        rdiv.style.top= mouseY;   //通过样式指定y坐标
+        rdiv.style.left= mouseX;   //通过样式指定x坐标
+        rdiv.style.display = "block";
+        $(rdiv).attr("noteId", noteId);
+    }
+
 </script>
 
 <script>
     /*function doReloadByXHR() {
-        /!*  http://www.cnblogs.com/rush/archive/2012/05/15/2502264.html
-            https://segmentfault.com/a/1190000002782175 *!/
-        var xhr = new XMLHttpRequest();
-        xhr.open("get", "/indexHandler", false);    //同步发送请求
-//        xhr.send(null);
-        if (xhr != null) {
-            xhr.onreadystatechange = function() {
+     /!*  http://www.cnblogs.com/rush/archive/2012/05/15/2502264.html
+     https://segmentfault.com/a/1190000002782175 *!/
+     var xhr = new XMLHttpRequest();
+     xhr.open("get", "/indexHandler", false);    //同步发送请求
+     //        xhr.send(null);
+     if (xhr != null) {
+     xhr.onreadystatechange = function() {
 
-                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                    alert("ResponseText: " + xhr.responseText);
-                } else {
-                    alert("Request was unsuccessful: " + xhr.status);
-                }
-            }
-        };
-        xhr.send(null); //为xhr对象绑定事件需要在send之前？
+     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+     alert("ResponseText: " + xhr.responseText);
+     } else {
+     alert("Request was unsuccessful: " + xhr.status);
+     }
+     }
+     };
+     xhr.send(null); //为xhr对象绑定事件需要在send之前？
 
-        xhr.open("get", "/indexHandler", true);     //异步发送请求
-        if (xhr != null) {
-            xhr.onreadystatechange = function() {
-                // 校验此次异步请求是否全部完成
-                if (xhr.readyState == 4) {
-                    /!*  readyState
-                     0 未初始化；尚未调用open()方法
-                     1 启动；尚未调用send()方法
-                     2 已发送；但尚未收到响应
-                     3 接收；已经收到部分响应数据
-                     4 完成；收到全部响应数据  *!/
-                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                        alert("ResponseText: " + xhr.responseText);
-                    }
-                    else {
-                        alert("Request was unsuccessful: " + xhr.status);
-                    }
-                }
-            };
-            xhr.open("GET", "/indexHandler", true);
-            xhr.send(null);
-        }
-        xhr.send(null);
-    }
+     xhr.open("get", "/indexHandler", true);     //异步发送请求
+     if (xhr != null) {
+     xhr.onreadystatechange = function() {
+     // 校验此次异步请求是否全部完成
+     if (xhr.readyState == 4) {
+     /!*  readyState
+     0 未初始化；尚未调用open()方法
+     1 启动；尚未调用send()方法
+     2 已发送；但尚未收到响应
+     3 接收；已经收到部分响应数据
+     4 完成；收到全部响应数据  *!/
+     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+     alert("ResponseText: " + xhr.responseText);
+     }
+     else {
+     alert("Request was unsuccessful: " + xhr.status);
+     }
+     }
+     };
+     xhr.open("GET", "/indexHandler", true);
+     xhr.send(null);
+     }
+     xhr.send(null);
+     }
 
-    function jsonpTest() {
-        $.ajax({
-         url: "https://www.baidu.com",
-         type: "get",
-         dataType: 'jsonp',
-         beforeSend: function(xhr) {
-            xhr.setRequestHeader("Test-Header", "Test-Value");
-         },
-         success: function () { alert(1); },
-         error:function () { alert(2); }
-         })
-    }*/
+     function jsonpTest() {
+     $.ajax({
+     url: "https://www.baidu.com",
+     type: "get",
+     dataType: 'jsonp',
+     beforeSend: function(xhr) {
+     xhr.setRequestHeader("Test-Header", "Test-Value");
+     },
+     success: function () { alert(1); },
+     error:function () { alert(2); }
+     })
+     }*/
 </script>
 
 </html>

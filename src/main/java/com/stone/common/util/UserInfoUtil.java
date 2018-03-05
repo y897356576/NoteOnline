@@ -1,5 +1,6 @@
 package com.stone.common.util;
 
+import com.stone.common.redis.RedisInit;
 import com.stone.common.redis.RedisShard;
 import com.stone.core.exception.MyException;
 import com.stone.core.factory.UserFactory;
@@ -46,14 +47,13 @@ public class UserInfoUtil {
             }
             redisInitMark = 0;
         } catch (JedisConnectionException e) {
-            /*if (redisInitMark++ == 0) {
+            if (redisInitMark++ == 0) {
                 RedisInit.doRedisInit();
                 user = UserInfoUtil.getUserFromRedis(request);
             } else {
                 redisInitMark = 0;
                 throw new MyException("获取用户数据失败");
-            }*/
-            throw new MyException("获取用户数据失败");
+            }
         }
         return user;
     }

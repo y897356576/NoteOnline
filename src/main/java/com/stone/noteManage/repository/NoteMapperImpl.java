@@ -58,4 +58,8 @@ public class NoteMapperImpl {
         return result == 1;
     }
 
+    public void noteDelete(String userId, String noteId) {
+        noteMapper.noteDelete(userId, noteId);
+    }
+
 }

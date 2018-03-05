@@ -36,7 +36,7 @@ public class NoteService {
      * @param file
      * @return
      */
-    public Boolean noteImport(User user, String genreName, MultipartFile file) {
+    public String noteImport(User user, String genreName, MultipartFile file) {
         if (file == null || file.getSize() <= 0) {
             throw new MyException("文件上传失败：上传的文件不存在。");
         }
@@ -69,7 +69,7 @@ public class NoteService {
             logger.error("文件上传异常", e);
             throw new MyException("文件上传异常；" + e.getMessage());
         }
-        return true;
+        return note.getId();
     }
 
     /**
@@ -110,6 +110,16 @@ public class NoteService {
         Note note = noteMapperImpl.getNoteById(user.getId(), noteId);
         this.composeContent(note);
         return note;
+    }
+
+    /**
+     * 笔记删除
+     * @param user
+     * @param noteId
+     * @return
+     */
+    public void noteDelete(User user, String noteId) {
+        noteMapperImpl.noteDelete(user.getId(), noteId);
     }
 
     /**

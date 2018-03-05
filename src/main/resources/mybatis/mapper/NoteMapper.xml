@@ -102,4 +102,10 @@
         </collection>
     </resultMap>
 
+    <update id="noteDelete">
+        UPDATE note SET status = 0
+        WHERE createUserId = #{0}
+        AND id = #{1}
+    </update>
+
 </mapper>

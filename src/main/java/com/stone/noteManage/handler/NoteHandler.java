@@ -1,17 +1,20 @@
 package com.stone.noteManage.handler;
 
-import com.stone.common.util.ObjMapTransUtil;
 import com.stone.common.util.UserInfoUtil;
 import com.stone.core.exception.MyException;
 import com.stone.core.model.Note;
 import com.stone.core.model.User;
 import com.stone.noteManage.service.NoteService;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,8 @@ public class NoteHandler {
     @Autowired
     private NoteService service;
 
+    private static final Logger logger = LoggerFactory.getLogger(NoteHandler.class);
+
     @RequestMapping(value = "noteImport", method = RequestMethod.POST)
     @ResponseBody
     public Map noteImport(HttpServletRequest request, String genreName,
@@ -33,10 +38,10 @@ public class NoteHandler {
         User user = UserInfoUtil.getUserFromRedis(request);
         this.checkUserAvailable(user);
 
-        final Boolean result = service.noteImport(user, genreName, file);
+        final String noteId = service.noteImport(user, genreName, file);
 
         Map<String, Object> resultMap = new HashMap<String, Object>() {{
-            put("result", result);
+            put("noteId", noteId);
         }};
         return resultMap;
     }
@@ -44,12 +49,19 @@ public class NoteHandler {
     @RequestMapping(value = "noteList", method = RequestMethod.GET)
     @ResponseBody
     public Map noteList(HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
         User user = UserInfoUtil.getUserFromRedis(request);
         this.checkUserAvailable(user);
 
-        List<Note> notes = service.noteList(user);
+        List<Note> notes = new ArrayList<>();
+        try {
+            notes = service.noteList(user);
+            result.put("flag", true);
+        } catch (Exception e) {
+            logger.error("笔记列表查询失败", e);
+            result.put("flag", false);
+        }
 
-        Map<String, Object> result = new HashMap<>();
         result.put("notes", notes);
         return result;
     }
@@ -58,10 +70,37 @@ public class NoteHandler {
     @ResponseBody
     public Map noteDetail(HttpServletRequest request, @PathVariable String noteId) {
         User user = UserInfoUtil.getUserFromRedis(request);
+        this.checkUserAvailable(user);
+
+        if (StringUtils.isBlank(noteId)) {
+            throw new MyException("笔记内容加载失败！");
+        }
+
         Note note = service.noteDetail(user, noteId);
 
         Map<String, Object> result = new HashMap<>();
         result.put("note", note);
+        return result;
+    }
+
+    @RequestMapping(value = "noteDelete/{noteId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Map noteDelete(HttpServletRequest request, @PathVariable String noteId) {
+        User user = UserInfoUtil.getUserFromRedis(request);
+        this.checkUserAvailable(user);
+
+        if (StringUtils.isBlank(noteId)) {
+            throw new MyException("笔记删除失败！");
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        try {
+            service.noteDelete(user, noteId);
+            result.put("flag", true);
+        } catch (Exception e) {
+            result.put("flag", false);
+            result.put("errMsg", "笔记删除失败");
+        }
         return result;
     }
 
