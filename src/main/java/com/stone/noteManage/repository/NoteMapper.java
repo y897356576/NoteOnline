@@ -33,7 +33,8 @@ public interface NoteMapper {
 
     void noteDelete(@Param("userId") String userId, @Param("noteId") String noteId);
 
-    Integer noteIndexModify(@Param("userId") String userId, @Param("noteId") String noteId,
-                            @Param("indexModify") Integer indexModify);
+    List<Note> getNotesByUserIdAndGenre(@Param("userId") String userId, @Param("noteId") String noteId);
+
+    Integer noteIndexModify(List<Note> updates);
 
 }

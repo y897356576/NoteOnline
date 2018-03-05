@@ -1,5 +1,8 @@
 <div style="position: relative; float: right; padding: 3px; cursor: pointer;" onclick="closeUploadDiv()">×</div>
-<div style="margin-top: 10%; text-align: center;">
+<div style="margin-top: 5%; padding-left: 8%">
+    <input id="genreName" maxlength="10" style="font-size: 16px; height: 30px" placeholder="笔记类别"/>
+</div>
+<div style="margin-top: 1%; text-align: center;">
     <input id="noteShow" size="50" style="font-size: 16px; height: 30px" readonly/>
     <input id="noteUpload" name="noteUpload" type="file" style="width: 14%; font-size: 16px;"/>
     <br/>
@@ -25,6 +28,9 @@
             type: "post",
             url: "/noteHandler/noteImport",
             fileElementId: "noteUpload",
+            data: {
+                "genreName": $("#genreName").val()
+            },
             dataType: "json",
             success: function (result) {
                 alert("文件上传成功");

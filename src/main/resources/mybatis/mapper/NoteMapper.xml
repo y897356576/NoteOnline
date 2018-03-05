@@ -75,6 +75,7 @@
     </select>
 
     <resultMap id="noteMap" type="note">
+        <id column="id" property="id"/>
         <id column="note_id" property="id"/>
         <result column="noteName" property="noteName"/>
         <result column="noteGenreId" property="noteGenreId"/>
@@ -112,32 +113,19 @@
         AND id = #{noteId}
     </update>
 
-    <update id="noteIndexModify">
+    <select id="getNotesByUserIdAndGenre" resultMap="noteMap">
+        SELECT *
+        FROM note n
+        WHERE n.createUserId = #{userId}
+        AND n.status = 1
+        AND n.noteGenreId = (SELECT noteGenreId FROM note WHERE id = #{noteId})
+        ORDER BY n.noteIndex ASC
+    </select>
 
-        <selectKey keyProperty="noteIndex" resultType="Integer" order="BEFORE">
-            SELECT IFNULL(
-                (SELECT noteIndex FROM note
-                WHERE createUserId = #{userId}
-                AND noteIndex =
-                  (SELECT noteIndex FROM note WHERE id = #{noteId})
-                  + #{indexModify})
-            , -1) FROM DUAL
-        </selectKey>
-
-        <if test="noteIndex == -1">
-            SELECT 1 FROM DUAL
-        </if>
-
-        <if test="noteIndex != -1">
-            UPDATE note SET noteIndex = #{noteIndex} - #{indexModify}
-            WHERE createUserId = #{userId}
-            AND noteIndex = #{noteIndex};
-
-            UPDATE note SET noteIndex = noteIndex + #{indexModify}
-            WHERE createUserId = #{userId}
-            AND id = #{noteId}
-        </if>
-
+    <update id="noteIndexModify" parameterType="List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE note SET noteIndex = #{item.noteIndex} WHERE id = #{item.id}
+        </foreach>
     </update>
 
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,7 +120,38 @@ public class NoteService {
      * @return
      */
     public void noteIndexModify(User user, String noteId, Integer indexModify) {
-        noteMapper.noteIndexModify(user.getId(), noteId, indexModify);
+        List<Note> notes = noteMapper.getNotesByUserIdAndGenre(user.getId(), noteId);
+        if (CollectionUtils.isEmpty(notes)) {
+            return;
+        }
+        List<Note> updates = new ArrayList<>();
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getId().equals(noteId)) {
+                if (indexModify > 0) {
+                    if (i == notes.size() - 1) {
+                        return;
+                    } else {
+                        Integer index = notes.get(i + 1).getNoteIndex();
+                        notes.get(i + 1).setNoteIndex(notes.get(i).getNoteIndex());
+                        notes.get(i).setNoteIndex(index);
+                        updates.add(notes.get(i));
+                        updates.add(notes.get(i + 1));
+                    }
+                } else {
+                    if (i == 0) {
+                        return;
+                    } else {
+                        Integer index = notes.get(i - 1).getNoteIndex();
+                        notes.get(i - 1).setNoteIndex(notes.get(i).getNoteIndex());
+                        notes.get(i).setNoteIndex(index);
+                        updates.add(notes.get(i));
+                        updates.add(notes.get(i - 1));
+                    }
+                }
+            }
+        }
+
+        noteMapper.noteIndexModify(updates);
     }
 
     /**
