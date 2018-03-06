@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,16 +51,21 @@ public class NoteService {
         NoteFile noteFile = note.getNoteFile();
 
         try {
-            String originalName = file.getOriginalFilename();
+            String originalName = file.getOriginalFilename();   //文件名称
+            String fileType = originalName.substring(originalName.lastIndexOf(".") + 1);  //文件后缀
+
             note.setNoteName(originalName.substring(0, originalName.lastIndexOf(".")));
             note.setCreateUserId(user.getId());
-            note.setContent(new String(file.getBytes()));
+
+            if ("txt|xml|conf|java|properties|js|css".contains(fileType)) {
+                note.setContent(new String(file.getBytes()));
+            }
 
             noteGenre.setTypeName(StringUtils.isBlank(genreName) ? "默认" : genreName.trim());
 
             noteFile.setFileName(note.getNoteName());
             noteFile.setFileContentType(file.getContentType());
-            noteFile.setFileType(originalName.substring(originalName.lastIndexOf(".") + 1));
+            noteFile.setFileType(fileType);
 
             this.fileTransfer(user, file, noteFile);
 
@@ -81,8 +87,9 @@ public class NoteService {
      * @throws IOException
      */
     private void fileTransfer(User user, MultipartFile file, NoteFile noteFile) throws IOException {
-        String realPath = getClass().getResource("/").getFile().toString();
-        realPath += "files" + File.separator + user.getId() + File.separator;
+        String realPath = this.getWebPath();
+
+        realPath += File.separator + "files" + File.separator + user.getId() + File.separator;
         String filePath = realPath + noteFile.getFileName() + "." + noteFile.getFileType();
 
         if (!new File(realPath).exists()) {
@@ -107,9 +114,15 @@ public class NoteService {
      * @param noteId
      * @return
      */
-    public Note noteDetail(User user, String noteId) {
+    public Note noteDetail(HttpServletRequest request, User user, String noteId) {
         Note note = noteMapper.getNoteById(user.getId(), noteId);
-        this.composeContent(note);
+        if ("jpg|jpeg|png|bmp|gif".contains(note.getNoteFile().getFileType())) {
+            String newPath = note.getNoteFile().getFilePath().replace(this.getWebPath(), "");
+            String hostStr = request.getRequestURL().toString().replace( request.getRequestURI(), "");
+            note.getNoteFile().setFilePath(hostStr + newPath);
+        } else {
+            this.composeContent(note);
+        }
         return note;
     }
 
@@ -172,10 +185,24 @@ public class NoteService {
         StringBuilder content = new StringBuilder();
         if (CollectionUtils.isNotEmpty(note.getContents())) {
             for (NoteContent temp : note.getContents()) {
-                content.append(temp.getContent());
+                if (StringUtils.isNotBlank(temp.getContent())) {
+                    content.append(temp.getContent());
+                }
             }
         }
         note.setContent(content.toString());
+    }
+
+    /**
+     * 获取项目所在路径
+     * @return
+     */
+    private String getWebPath() {
+        String realPath = getClass().getResource("/").getFile().toString();
+        realPath = realPath.substring(0, realPath.lastIndexOf("/"));
+        realPath = realPath.substring(0, realPath.lastIndexOf("/"));
+        realPath = realPath.substring(0, realPath.lastIndexOf("/"));
+        return realPath;
     }
 
 }

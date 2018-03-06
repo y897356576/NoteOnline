@@ -103,7 +103,7 @@ public class NoteHandler {
             throw new MyException("BadRequest", "笔记内容加载失败");
         }
 
-        Note note = service.noteDetail(user, noteId);
+        Note note = service.noteDetail(request, user, noteId);
 
         Map<String, Object> result = new HashMap<>();
         result.put("note", note);

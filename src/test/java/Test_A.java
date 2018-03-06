@@ -1,20 +1,26 @@
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.beans.BeanUtils;
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.IOException;
 import java.lang.reflect.*;
-import java.security.SecureRandom;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /**
  * Created by 石头 on 2017/6/22.
@@ -32,9 +38,65 @@ public class Test_A {
 
 
     @Test
+    public void test_24() {
+    }
+
+    @Test
+    public void test_23() {
+        int[] ints = new int[100];
+        int init = 0x25c8;
+        for (int i = 0; i < 100; i++) {
+            ints[i] = init + i;
+        }
+        for (int i = 0; i < ints.length; i++) {
+            System.out.println(Integer.toHexString(ints[i]) + ":" + new String(ints, i, 1));
+        }
+    }
+
+    @Test
+    public void test_22() {
+        List<Object> objs = new ArrayList<>();
+        Object obj = new Object();
+        System.out.println("-----1:" + obj);
+        objs.add(obj);
+        obj = new Object();
+        System.out.println("-----2:" + obj);
+        objs.add(obj);
+        for (Object o : objs) {
+            System.out.println("---for:" + o);
+        }
+    }
+
+    @Test
+    public void test_21() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println(df.format(123.456D));
+
+        System.out.println(String.format("%02d", 1));
+    }
+
+    @Test
+    public void test_20() {
+        String pattern = "20[0-9][0-9](0[1-9]|1[0-2])?";
+        System.out.println(Pattern.matches(pattern, "209901"));
+    }
+
+    @Test
+    public void test_19() {
+        switch (1) {
+            case 0: System.out.println("result: 0"); break;
+            case 1: System.out.println("result: 1");
+            case 2: System.out.println("result: 2");
+            case 3: System.out.println("result: 3");
+            default: System.out.println("result: default"); break;
+        }
+    }
+
+
+    @Test
     public void test_18() {
         String a = (String) null;
-        System.out.println(a);
+        System.out.println(a.toString());
     }
 
 
@@ -54,7 +116,7 @@ public class Test_A {
 
     @Test
     public void test_16() {
-        List<String> list = new ArrayList<String>(){{
+        List<String> list = new ArrayList<String>() {{
             add("1");
             add("2");
             add("3");
@@ -86,11 +148,11 @@ public class Test_A {
     @Test
     public void test_14() {
         JSONObject json = new JSONObject();
-        json.put("1","A");
-        json.put("2","B");
-        json.put("3","C");
-        json.put("4","D");
-        json.put("5","E");
+        json.put("1", "A");
+        json.put("2", "B");
+        json.put("3", "C");
+        json.put("4", "D");
+        json.put("5", "E");
         System.out.println(JSONObject.toJSONString(json));
 
         String str = "{3:\"C\",2:\"B\",1:\"A\",5:\"E\",4:\"D\"}";
@@ -102,8 +164,8 @@ public class Test_A {
     @Test
     public void test_13() {
         Integer[] ints = new Integer[]{1, 3, 2, 5, 4, 6, 8, 7, 5, 0, -1};
-        Integer[] leftArrs = Arrays.copyOfRange(ints, 0, ints.length/2);
-        Integer[] rightArrs = Arrays.copyOfRange(ints, ints.length/2, ints.length);
+        Integer[] leftArrs = Arrays.copyOfRange(ints, 0, ints.length / 2);
+        Integer[] rightArrs = Arrays.copyOfRange(ints, ints.length / 2, ints.length);
         System.out.println(Arrays.toString(leftArrs));
         System.out.println(Arrays.toString(rightArrs));
     }
@@ -111,13 +173,9 @@ public class Test_A {
 
     @Test
     public void test_12() throws InterruptedException, ClassNotFoundException {
-//        User.doPrint();
-//        System.out.println(new User().getClass().getName());
-//        Class.forName("model.User");
-//        User user = new User();
-//        System.out.println("User:" + user);
-//        user = new User();
-//        System.out.println("User:" + user);
+        System.out.println(getClass().getResource("/").getFile());
+//        System.out.println(request.getRequestURL());
+//        System.out.println(request.getRequestURI());
     }
 
 
@@ -145,7 +203,7 @@ public class Test_A {
 
     @Test
     public void test_9() throws InterruptedException {
-        Object obj =  applicationContext.getBean("user");
+        Object obj = applicationContext.getBean("user");
         System.out.println("1:" + obj);
         test_9_assist(obj);
         TimeUnit.SECONDS.sleep(1);
@@ -155,14 +213,15 @@ public class Test_A {
         System.out.println("4:" + obj);
         System.out.println("5:" + user);
     }
-    private static void test_9_assist(Object obj){
+
+    private static void test_9_assist(Object obj) {
         obj = new User();   //传过来的obj的内容为堆中obj对象的地址，将obj重新赋值是将地址覆盖掉了，对堆中的对象无影响
         System.out.println("2:" + obj);
     }
 
 
     @Test
-    public void test_8(){
+    public void test_8() {
         Integer i = this.test_8_assist0();
         System.out.println("int : " + i);
         String str = this.test_8_assist1();
@@ -170,6 +229,7 @@ public class Test_A {
         User user = this.test_8_assist2();
         System.out.println("userName : " + user.getUserName());
     }
+
     private int test_8_assist0() {
         int x = 1;
         try {
@@ -183,11 +243,12 @@ public class Test_A {
             它应该使用栈保存返回值。*/
         }
     }
-    private String test_8_assist1(){
+
+    private String test_8_assist1() {
         String str = "1";
-        try{
+        try {
             return str;
-        } catch (Exception e){
+        } catch (Exception e) {
             str = "2";
             return str;
         } finally {
@@ -195,13 +256,14 @@ public class Test_A {
             return "3.1";
         }
     }
-    private User test_8_assist2(){
+
+    private User test_8_assist2() {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/spring.xml");
         User user = (User) applicationContext.getBean("user");
-        try{
+        try {
             user.setUserName("test1");
             return user;
-        } catch (Exception e){
+        } catch (Exception e) {
             user.setUserName("test2");
             return user;
         } finally {
@@ -211,21 +273,31 @@ public class Test_A {
 
 
     @Test
-    public void test_7(){
+    public void test_7() {
         String[] strArr = {"1", "2", "3"};
         System.out.println(Arrays.toString(strArr));
         this.test_7_assist(strArr);
         System.out.println(Arrays.toString(strArr));
     }
-    private void test_7_assist(String[] strArr){
+
+    private void test_7_assist(String[] strArr) {
         strArr[2] = "4";
     }
 
 
     @Test
-    public void test_6(){
-        List<Integer> l1 = new ArrayList<Integer>(){{add(1);add(2);add(3);add(1);}};
-        List<Integer> l2 = new ArrayList<Integer>(){{add(4);add(2);add(3);}};
+    public void test_6() {
+        List<Integer> l1 = new ArrayList<Integer>() {{
+            add(1);
+            add(2);
+            add(3);
+            add(1);
+        }};
+        List<Integer> l2 = new ArrayList<Integer>() {{
+            add(4);
+            add(2);
+            add(3);
+        }};
         Set<Integer> i1 = new HashSet<Integer>();
         i1.addAll(l1);
         l1.removeAll(l2);
@@ -234,17 +306,18 @@ public class Test_A {
 
 
     @Test
-    public void test_5(){
-        try{
+    public void test_5() {
+        try {
             Date date = new Date();
             System.out.println("1:" + date.getTime());
             this.test_5_assist(date);
             Thread.sleep(1000);
             System.out.println("2:" + date.getTime());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     private void test_5_assist(Date date) throws InterruptedException {
         Thread.sleep(2005);
 //        date = new Date();
@@ -254,14 +327,14 @@ public class Test_A {
 
 
     @Test
-    public void test_4(){
-        System.out.println(StringUtils.leftPad("1",4,"0"));
-        System.out.println(StringUtils.rightPad("1",4,"0"));
+    public void test_4() {
+        System.out.println(StringUtils.leftPad("1", 4, "0"));
+        System.out.println(StringUtils.rightPad("1", 4, "0"));
     }
 
 
     @Test
-    public void test_3(){
+    public void test_3() {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/spring.xml");
         User user = (User) applicationContext.getBean("user");
         System.out.println("User:" + user);
@@ -269,8 +342,12 @@ public class Test_A {
 
 
     @Test
-    public void test_2(){
-        List<String> list = new ArrayList<String>(){{add("1");add("2");add("3");}};
+    public void test_2() {
+        List<String> list = new ArrayList<String>() {{
+            add("1");
+            add("2");
+            add("3");
+        }};
         String[] objArr = list.toArray(new String[list.size()]);
         list = Arrays.asList(objArr);
         String s = StringUtils.join(list.toArray(new String[list.size()]), ",");
@@ -281,13 +358,13 @@ public class Test_A {
 
     @Test
     //java反射
-    public void test_1(){
-        try{
+    public void test_1() {
+        try {
             Class cla = Class.forName("model.User");
             Object obj = cla.newInstance();
-            if(obj instanceof User) {
+            if (obj instanceof User) {
                 System.out.println(" this obj is instanceof User");
-                System.out.println((User)obj);
+                System.out.println((User) obj);
             }
 
             System.out.println("packageName:" + cla.getPackage().getName());
@@ -298,7 +375,7 @@ public class Test_A {
             System.out.println("\n --------------------- \n");
 
             Constructor[] constructors = cla.getConstructors();
-            for(Constructor constructorf : constructors){
+            for (Constructor constructorf : constructors) {
                 System.out.println("ConstructParamTypes:" + Arrays.toString(constructorf.getParameterTypes()));
             }
             Constructor construct = cla.getConstructor();
@@ -306,21 +383,21 @@ public class Test_A {
             System.out.println("constructName:" + construct.getName());
             Class[] params = construct.getParameterTypes();
             String paramStr = "";
-            if(params!=null){
-                for(Class param : params){
+            if (params != null) {
+                for (Class param : params) {
                     paramStr += "," + param.getSimpleName();
                 }
             }
-            System.out.println("constructParams" +paramStr);
+            System.out.println("constructParams" + paramStr);
 
             System.out.println("\n --------------------- \n");
 
-            Method[] methods =  cla.getMethods();
-            if(methods != null){
-                for(Method method : methods){
+            Method[] methods = cla.getMethods();
+            if (methods != null) {
+                for (Method method : methods) {
                     String paramTypes = "";
                     Type[] paramTypeArr = method.getGenericParameterTypes();
-                    for(Type type : paramTypeArr){
+                    for (Type type : paramTypeArr) {
                         paramTypes += type + ",";
                     }
                     System.out.println(method.getName() + "--" + paramTypes);
@@ -343,7 +420,7 @@ public class Test_A {
             method = cla.getDeclaredMethod("getUserName");
             System.out.println("Function_getUserName:" + method.invoke(user_2));
 
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Exception : " + e);
         }
     }

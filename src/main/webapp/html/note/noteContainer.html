@@ -1,0 +1,288 @@
+<div id="sidebar" class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
+    <ul id="noteMgtUL" class="ul_label">
+        <template v-for="(notes, noteType) in noteTypes">
+            <li class="label first" @click="secTempToggle('secTemp' + noteType)">
+                {{ noteType }}
+            </li>
+            <div v-bind:id="'secTemp' + noteType">
+                <li class="label second" v-bind:id="note.id" v-for="note in notes">
+                            <span style="cursor: pointer;" v-bind:title="note.noteName" @click="getNoteDetail(note.id)">
+                                {{ note.noteName }}
+                            </span>
+                </li>
+            </div>
+        </template>
+    </ul>
+</div>
+
+<div class="noteDetail" style="height: 100%; width: 87%; float: right;">
+    <div id="noteContent" style="width: 100%; height: 100%;">
+        <div id="noteTitle" style="height: 4%; width: 100%; text-align: center; font-size: 20px;padding-top: 1%; background-color: rgba(192,220,192,0.9);"></div>
+        <div id="noteParticulars" style="height: 94%; width: 100%; overflow-y: auto;">
+                <textarea id="particularsArea" style="height: 100%; width: 100%; background-color: rgba(192,220,192,0.9); outline: none; padding: 10px;" readonly>
+                </textarea>
+        </div>
+        <div id="imgDetail" style="height: 94%; width: 100%; overflow-y: auto;">
+        </div>
+    </div>
+</div>
+
+<div style="position: absolute; top: 90%; left: 95%; width: 60px; height: 40px; background-color: #CDCDCD;">
+    <div id="showUploadDiv"
+         style="color: #000000; font-size: 20px; margin-top: 8px; margin-left: 8px; cursor: pointer;">上传
+    </div>
+</div>
+
+<div class="noteUploadDiv">
+    <div style="position: relative; float: right; padding: 3px; cursor: pointer;" onclick="closeUploadDiv()">×</div>
+    <div style="margin-top: 5%; padding-left: 8%">
+        <input id="genreName" maxlength="10" style="font-size: 16px; height: 30px" placeholder="笔记类别"/>
+    </div>
+    <div style="margin-top: 1%; text-align: center;">
+        <input id="noteShow" size="50" style="font-size: 16px; height: 30px" readonly/>
+        <input id="noteUpload" name="noteUpload" type="file" style="width: 14%; font-size: 16px;"/>
+        <br/>
+        <br/>
+        <input id="doNoteUpload" type="button" value="上传" style="font-size: 18px;"/>
+    </div>
+</div>
+
+<div class="rightMenuDiv">
+    <div style="width: 100%; height: 26%; border-bottom: 1px solid grey; text-align: center; padding-top: 10%; cursor: pointer"
+         onclick="indexMove(this, 1)">上移</div>
+    <div style="width: 100%; height: 26%; border-bottom: 1px solid grey; text-align: center; padding-top: 10%; cursor: pointer"
+         onclick="indexMove(this, -1)">下移</div>
+    <div style="width: 100%; text-align: center; padding-top: 10%; cursor: pointer" onclick="deleteNote(this)">删除</div>
+</div>
+
+<script>
+    /** 左侧笔记列表 */
+
+    $(function () {
+        showNoteList();
+    });
+
+    var vm = new Vue({
+        el: "#sidebar",
+        data: {
+            noteTypes: {}
+        },
+        methods: {
+            getNoteDetail: function (noteId) {
+                showNoteDetail(noteId);
+            },
+            secTempToggle: function (tempId) {
+                $("#" + tempId).toggle();
+            }
+        }
+    });
+
+    function showNoteList() {
+        $.ajax({
+            type: "get",
+            url: "/noteHandler/noteList",
+            dataType: "json",
+            success: function (result) {
+                var notes = result.notes;
+                var noteTypes = {};
+                for (var i in notes) {
+                    var note = notes[i];
+                    var typeName = note.noteGenre.typeName;
+                    if (!noteTypes[typeName]) {
+                        noteTypes[typeName] = [];
+                        noteTypes[typeName].push(note);
+                    } else {
+                        noteTypes[typeName].push(note);
+                    }
+                }
+
+                vm.noteTypes = noteTypes;
+            }
+        })
+    }
+</script>
+
+<script>
+    /** 笔记内容加载 */
+
+    $(function () {
+        if (sessionStorage.getItem("noteId")) {
+            showNoteDetail(sessionStorage.getItem("noteId"));
+        }
+    });
+
+    function showNoteDetail(noteId) {
+        if (!noteId) {
+            return;
+        }
+        $.ajax({
+            type: "get",
+            url: "/noteHandler/noteDetail/" + noteId,
+            dataType: "json",
+            success: function (result) {
+                var note = result.note;
+                $("#noteTitle").html(note.noteName);
+                if ("jpg|jpeg|png|bmp|gif".indexOf(note.noteFile.fileType) >= 0) {
+                    $("#noteParticulars").hide();
+                    $("#imgDetail").show();
+                    $("#imgDetail").html("<img src=" + note.noteFile.filePath + " style='width: 100%; height: 100%;' />");
+                } else {
+                    $("#imgDetail").hide();
+                    $("#noteParticulars").show();
+                    $("#particularsArea").val(note.content);
+                }
+            }
+        })
+    }
+</script>
+
+<script>
+    /** 文件上传 */
+
+    $("#showUploadDiv").on("click", function () {
+        $(".noteUploadDiv").toggle();
+    });
+
+    function closeUploadDiv() {
+        $(".noteUploadDiv").hide();
+    }
+
+    $("#noteUpload").on("change", function () {
+        $("#noteShow").val($("#noteUpload").val());
+    });
+
+    var suffixs = "txt|xml|conf|java|properties|js|css|jpg|jpeg|png|bmp|gif";
+    //文件上传
+    $("#doNoteUpload").on("click", function () {
+        var filePath = $("#noteUpload").val();
+        if (!filePath) {
+            alert("请选择需上传的文件");
+        }
+        var fileSuffix = filePath.substring(filePath.lastIndexOf(".") + 1);
+        if (suffixs.indexOf(fileSuffix) < 0) {
+            alert("只支持文本与图片类型上传");
+            return;
+        }
+        $.ajaxFileUpload({
+            type: "post",
+            url: "/noteHandler/noteImport",
+            fileElementId: "noteUpload",
+            data: {
+                "genreName": $("#genreName").val()
+            },
+            dataType: "json",
+            success: function (result) {
+                alert("文件上传成功");
+                sessionStorage.setItem("noteId", result.noteId);
+                closeUploadDiv();
+                location.reload();
+            }
+        })
+    });
+</script>
+
+<script>
+    /** 右键菜单 */
+
+    //去除 sidebar 中浏览器自带的点击事件
+    $("#sidebar").unbind("mousedown").bind("contextmenu", function (e) {
+        e.preventDefault();
+        return false;
+    });
+    $(".rightMenuDiv").unbind("mousedown").bind("contextmenu", function (e) {
+        e.preventDefault();
+        return false;
+    });
+    //为 sidebar 添加自定义的点击事件
+    $("#sidebar").bind("mousedown", function (e) {
+        $("#sidebar").unbind("mousedown");  //去除sidebar的点击事件
+        reloadSidebarClick(e);  //为所有 second 元素添加右击事件
+    });
+
+    function reloadSidebarClick(e) {
+        //为所有 second 元素添加右击事件
+        $(".second").unbind("mousedown").bind("mousedown", function (event) {
+            showRightMenu(event, "second");
+        });
+        //触发右击事件
+        showRightMenu(e, "sidebar");
+    }
+    function showRightMenu(event, resource) {
+        if (event.which === 3) {
+            var noteId;
+            var mouseX;
+            var mouseY;
+            if(event.pageX || event.pageY){
+                mouseX = event.pageX + 'px';
+                mouseY = event.pageY + 'px';
+            } else {
+                mouseX = ev.clientX + document.body.scrollLeft - document.body.clientLeft + 'px';
+                mouseY = ev.clientY + document.documentElement.scrollTop + 'px';
+            }
+            if (resource === "sidebar" && event.target.tagName === "SPAN") {
+                noteId = event.target.parentNode.id;
+                showRightMenuDiv(noteId, mouseX, mouseY);
+            } else if (resource === "second") {
+                noteId = event.currentTarget.id;
+                showRightMenuDiv(noteId, mouseX, mouseY);
+            }
+        }
+    }
+
+    //显示右键菜单div
+    function showRightMenuDiv(noteId, mouseX, mouseY){
+        var rdiv = $(".rightMenuDiv")[0];
+        rdiv.style.top= mouseY;   //通过样式指定y坐标
+        rdiv.style.left= mouseX;   //通过样式指定x坐标
+        rdiv.style.display = "block";
+        $(rdiv).attr("noteId", noteId);
+    }
+    //隐藏右键菜单
+    $(".rightMenuDiv").on("mouseleave", function () {
+        $(".rightMenuDiv").hide();
+    });
+</script>
+
+<script>
+    /** 右键菜单事件处理 */
+
+    function indexMove(obj, indexModify) {
+        var noteId = $(obj.parentElement).attr("noteId");
+        $.ajax({
+            type: "put",
+            url: "/noteHandler/noteList",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "noteId": noteId,
+                "indexModify": indexModify
+            }),
+            dataType: "json",
+            success: function (result) {
+                if (result.flag) {
+                    $(obj).parent().hide();
+                    showNoteList();
+                }
+            }
+        });
+    }
+
+    function deleteNote(obj) {
+        if (!confirm("确认删除该条笔记？")) {
+            return;
+        }
+        var noteId = $(obj.parentElement).attr("noteId");
+        $.ajax({
+            type: "delete",
+            url: "/noteHandler/noteDetail/" + noteId,
+            dataType: "json",
+            success: function (result) {
+                if (result.flag) {
+                    alert("删除成功");
+                    showNoteList();
+                } else {
+                    alert(result.errMsg);
+                }
+            }
+        });
+    }
+</script>

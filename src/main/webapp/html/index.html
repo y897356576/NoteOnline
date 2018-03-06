@@ -67,104 +67,16 @@
 </div>
 
 <div class="container" style="height: 90%; width: 100%">
-    <div id="sidebar" class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
-        <ul id="noteMgtUL" class="ul_label">
-            <template v-for="(notes, noteType) in noteTypes">
-                <li class="label first" @click="secTempToggle('secTemp' + noteType)">
-                    {{ noteType }}
-                </li>
-                <div v-bind:id="'secTemp' + noteType">
-                    <li class="label second" v-bind:id="note.id" v-for="note in notes">
-                            <span style="cursor: pointer;" v-bind:title="note.noteName" @click="getNoteDetail(note.id)">
-                                {{ note.noteName }}
-                            </span>
-                    </li>
-                </div>
-            </template>
-        </ul>
-    </div>
-    <div class="noteDetail" style="height: 100%; width: 87%; float: right;">
-    </div>
 </div>
 
 <div class="footer" style="background-color: #5f5f5f; height: 2%; width: 100%">
 </div>
-
-<div style="position: absolute; top: 90%; left: 95%; width: 60px; height: 40px; background-color: #CDCDCD;">
-    <div id="showUploadDiv"
-         style="color: #000000; font-size: 20px; margin-top: 8px; margin-left: 8px; cursor: pointer;">上传
-    </div>
-</div>
-
-<div class="noteUploadDiv">
-</div>
-
-<div class="rightMenuDiv">
-</div>
-
 </body>
 
 <script>
     $(function () {
-        showNoteList();
-        $(".noteUploadDiv").load("note/noteFileUpload.html");
-        $(".rightMenuDiv").load("note/noteListRightMenu.html");
-        if (sessionStorage.getItem("noteId")) {
-            showNoteDetail(sessionStorage.getItem("noteId"));
-        } else {
-            $(".noteDetail").load("note/noteInit.html");
-        }
+        $(".container").load("note/noteContainer.html");
     });
-
-    var vm = new Vue({
-        el: "#sidebar",
-        data: {
-            noteTypes: {}
-        },
-        methods: {
-            getNoteDetail: function (noteId) {
-                showNoteDetail(noteId);
-            },
-            secTempToggle: function (tempId) {
-                $("#" + tempId).toggle();
-            }
-        }
-    });
-
-    function showNoteList() {
-        $.ajax({
-            type: "get",
-            url: "/noteHandler/noteList",
-            dataType: "json",
-            success: function (result) {
-                var notes = result.notes;
-                var noteTypes = {};
-                for (var i in notes) {
-                    var note = notes[i];
-                    var typeName = note.noteGenre.typeName;
-                    if (!noteTypes[typeName]) {
-                        noteTypes[typeName] = [];
-                        noteTypes[typeName].push(note);
-                    } else {
-                        noteTypes[typeName].push(note);
-                    }
-                }
-
-                vm.noteTypes = noteTypes;
-            }
-        })
-    }
-
-    var notInitedContentDiv = false;
-    function showNoteDetail(noteId) {
-        sessionStorage.setItem("noteId", noteId);
-        if (!notInitedContentDiv) {
-            $(".noteDetail").load("note/noteContent.html");
-            notInitedContentDiv = true;
-        } else {
-            showNoteContent();
-        }
-    }
 
     //用户注销
     $("#doLogout").on("click", function () {
@@ -172,74 +84,6 @@
             window.location.href = "/login.html";
         })
     });
-
-    $("#showUploadDiv").on("click", function () {
-        $(".noteUploadDiv").toggle();
-        reloadSidebarClick();
-    });
-
-    $(".rightMenuDiv").on("mouseleave", function () {
-        $(".rightMenuDiv").hide();
-    });
-
-</script>
-
-<script>
-    //去除 sidebar 中浏览器自带的点击事件
-    $("#sidebar").unbind("mousedown").bind("contextmenu", function (e) {
-        e.preventDefault();
-        return false;
-    });
-    $(".rightMenuDiv").unbind("mousedown").bind("contextmenu", function (e) {
-        e.preventDefault();
-        return false;
-    });
-    //为 sidebar 添加自定义的点击事件
-    $("#sidebar").bind("mousedown", function (e) {
-        $("#sidebar").unbind("mousedown");  //去除sidebar的点击事件
-        reloadSidebarClick(e);  //为所有 second 元素添加右击事件
-    });
-
-    function reloadSidebarClick(e) {
-        //为所有 second 元素添加右击事件
-        $(".second").unbind("mousedown").bind("mousedown", function (event) {
-            showRightMenu(event, "second");
-        });
-        //触发右击事件
-        showRightMenu(e, "sidebar");
-    }
-    function showRightMenu(event, resource) {
-        if (event.which === 3) {
-            var noteId;
-            var mouseX;
-            var mouseY;
-            if(event.pageX || event.pageY){
-                mouseX = event.pageX + 'px';
-                mouseY = event.pageY + 'px';
-            } else {
-                mouseX = ev.clientX + document.body.scrollLeft - document.body.clientLeft + 'px';
-                mouseY = ev.clientY + document.documentElement.scrollTop + 'px';
-            }
-            if (resource === "sidebar" && event.target.tagName === "SPAN") {
-                noteId = event.target.parentNode.id;
-                showRightMenuDiv(noteId, mouseX, mouseY);
-            } else if (resource === "second") {
-                noteId = event.currentTarget.id;
-                showRightMenuDiv(noteId, mouseX, mouseY);
-            }
-        }
-    }
-
-    /**
-    * 显示右键菜单div
-    */
-    function showRightMenuDiv(noteId, mouseX, mouseY){
-        var rdiv = $(".rightMenuDiv")[0];
-        rdiv.style.top= mouseY;   //通过样式指定y坐标
-        rdiv.style.left= mouseX;   //通过样式指定x坐标
-        rdiv.style.display = "block";
-        $(rdiv).attr("noteId", noteId);
-    }
 
 </script>
 
