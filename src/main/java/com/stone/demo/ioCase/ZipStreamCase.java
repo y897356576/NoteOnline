@@ -10,17 +10,17 @@ import java.util.zip.*;
 public class ZipStreamCase {
 
     public static void main(String[] args) {
-//        String filePath = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\ZipStreamCase.java";
-//        String outputPathGzip = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\ZipStreamCaseCopy.java.zip";
+//        String filePath = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\ZipStreamCase.java";
+//        String outputPathGzip = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\ZipStreamCaseCopy.java.zip";
 //        doGZipCase(filePath, outputPath);
 //        readGZipCase(outputPath);
         String[] strs = new String[5];
-        strs[0] = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\EchoCase.java";
-        strs[1] = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\FileStreamReadWriteCase.java";
-        strs[2] = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\ImgReaderCase.java";
-        strs[3] = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\NioChannelCase.java";
-        strs[4] = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\RedirectCase.java";
-        String outputPathZip = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\IOZipCase.zip";
+        strs[0] = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\EchoCase.java";
+        strs[1] = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\FileStreamReadWriteCase.java";
+        strs[2] = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\ImgReaderCase.java";
+        strs[3] = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\NioChannelCase.java";
+        strs[4] = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\RedirectCase.java";
+        String outputPathZip = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\IOZipCase.zip";
         doZipCase(strs, outputPathZip);
         readZipCase(outputPathZip);
     }

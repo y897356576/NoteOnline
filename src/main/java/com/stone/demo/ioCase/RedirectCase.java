@@ -10,9 +10,9 @@ public class RedirectCase {
     public static void main(String[] args) throws IOException {
         PrintStream console = System.out;
         InputStream is = new BufferedInputStream(new FileInputStream(
-                new File("E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\RedirectCase.java")));
+                new File("E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\RedirectCase.java")));
         OutputStream os = new BufferedOutputStream(new FileOutputStream(
-                new File("E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\RedirectCaseCopy.java")));
+                new File("E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\RedirectCaseCopy.java")));
         System.setOut(new PrintStream(os));
         String str = "";
         BufferedReader br = new BufferedReader(new InputStreamReader(is));

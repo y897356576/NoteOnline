@@ -11,7 +11,7 @@ public class FileStreamReadWriteCase {
         Class clazz = new FileStreamReadWriteCase().getClass();
         String rootPath = clazz.getResource("/").getFile();
         String hereClassPath = clazz.getResource("").getFile() + clazz.getSimpleName() + ".class";
-        String hereJavaPath = "E:\\Projects\\mavenCase_fir\\src\\main\\java\\com\\stone\\demo\\ioCase\\FileStreamReadWriteCase.java";
+        String hereJavaPath = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\FileStreamReadWriteCase.java";
 //        getFiles(rootPath);
 //        readFileByBufferedInputStream(hereJavaPath);
 //        readFileByBufferedReader(hereJavaPath);
