@@ -168,12 +168,16 @@
             dataType: "json",
             success: function (result) {
                 var note = result.note;
+                if (!note) {
+                    return;
+                }
                 $("#noteTitle").show();
                 $("#noteTitle").html(note.noteName);
                 if ("jpg|jpeg|png|bmp|gif".indexOf(note.noteFile.fileType) >= 0) {
                     $("#noteParticulars").hide();
                     $("#imgDetail").show();
-                    $("#imgDetail").html("<img src=" + note.noteFile.filePath + " style='width: 100%; height: 100%;' />");
+                    var url = "/noteHandler/noteDetailImg?filePath=" + encodeURI(note.noteFile.filePath);
+                    $("#imgDetail").html("<img src=" + url + " style='width: 100%; height: 100%;' />");
                 } else {
                     $("#imgDetail").hide();
                     $("#noteParticulars").show();

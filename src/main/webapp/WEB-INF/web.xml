@@ -15,6 +15,7 @@
         <welcome-file>/login.html</welcome-file>
     </welcome-file-list>
 
+    <!-- 可用System.getProperty("webapp.root")来动态获项目的运行路径(log4j2.xml内可试${webapp.root}) -->
     <context-param>
         <param-name>webAppRootKey</param-name>
         <param-value>webapp.root</param-value>
@@ -81,13 +82,6 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring.xml</param-value>
     </context-param>
-
-
-    <!-- 可用System.getProperty("testProject")来动态获项目的运行路径(log4j2.xml内可试${webappRoot}) -->
-    <!--<context-param>
-        <param-name>webAppRootKey</param-name>
-        <param-value>webappRoot</param-value>
-    </context-param>-->
 
 
     <!-- spring MVC 的配置 -->

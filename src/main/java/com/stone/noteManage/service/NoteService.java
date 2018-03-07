@@ -11,9 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,11 +95,15 @@ public class NoteService {
 
         realPath += File.separator + "files" + File.separator + user.getId() + File.separator;
         String filePath = realPath + noteFile.getFileName() + "." + noteFile.getFileType();
+        File realPathFile = new File(realPath);
+        File filePathFile = new File(filePath);
 
-        if (!new File(realPath).exists()) {
-            new File(realPath).mkdirs();
+        if (!realPathFile.exists()) {
+            realPathFile.mkdirs();
         }
-        file.transferTo(new File(filePath));
+        if (!filePathFile.exists()) {
+            file.transferTo(filePathFile);
+        }
         noteFile.setFilePath(filePath);
     }
 
@@ -116,14 +124,33 @@ public class NoteService {
      */
     public Note noteDetail(HttpServletRequest request, User user, String noteId) {
         Note note = noteMapper.getNoteById(user.getId(), noteId);
-        if ("jpg|jpeg|png|bmp|gif".contains(note.getNoteFile().getFileType())) {
-            String newPath = note.getNoteFile().getFilePath().replace(this.getWebPath(), "");
-            String hostStr = request.getRequestURL().toString().replace( request.getRequestURI(), "");
-            note.getNoteFile().setFilePath(hostStr + newPath);
-        } else {
+        if (note == null) {
+            return note;
+        }
+        if (!"jpg|jpeg|png|bmp|gif".contains(note.getNoteFile().getFileType())) {
             this.composeContent(note);
         }
         return note;
+    }
+
+    /**
+     * 加载图片文件
+     * @param response
+     * @param filePath
+     */
+    public void noteDetailImg(HttpServletResponse response, String filePath) {
+        try {
+            InputStream is = new FileInputStream(new File(filePath));
+            byte[] bytes = new byte[is.available()];
+            is.read(bytes);
+            response.setContentType("image/jpeg");
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.write(bytes);
+            outputStream.flush();
+        } catch (IOException e) {
+            logger.error("图片加载失败", e);
+            throw new MyException("图片加载失败");
+        }
     }
 
     /**

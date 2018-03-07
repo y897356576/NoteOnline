@@ -110,6 +110,12 @@ public class NoteHandler {
         return result;
     }
 
+    @RequestMapping(value = "noteDetailImg", method = RequestMethod.GET)
+    @ResponseBody
+    public void noteDetailImg(HttpServletResponse response, @RequestParam String filePath) {
+        service.noteDetailImg(response, filePath);
+    }
+
     @RequestMapping(value = "noteDetail/{noteId}", method = RequestMethod.DELETE)
     @ResponseBody
     public Map noteDelete(HttpServletRequest request, @PathVariable String noteId) {

@@ -15,7 +15,7 @@
         <span style="color: #dedede; font-size: 15px; padding-left: 5px;">服务器①号</span>
     </div>
     <div style="float: right; margin-top: 1.5%; margin-right: 1.5%;">
-                <span id="doLogout" style="color: #dedede; font-size: 16px; text-decoration: underline; cursor: pointer;
+        <span id="doLogout" onclick="doLogOut()" style="color: #dedede; font-size: 16px; text-decoration: underline; cursor: pointer;
                 text-align: right; display: block;">注销</span>
     </div>
 </div>
@@ -33,6 +33,10 @@
     $(function () {
         $(".container").load("note/noteContainer.html");
         userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        if (!userInfo) {
+            doLogOut();
+            return;
+        }
         vmIndex.nickName = userInfo.nickName;
     });
 
@@ -44,11 +48,11 @@
     });
 
     //用户注销
-    $("#doLogout").on("click", function () {
+    function doLogOut() {
         $.post("/loginHandler/doLogOut/74f77674-0457-4298-8d77-2850c6a78393", function () {
             window.location.href = "/login.html";
         })
-    });
+    }
 
 </script>
 
