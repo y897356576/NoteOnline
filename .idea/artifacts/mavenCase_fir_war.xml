@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="mavenCase_fir:war">
-    <output-path>$PROJECT_DIR$/target/artifacts/mavenCase_fir_war</output-path>
-    <root id="archive" name="mavenCase_fir_war.war">
-      <element id="artifact" artifact-name="mavenCase_fir:war exploded" />
-    </root>
-  </artifact>
-</component>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="noteOnline:war">
+    <output-path>$PROJECT_DIR$/target/artifacts/noteOnline_war</output-path>
+    <root id="archive" name="noteOnline_war.war">
+      <element id="artifact" artifact-name="noteOnline:war exploded" />
+    </root>
+  </artifact>
+</component>

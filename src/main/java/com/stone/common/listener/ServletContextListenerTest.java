@@ -1,9 +1,5 @@
 package com.stone.common.listener;
 
-import com.stone.common.util.EhcacheUtil;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 

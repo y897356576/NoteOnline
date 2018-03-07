@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mavenCase_fir.iml" filepath="$PROJECT_DIR$/mavenCase_fir.iml" />
+      <module fileurl="file://$PROJECT_DIR$/noteOnline.iml" filepath="$PROJECT_DIR$/noteOnline.iml" />
     </modules>
   </component>
 </project>
