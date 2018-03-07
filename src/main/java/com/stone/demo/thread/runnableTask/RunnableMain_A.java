@@ -68,7 +68,7 @@ public class RunnableMain_A {
     }
 
     private static void method_4A(ThreadPoolTaskExecutor executor) {
-        User user = UserFactory.generateUser();
+        User user = new User();
         user.setUserName("test1");
 
         RunnableTask_4 runnable = new RunnableTask_4();

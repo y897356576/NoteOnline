@@ -35,6 +35,9 @@ public class LoginService {
     @Autowired
     private UserMapperImpl userMapperImpl;
 
+    /**
+     * 用户登录
+     */
     public User doLogin(User user, HttpServletResponse response) {
         try{
             if (user==null || StringUtils.isBlank(user.getUserName())
@@ -84,8 +87,10 @@ public class LoginService {
     }
 
 
-
-    public void doLogOut( String id, HttpServletRequest request, HttpServletResponse response) {
+    /**
+     * 用户注销
+     */
+    public void doLogOut(String id, HttpServletRequest request, HttpServletResponse response) {
         String userId = this.removeLoginCookie(request, response);
 
         //注销时清除redis中的用户信息

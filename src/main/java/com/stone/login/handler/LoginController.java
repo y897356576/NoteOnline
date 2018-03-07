@@ -1,7 +1,6 @@
 package com.stone.login.handler;
 
 import com.stone.common.util.ResultMap;
-import com.stone.core.factory.UserFactory;
 import com.stone.core.model.User;
 import com.stone.login.service.LoginService;
 import org.apache.log4j.LogManager;
@@ -33,7 +32,6 @@ public class LoginController {
         Map<String, Object> rsMap = new HashMap<String, Object>();
 
         try{
-            UserFactory.standardUser(user);
             user = loginServic.doLogin(user, response);
         } catch (Exception e){
             user = null;
@@ -41,10 +39,12 @@ public class LoginController {
         }
 
         if (user != null) {
+            user.setPassWord("");
             rsMap = ResultMap.generateMap(true);
+            rsMap.put("userInfo", user);
             logger.info("[" + user.getUserName() + "]：登录成功");
-
         }
+
         return rsMap;
     }
 

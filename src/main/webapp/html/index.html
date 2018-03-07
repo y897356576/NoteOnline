@@ -1,64 +1,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>线上笔记</title>
+
     <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="/js/ajaxfileupload.js"></script>
     <script type="text/javascript" src="/js/vue.min.js"></script>
 </head>
 
-<style>
-    .ul_label {
-        list-style-type: none;
-        padding: 0 10px;
-        font-size: 20px;
-    }
-
-    .ul_label .label {
-        border: 1px solid #cdcdcd;
-        line-height: 39px;
-        padding-left: 20px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-
-    .ul_label .first {
-        margin-top: 6%;
-        background-color: rgb(245, 245, 245);
-    }
-
-    .ul_label .second {
-        border-top: 0;
-        border-right: 0;
-        margin-left: 20px;
-        margin-top: 5px;
-    }
-
-    .noteUploadDiv {
-        display: none;
-        height: 20%;
-        width: 30%;
-        background-color: #cdcdcd;
-        position: absolute;
-        top: 30%;
-        left: 35%
-    }
-
-    .rightMenuDiv {
-        width: 60px;
-        height: 100px;
-        background-color: rgb(245, 245, 245);
-        position: absolute;
-        display: none;
-        border: 1px solid rgba(162,162,162,0.27);
-    }
-
-</style>
-
 <body class="header-page" style="margin: 0;">
 <div class="header" style="background-color: #5f5f5f; height: 8%; width: 100%;">
     <div style="float: left; margin-top: 1.2%; margin-left: 1.2%;">
-        <span style="color: #dedede; font-size: 24px; font-weight: bold;">石头的线上笔记</span>
+        <span style="color: #dedede; font-size: 24px; font-weight: bold;">{{ nickName }}的线上笔记</span>
+        <span style="color: #dedede; font-size: 15px; padding-left: 5px;">服务器①号</span>
     </div>
     <div style="float: right; margin-top: 1.5%; margin-right: 1.5%;">
                 <span id="doLogout" style="color: #dedede; font-size: 16px; text-decoration: underline; cursor: pointer;
@@ -74,8 +28,19 @@
 </body>
 
 <script>
+    var userInfo;
+
     $(function () {
         $(".container").load("note/noteContainer.html");
+        userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        vmIndex.nickName = userInfo.nickName;
+    });
+
+    var vmIndex = new Vue({
+        el: ".header",
+        data: {
+            nickName: ""
+        }
     });
 
     //用户注销
@@ -87,62 +52,62 @@
 
 </script>
 
-<script>
-    /*function doReloadByXHR() {
-     /!*  http://www.cnblogs.com/rush/archive/2012/05/15/2502264.html
-     https://segmentfault.com/a/1190000002782175 *!/
-     var xhr = new XMLHttpRequest();
-     xhr.open("get", "/indexHandler", false);    //同步发送请求
-     //        xhr.send(null);
-     if (xhr != null) {
-     xhr.onreadystatechange = function() {
+<!--<script>
+    function doReloadByXHR() {
+        /*  http://www.cnblogs.com/rush/archive/2012/05/15/2502264.html
+        https://segmentfault.com/a/1190000002782175 */
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", "/indexHandler", false);    //同步发送请求
+        //        xhr.send(null);
+        if (xhr != null) {
+            xhr.onreadystatechange = function() {
 
-     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-     alert("ResponseText: " + xhr.responseText);
-     } else {
-     alert("Request was unsuccessful: " + xhr.status);
-     }
-     }
-     };
-     xhr.send(null); //为xhr对象绑定事件需要在send之前？
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    alert("ResponseText: " + xhr.responseText);
+                } else {
+                    alert("Request was unsuccessful: " + xhr.status);
+                }
+            }
+        };
+        xhr.send(null); //为xhr对象绑定事件需要在send之前？
 
-     xhr.open("get", "/indexHandler", true);     //异步发送请求
-     if (xhr != null) {
-     xhr.onreadystatechange = function() {
-     // 校验此次异步请求是否全部完成
-     if (xhr.readyState == 4) {
-     /!*  readyState
-     0 未初始化；尚未调用open()方法
-     1 启动；尚未调用send()方法
-     2 已发送；但尚未收到响应
-     3 接收；已经收到部分响应数据
-     4 完成；收到全部响应数据  *!/
-     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-     alert("ResponseText: " + xhr.responseText);
-     }
-     else {
-     alert("Request was unsuccessful: " + xhr.status);
-     }
-     }
-     };
-     xhr.open("GET", "/indexHandler", true);
-     xhr.send(null);
-     }
-     xhr.send(null);
-     }
+        xhr.open("get", "/indexHandler", true);     //异步发送请求
+        if (xhr != null) {
+            xhr.onreadystatechange = function() {
+                // 校验此次异步请求是否全部完成
+                if (xhr.readyState == 4) {
+                /*  readyState
+                    0 未初始化；尚未调用open()方法
+                    1 启动；尚未调用send()方法
+                    2 已发送；但尚未收到响应
+                    3 接收；已经收到部分响应数据
+                    4 完成；收到全部响应数据  */
+                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                        alert("ResponseText: " + xhr.responseText);
+                    }
+                    else {
+                        alert("Request was unsuccessful: " + xhr.status);
+                    }
+                }
+            };
+            xhr.open("GET", "/indexHandler", true);
+            xhr.send(null);
+        }
+        xhr.send(null);
+    }
 
-     function jsonpTest() {
-     $.ajax({
-     url: "https://www.baidu.com",
-     type: "get",
-     dataType: 'jsonp',
-     beforeSend: function(xhr) {
-     xhr.setRequestHeader("Test-Header", "Test-Value");
-     },
-     success: function () { alert(1); },
-     error:function () { alert(2); }
-     })
-     }*/
-</script>
+    function jsonpTest() {
+        $.ajax({
+            url: "https://www.baidu.com",
+            type: "get",
+            dataType: 'jsonp',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Test-Header", "Test-Value");
+            },
+            success: function () { alert(1); },
+            error:function () { alert(2); }
+        })
+    }
+</script>-->
 
 </html>

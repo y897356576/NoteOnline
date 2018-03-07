@@ -15,6 +15,7 @@
     <resultMap id="userMap" type="user">
         <id column="id" property="id"/>
         <result column="userName" property="userName"/>
+        <result column="nickName" property="nickName"/>
         <result column="passWord" property="passWord"/>
         <result column="status" property="status" typeHandler="dataStatusHandler"/>
         <result column="registerTime" property="registerTime"/>
@@ -22,13 +23,13 @@
     </resultMap>
 
     <insert id="createUser" parameterType="user">
-        insert into user (id, userName, passWord, status, registerTime, remark)
-        values (#{id}, #{userName}, #{passWord}, #{status, typeHandler = dataStatusHandler}, #{registerTime}, #{remark})
+        insert into user
+        values (#{id}, #{userName}, #{passWord}, #{nickName}, #{status, typeHandler = dataStatusHandler}, #{registerTime}, #{remark})
     </insert>
 
     <update id="updateUser" parameterType="user">
-        UPDATE user SET userName=#{userName}, passWord=#{passWord}, status=#{status, typeHandler = dataStatusHandler},
-        registerTime=#{registerTime}, remark=#{remark}
+        UPDATE user SET userName=#{userName}, passWord=#{passWord}, nickName = #{nickName},
+        status=#{status, typeHandler = dataStatusHandler}, remark=#{remark}
         WHERE id=#{id}
     </update>
 

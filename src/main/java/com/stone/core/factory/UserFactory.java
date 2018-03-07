@@ -13,11 +13,11 @@ public class UserFactory {
         this.userMapperImpl = userMapperImpl;
     }
 
-    public static User generateUser(){
+    /*public static User generateUser(){
         User user = new User();
         user.setUserMapperImpl(userMapperImpl);
         return user;
-    }
+    }*/
 
     public static void standardUser(User user){
         user.setUserMapperImpl(userMapperImpl);

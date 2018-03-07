@@ -12,8 +12,13 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <welcome-file-list>
-        <welcome-file>/html/login/login.html</welcome-file>
+        <welcome-file>/login.html</welcome-file>
     </welcome-file-list>
+
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>webapp.root</param-value>
+    </context-param>
 
 
     <!-- 针对于每次浏览器的POST请求进行编码过滤，GET可在Tomcat内设置 -->
@@ -31,6 +36,30 @@
     </filter-mapping>
 
 
+    <!-- log4j2的监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+    <!-- log4j2文件的配置 -->
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>classpath:log4j.properties</param-value>
+    </context-param>
+    <!-- log4j2的过滤器 -->
+    <!--<filter>-->
+    <!--<filter-name>log4j2ServletFilter</filter-name>-->
+    <!--<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+    <!--<filter-name>log4j2ServletFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--<dispatcher>REQUEST</dispatcher>-->
+    <!--<dispatcher>FORWARD</dispatcher>-->
+    <!--<dispatcher>INCLUDE</dispatcher>-->
+    <!--<dispatcher>ERROR</dispatcher>-->
+    <!--</filter-mapping>-->
+
+
     <!-- 登录过滤，拦截所有jsp -->
     <filter>
         <filter-name>loginFilter</filter-name>
@@ -38,7 +67,6 @@
     </filter>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
-        <url-pattern>*.jsp</url-pattern>
         <url-pattern>*.html</url-pattern>
         <!--<url-pattern>*</url-pattern>-->
     </filter-mapping>
@@ -79,30 +107,6 @@
         <servlet-name>springMVC</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
-
-    <!-- log4j2的监听器 -->
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
-    <!-- log4j2文件的配置 -->
-    <context-param>
-        <param-name>log4jConfiguration</param-name>
-        <param-value>classpath:log4j.properties</param-value>
-    </context-param>
-    <!-- log4j2的过滤器 -->
-    <!--<filter>-->
-    <!--<filter-name>log4j2ServletFilter</filter-name>-->
-    <!--<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-    <!--<filter-name>log4j2ServletFilter</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-    <!--<dispatcher>REQUEST</dispatcher>-->
-    <!--<dispatcher>FORWARD</dispatcher>-->
-    <!--<dispatcher>INCLUDE</dispatcher>-->
-    <!--<dispatcher>ERROR</dispatcher>-->
-    <!--</filter-mapping>-->
 
 
     <!--<servlet>

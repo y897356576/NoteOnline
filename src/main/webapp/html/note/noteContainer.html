@@ -1,3 +1,50 @@
+<style>
+    .ul_label {
+        list-style-type: none;
+        padding: 0 10px;
+        font-size: 20px;
+    }
+
+    .ul_label .label {
+        border: 1px solid #cdcdcd;
+        line-height: 39px;
+        padding-left: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .ul_label .first {
+        margin-top: 6%;
+        background-color: rgb(245, 245, 245);
+    }
+
+    .ul_label .second {
+        border-top: 0;
+        border-right: 0;
+        margin-left: 20px;
+        margin-top: 5px;
+    }
+
+    .noteUploadDiv {
+        display: none;
+        height: 20%;
+        width: 30%;
+        background-color: #cdcdcd;
+        position: absolute;
+        top: 30%;
+        left: 35%
+    }
+
+    .rightMenuDiv {
+        width: 60px;
+        height: 100px;
+        background-color: rgb(245, 245, 245);
+        position: absolute;
+        display: none;
+        border: 1px solid rgba(162,162,162,0.27);
+    }
+</style>
 <div id="sidebar" class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
     <ul id="noteMgtUL" class="ul_label">
         <template v-for="(notes, noteType) in noteTypes">
@@ -17,12 +64,12 @@
 
 <div class="noteDetail" style="height: 100%; width: 87%; float: right;">
     <div id="noteContent" style="width: 100%; height: 100%;">
-        <div id="noteTitle" style="height: 4%; width: 100%; text-align: center; font-size: 20px;padding-top: 1%; background-color: rgba(192,220,192,0.9);"></div>
-        <div id="noteParticulars" style="height: 94%; width: 100%; overflow-y: auto;">
+        <div id="noteTitle" style="height: 4%; width: 100%; text-align: center; font-size: 20px;padding-top: 1%; background-color: rgba(192,220,192,0.9); display: none"></div>
+        <div id="noteParticulars" style="height: 94%; width: 100%; overflow-y: auto; display: none">
                 <textarea id="particularsArea" style="height: 100%; width: 100%; background-color: rgba(192,220,192,0.9); outline: none; padding: 10px;" readonly>
                 </textarea>
         </div>
-        <div id="imgDetail" style="height: 94%; width: 100%; overflow-y: auto;">
+        <div id="imgDetail" style="height: 94%; width: 100%; overflow-y: auto; display: none">
         </div>
     </div>
 </div>
@@ -62,7 +109,7 @@
         showNoteList();
     });
 
-    var vm = new Vue({
+    var vmNote = new Vue({
         el: "#sidebar",
         data: {
             noteTypes: {}
@@ -96,7 +143,7 @@
                     }
                 }
 
-                vm.noteTypes = noteTypes;
+                vmNote.noteTypes = noteTypes;
             }
         })
     }
@@ -121,6 +168,7 @@
             dataType: "json",
             success: function (result) {
                 var note = result.note;
+                $("#noteTitle").show();
                 $("#noteTitle").html(note.noteName);
                 if ("jpg|jpeg|png|bmp|gif".indexOf(note.noteFile.fileType) >= 0) {
                     $("#noteParticulars").hide();

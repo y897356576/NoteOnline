@@ -1,17 +1,12 @@
 package com.stone.common.filter;
 
-import com.stone.common.redis.RedisShard;
-import com.stone.common.util.ObjMapTransUtil;
 import com.stone.common.util.UserInfoUtil;
 import com.stone.core.model.User;
-import redis.clients.jedis.Jedis;
 
 import javax.servlet.*;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by 石头 on 2017/6/20.
@@ -33,6 +28,10 @@ public class LoginFilter implements Filter {
         User user = UserInfoUtil.getUserFromRedis(request);
 
         if(user == null && !path.contains("/login.html")){
+            if (path.contains("/register.html")) {
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            }
             response.sendRedirect("/login.html");
         } else if(user != null && path.contains("/login.html")) {
             response.sendRedirect("/html/index.html");

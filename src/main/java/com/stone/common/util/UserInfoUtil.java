@@ -43,7 +43,6 @@ public class UserInfoUtil {
             Map userMap = jedis.hgetAll(userId + "_user");
             if (userMap != null && userMap.size() > 0) {
                 user = (User) ObjMapTransUtil.mapToObj(userMap, User.class);
-                UserFactory.standardUser(user);
             }
             redisInitMark = 0;
         } catch (JedisConnectionException e) {

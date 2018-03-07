@@ -162,14 +162,14 @@
     </bean>
 
     <!-- spring-ehcache缓存管理工厂 -->
-    <bean id="ehcacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+    <!--<bean id="ehcacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="configLocation" value="classpath:/ehcache.xml" />
     </bean>
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
         <property name="cacheManager" ref="ehcacheManagerFactory" />
     </bean>
-    <!-- 启用缓存注解开关 -->
-    <cache:annotation-driven cache-manager="cacheManager" />
+    &lt;!&ndash; 启用缓存注解开关 &ndash;&gt;
+    <cache:annotation-driven cache-manager="cacheManager" />-->
 
     <!-- 异步注解功能开启 -->
     <task:annotation-driven/>

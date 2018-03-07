@@ -5,7 +5,6 @@
     <title>登录</title>
 
     <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
-
 </head>
 <body>
 
@@ -16,33 +15,8 @@
     <button name="btClear" id="btClear">清空</button>
 </div>
 
-<div id="registerDiv" class="dialog_box" style="display: none; margin-left:600px; margin-top:200px; width:300px; height:180px; background-color: aliceblue">
-    <div id="registerDiv_title" class="dialog_box_title" style="padding-left: 6px; padding-top: 3px">
-        用户注册
-    </div>
-    <div id="registerDiv_cont" style="padding-top: 10px; padding-left: 20px">
-        <table>
-            <tr>
-                <td style="text-align: right">用户名：</td>
-                <td><input type="text" name="regName" id="regName" size="21" maxlength="12" placeholder="请输入数字、字母、下划线"/></td>
-            </tr>
-            <tr>
-                <td style="text-align: right">密&nbsp;&nbsp;码：</td>
-                <td><input type="password" name="regPasswd" id="regPasswd" size="21" maxlength="12"/></td>
-            </tr>
-            <tr>
-                <td style="text-align: right">确认密码：</td>
-                <td><input type="password" name="reRegPasswd" id="reRegPasswd" size="21" maxlength="12"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td style="height: 46px">
-                    <input type="button" name="btRegister" value="注册"/>
-                    <input type="button" name="btCancel" value="取消"/>
-                </td>
-            </tr>
-        </table>
-    </div>
+<div id="registerDiv"
+     style="display: none; margin-left:40%; margin-top:15%; width:300px; height:200px; background-color: #cdcdcd">
 </div>
 
 </body>
@@ -50,7 +24,6 @@
 <script>
 
     $(function () {
-
         /*获取登录与清空按钮并绑定事件*/
         $("#mainDiv button[id='btLogin']").on("click", function () {
             doLogin();
@@ -58,6 +31,7 @@
         $("#mainDiv button[name='btClear']").on("click", function () {
             doClear();
         });
+        enterSwitch("index");
 
         /*创建注册按钮*/
         $("<span>", {
@@ -77,20 +51,18 @@
         $("<div>", {
             id: "curtainLevel"
         }).css({
-            "top": "0",
-            "left": "0",
-            "bottom": "0",
-            "right":"0",
+            "top": "0", "left": "0", "bottom": "0", "right":"0",
             "background": "url(../../img/bagd-hg.png) repeat",
             "position": "absolute",
             "z-index": "999",
             "display": "none"
         }).appendTo("body");
+
+        $("#registerDiv").load("html/register/register.html");
     });
 
     function doLogin() {
         var userName = $.trim($("#mainDiv input[name='userName']").val());
-//        var userName = document.getElementById("userName").value;
         var passWord = $.trim($("#mainDiv input:last").val());
         if (!userName || !passWord) {
             alert("用户名与密码不能为空！");
@@ -111,59 +83,27 @@
             url:"/loginHandler/doLogin",
             contentType:"application/json",
             data:JSON.stringify({
-                userName:userName,
+                "userName":userName,
                 "passWord":passWord
             }),
             dataType:"json",
             success:function(rsData){
                 if(rsData.result){
+                    localStorage.setItem("userInfo", JSON.stringify(rsData.userInfo));
                     window.location.href="/html/index.html";
                 }else{
                     alert(rsData.message);
                 }
-            },
-            /*error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.responseText);
-                alert(textStatus);
-                alert(errorThrown);
-            }*/
-
-            error: function (XMLHttpRequest, status) {
+            }
+            /*, error: function (XMLHttpRequest, textStatus, errorThrown) {
                 var responseText = XMLHttpRequest.responseText;
-
                 if (responseText.indexOf("description") > 0) {
                     var response = jQuery.parseJSON(responseText);
                     alert("错误描述1：" + response.description);
+                } else {
+                    alert("错误描述2：" + responseText);
                 }
-                else
-                    alert("错误描述2：" + XMLHttpRequest.responseText);
-
-                /*function showErrorMsg() {
-                    var responseText = XMLHttpRequest.responseText;
-
-                    if (responseText.indexOf("description") > 0) {
-                        var response = jQuery.parseJSON(responseText);
-                        alert("错误描述1：" + response.description);
-                    }
-                    else
-                        alert("错误描述2：" + XMLHttpRequest.responseText);
-                }
-
-                if (status == "parsererror")
-                    WEBDIALOG.tipMsg('请求的资源不存在!');
-                else {
-                    if (p.error) p.error(XMLHttpRequest.responseText);
-                    else {
-                        if (status == 401)
-                            WEBDIALOG.tipMsg('请求的资源不存在!');
-                        else
-                            showErrorMsg();
-                    }
-                }
-                hideMask();*/
-            }
-
+            }*/
             /* XMLHttpRequest.readyState: 状态码的意思
              0 － （未初始化）还没有调用send()方法
              1 － （载入）已调用send()方法，正在发送请求
@@ -181,65 +121,59 @@
     }
 
     function showRegister() {
+        enterSwitch("register");
         $("#curtainLevel").show();
         $("div[id=registerDiv]").show("fast");
-        $("#registerDiv").appendTo("#curtainLevel");
-        $("#registerDiv").css({
-            "top": "50%",
-            "left": "50%"
-        })
+        $("#registerDiv").appendTo("#curtainLevel")
+            .css ({ "top": "50%", "left": "50%" })
     }
 
     //回车键触发事件
-    document.onkeydown = function (event) {
-        var e = event || window.event || arguments.callee.caller.arguments[0];
-        if (e && e.keyCode == 13) { // enter 键
-            doLogin();
-        }
-    };
-
-
-    $(function(){
-        $("#registerDiv_cont input[name='btRegister']").click(function(){
-            regDoRegister();
-        });
-
-        $("#registerDiv_cont input[name='btCancel']").click(function(){
-            regDoCancel();
-        });
-    })
-
-    function regDoRegister(){
-        var userName = $.trim($("#registerDiv_cont input[name='regName']").val());
-        var regpd = $.trim($("#registerDiv_cont input[name='regPasswd']").val());
-        var reregpd = $.trim($("#registerDiv_cont input[name='reRegPasswd']").val());
-        var textCheck = /^[A-z0-9_-]{3,12}$/
-        if(!textCheck.test(userName) || !textCheck.test(regpd)){
-            alert("用户名或密码格式不正确！");
-            return;
-        }
-        if(regpd!=reregpd){
-            alert("两次输入的密码不一致！");
-            return;
-        }
-        $.post("/registerHandler",{userName:userName, passWord:regpd}, function(rsData){
-            if(rsData.result){
-                alert("新增用戶成功");
-                regDoCancel();
-            } else {
-                alert(rsData.message);
+    function enterSwitch(data) {
+        document.onkeydown = function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode === 13) { // enter 键
+                if (data === "index") {
+                    doLogin();
+                } else if(data === "register") {
+                    regDoRegister();
+                }
             }
-        })
+        };
     }
-
-    function regDoCancel(){
-        $("#registerDiv").hide();
-        $("#curtainLevel").hide();//隐藏遮罩层
-        $("#registerDiv_cont input[name='regName']").val("");
-        $("#registerDiv_cont input[name='regPasswd']").val("");
-        $("#registerDiv_cont input[name='reRegPasswd']").val("");
-    }
-
 </script>
+
+<!--<script>
+    $.ajax({
+        type: "post",
+        url: "",
+        dataType: "json",
+        success: function () {},
+        error: function (XMLHttpRequest, status) {
+            if (status === "parsererror") {
+                alert('请求的资源不存在!');
+            } else {
+                if (p.error) {
+                    p.error(XMLHttpRequest.responseText);
+                } else {
+                    if (status === 401)
+                        WEBDIALOG.tipMsg('请求的资源不存在!');
+                    else
+                        showErrorMsg(XMLHttpRequest);
+                }
+            }
+        }
+    });
+
+    function showErrorMsg(XMLHttpRequest) {
+        var responseText = XMLHttpRequest.responseText;
+        if (responseText.indexOf("description") > 0) {
+            var response = jQuery.parseJSON(responseText);
+            alert("错误描述1：" + response.description);
+        } else {
+            alert("错误描述2：" + responseText);
+        }
+    }
+</script>-->
 
 </html>

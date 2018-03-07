@@ -39,9 +39,9 @@ public class ServletContextListenerTest implements ServletContextListener {
 //        // 在整个web应用销毁之前调用，将所有应用空间所设置的内容清空
 //        servletContext.removeAttribute("dataSource");
 
-        Cache cache = EhcacheUtil.getCache("ehcacheFir");
+        /*Cache cache = EhcacheUtil.getCache("ehcacheFir");
         cache.flush();
-        EhcacheUtil.shutdown();
+        EhcacheUtil.shutdown();*/
 
         System.out.println("ServletContext销毁完成...");
     }

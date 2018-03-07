@@ -1,46 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>注册</title>
 
-    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
-
-</head>
-<body>
-
-<div id="registerDiv" class="dialog_box" style="width:300px; height:180px;">
-    <div id="registerDiv_title" class="dialog_box_title">
-        用户注册
-    </div>
-    <div id="registerDiv_cont" style="padding-top: 10px; padding-left: 20px">
-        <table>
-            <tr>
-                <td style="text-align: right">用户名：</td>
-                <td><input type="text" name="regName" id="regName" size="21" maxlength="12" placeholder="请输入数字、字母、下划线"/></td>
-            </tr>
-            <tr>
-                <td style="text-align: right">密&nbsp;&nbsp;码：</td>
-                <td><input type="password" name="regPasswd" id="regPasswd" size="21" maxlength="12"/></td>
-            </tr>
-            <tr>
-                <td style="text-align: right">确认密码：</td>
-                <td><input type="password" name="reRegPasswd" id="reRegPasswd" size="21" maxlength="12"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td style="height: 46px">
-                    <input type="button" name="btRegister" value="注册"/>
-                    <input type="button" name="btCancel" value="取消"/>
-                </td>
-            </tr>
-        </table>
-    </div>
+<div id="registerDiv_title" style="padding: 8px;">
+    用户注册
 </div>
-</body>
+<div id="registerDiv_cont" style="padding-left: 20px">
+    <table>
+        <tr>
+            <td style="text-align: right">用户名：</td>
+            <td><input type="text" name="regName" id="regName" size="23" maxlength="12" placeholder="请输入数字、字母、下划线"/></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">昵&nbsp;&nbsp;称：</td>
+            <td><input type="text" name="nickName" id="nickName" size="23" maxlength="12"/></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">密&nbsp;&nbsp;码：</td>
+            <td><input type="password" name="regPasswd" id="regPasswd" size="23" maxlength="12"/></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">确认密码：</td>
+            <td><input type="password" name="reRegPasswd" id="reRegPasswd" size="23" maxlength="12"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="height: 46px">
+                <input type="button" name="btRegister" value="注册"/>
+                <input type="button" name="btCancel" value="取消"/>
+            </td>
+        </tr>
+    </table>
+</div>
+
 <script>
     $(function(){
-
         $("#registerDiv_cont input[name='btRegister']").click(function(){
             regDoRegister();
         });
@@ -48,36 +39,62 @@
         $("#registerDiv_cont input[name='btCancel']").click(function(){
             regDoCancel();
         });
-    })
+
+        $("#regName").on("blur", function () {
+            $("#nickName").val($("#regName").val());
+        });
+    });
 
     function regDoRegister(){
         var userName = $.trim($("#registerDiv_cont input[name='regName']").val());
-        var regpd = $.trim($("#registerDiv_cont input[name='regPasswd']").val());
-        var reregpd = $.trim($("#registerDiv_cont input[name='reRegPasswd']").val());
-        var textCheck = /^[A-z0-9_-]{3,12}$/
-        if(!textCheck.test(userName) || !textCheck.test(regpd)){
+        var nickName = $.trim($("#registerDiv_cont input[name='nickName']").val());
+        var regpwd = $.trim($("#registerDiv_cont input[name='regPasswd']").val());
+        var reregpwd = $.trim($("#registerDiv_cont input[name='reRegPasswd']").val());
+        var textCheck = /^[A-z0-9_-]{3,12}$/;
+        if(!textCheck.test(userName) || !textCheck.test(regpwd)){
             alert("用户名或密码格式不正确！");
             return;
         }
-        if(regpd!=reregpd){
+        if (!nickName) {
+            alert("用户昵称不能为空！");
+            return;
+        }
+        if(regpwd!=reregpwd){
             alert("两次输入的密码不一致！");
             return;
         }
-        $.post("/registerHandler",{userName:userName, passWord:regpd}, function(rsData){
-            alert(rsData.msg);
-        })
+        $.ajax({
+            type: "post",
+            url: "/registerHandler",
+            contentType: "application/json",
+            data: JSON.stringify({
+                userName: userName,
+                nickName: nickName,
+                passWord: regpwd
+            }),
+            dataType: "json",
+            success: function (rsData) {
+                if (rsData.result) {
+                    alert("注册成功");
+                    regDoCancel();
+                } else {
+                    alert(rsData.message);
+                }
+            }
+        });
     }
 
     function regDoCancel(){
         $("#registerDiv").hide();
         $("#curtainLevel").hide();//隐藏遮罩层
+        enterSwitch("index");
 //        var reg_inputs = $("#registerDiv_cont input");
 //        for(var i=0; i<reg_inputs.length; i++){
 //            $(reg_inputs[i]).val("");
 //        }
         $("#registerDiv_cont input[name='regName']").val("");
+        $("#registerDiv_cont input[name='nickName']").val("");
         $("#registerDiv_cont input[name='regPasswd']").val("");
         $("#registerDiv_cont input[name='reRegPasswd']").val("");
     }
 </script>
-</html>

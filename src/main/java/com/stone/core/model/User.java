@@ -3,10 +3,12 @@ package com.stone.core.model;
 import com.stone.common.model.DataStatus;
 import com.stone.common.util.IdGenerator;
 import com.stone.core.exception.MyException;
+import com.stone.core.factory.UserFactory;
 import com.stone.core.repository.UserMapperImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.util.DigestUtils;
 
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class User {
     private String id;
     private String userName;
     private String passWord;
+    private String nickName;
     private DataStatus status;
     private Date registerTime;
     private String remark;
@@ -28,11 +31,18 @@ public class User {
         this.userMapperImpl = userMapperImpl;
     }
 
+    public User() {
+        UserFactory.standardUser(this);
+    }
+
     /**
      * 用户新增
      * @return
      */
     public Boolean persistUser(){
+        status = DataStatus.启用;
+        registerTime = new Date();
+
         if(!this.checkDataComplete()){
             throw new MyException("新增失败，用户对象数据缺失");
         }
@@ -42,7 +52,7 @@ public class User {
         }
 
         id = IdGenerator.generateId_16();
-        registerTime = new Date();
+        passWord = DigestUtils.md5DigestAsHex(passWord.getBytes());
         try{
             return userMapperImpl.createUser(this);
         } catch (Exception e){
@@ -86,6 +96,9 @@ public class User {
             return false;
         }
         if(StringUtils.isBlank(passWord)){
+            return false;
+        }
+        if(StringUtils.isBlank(nickName)){
             return false;
         }
         if(status==null){
@@ -159,5 +172,13 @@ public class User {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }
