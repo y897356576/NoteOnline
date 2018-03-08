@@ -47,17 +47,6 @@
             showRegister();
         }).appendTo("#mainDiv");
 
-        /*创建遮罩层*/
-        $("<div>", {
-            id: "curtainLevel"
-        }).css({
-            "top": "0", "left": "0", "bottom": "0", "right":"0",
-            "background": "url(../../img/bagd-hg.png) repeat",
-            "position": "absolute",
-            "z-index": "999",
-            "display": "none"
-        }).appendTo("body");
-
         $("#registerDiv").load("html/register/register.html");
     });
 
@@ -141,6 +130,21 @@
             }
         };
     }
+</script>
+
+<script>
+    $(function () {
+        /*创建遮罩层*/
+        $("<div>", {
+            id: "curtainLevel"
+        }).css({
+            "top": "0", "left": "0", "bottom": "0", "right":"0",
+            "background": "url(../../img/bagd-hg.png) repeat",
+            "position": "absolute",
+            "z-index": "999",
+            "display": "none"
+        }).appendTo("body");
+    })
 </script>
 
 <!--<script>

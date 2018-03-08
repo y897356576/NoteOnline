@@ -33,7 +33,8 @@
         background-color: #cdcdcd;
         position: absolute;
         top: 30%;
-        left: 35%
+        left: 35%;
+        z-index: 1000;
     }
 
     .rightMenuDiv {
@@ -44,8 +45,19 @@
         display: none;
         border: 1px solid rgba(162,162,162,0.27);
     }
+
+    .noteDetail ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar {
+        width: 3px;
+        background-color: #ddd;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #aaa;
+    }
 </style>
-<div id="sidebar" class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left">
+<div id="sidebar" class="sidebar" style="border-right: 1px solid grey; height: 100%; width: 12%; float: left; overflow-y: auto; ">
     <ul id="noteMgtUL" class="ul_label">
         <template v-for="(notes, noteType) in noteTypes">
             <li class="label first" @click="secTempToggle('secTemp' + noteType)">
@@ -192,10 +204,12 @@
 
     $("#showUploadDiv").on("click", function () {
         $(".noteUploadDiv").toggle();
+        $("#curtainLevel").toggle();
     });
 
     function closeUploadDiv() {
         $(".noteUploadDiv").hide();
+        $("#curtainLevel").hide();
     }
 
     $("#noteUpload").on("change", function () {
@@ -214,6 +228,7 @@
             alert("只支持文本与图片类型上传");
             return;
         }
+        promptShow();
         $.ajaxFileUpload({
             type: "post",
             url: "/noteHandler/noteImport",
@@ -223,12 +238,18 @@
             },
             dataType: "json",
             success: function (result) {
+                promptHide();
                 alert("文件上传成功");
                 sessionStorage.setItem("noteId", result.noteId);
                 closeUploadDiv();
                 location.reload();
+            },
+            error: function () {
+                promptHide();
+                alert("文件上传失败");
             }
         })
+
     });
 </script>
 
@@ -330,6 +351,7 @@
                 if (result.flag) {
                     alert("删除成功");
                     showNoteList();
+                    $(".rightMenuDiv").hide();
                     $("#noteTitle").hide();
                     $("#noteParticulars").hide();
                     $("#imgDetail").hide();
@@ -338,5 +360,48 @@
                 }
             }
         });
+    }
+</script>
+
+<script>
+    /** 遮罩层与提示信息 */
+
+    $(function () {
+        /*创建遮罩层*/
+        $("<div>", {
+            id: "curtainLevel"
+        }).css({
+            "top": "0", "left": "0", "bottom": "0", "right":"0",
+            "background": "url(../../img/bagd-hg.png) repeat",
+            "position": "absolute",
+            "z-index": "999",
+            "display": "none"
+        }).appendTo("body");
+
+        /*创建提示信息层*/
+        $("<div>", {
+            id: "promptMsg"
+        }).css({
+            "top": "35%", "left": "41%",
+            "width": "300px", "height": "60px",
+            "text-align": "center", "padding-top": "40px",
+            "background-color": "#cdcdcd",
+            "position": "absolute",
+            "z-index": "1002",
+            "display": "none"
+        }).html("请稍等...").appendTo("body");
+    });
+
+    //显示提示信息 请稍后...
+    function promptShow() {
+        $("#curtainLevel").css("z-index", "1001");
+        $("#curtainLevel").show();
+        $("#promptMsg").show();
+    }
+    //隐藏提示信息 请稍后...
+    function promptHide() {
+        $("#curtainLevel").css("z-index", "999");
+        $("#curtainLevel").hide();
+        $("#promptMsg").hide();
     }
 </script>
