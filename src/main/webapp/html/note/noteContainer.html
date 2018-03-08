@@ -216,18 +216,23 @@
     function showNoteDetail(noteId) {
         if (!noteId) { return; }
         sessionStorage.setItem("noteId", noteId);
-        $("#promptMsg").show();
+
+        var timingTimer = setTimeout(function () {
+            $("#promptMsg").show();
+        }, 500);
+
         $.ajax({
             type: "get",
             url: "/noteHandler/noteDetail/" + noteId,
             dataType: "json",
             success: function (result) {
+                clearTimeout(timingTimer);
                 var note = result.note;
                 if (!note) {
                     $("#promptMsg").hide();
                     return;
                 }
-                //处理笔记内容显示的Div
+                //处理笔记内容Div的显示过程
                 processDetailDiv(note);
             }
         })
@@ -240,23 +245,29 @@
         if ("jpg|jpeg|png|bmp|gif".indexOf(note.noteFile.fileType) >= 0) {
             $("#noteParticulars").hide();
             $("#imgDetail").show();
-            var url = "/noteHandler/noteDetailImg?filePath=" + encodeURI(note.noteFile.filePath);
-            $("#imgDetail").html("<img src=" + url + " style='width: 100%; height: 100%;' />");
-
-            //定时扫描img是否加载完成
-            var timer = setInterval(function(){
-                console.log($("#imgDetail img")[0].complete);
-                if ($("#imgDetail img")[0].complete){
-                    $("#promptMsg").hide();
-                    clearInterval(timer);
-                }
-            }, 200);
+            processImg(note);
         } else {
             $("#promptMsg").hide();
             $("#imgDetail").hide();
             $("#noteParticulars").show();
             $("#particularsArea").val(note.content);
         }
+    }
+
+    //图片加载
+    function processImg(note) {
+        $("#promptMsg").show();
+
+        var url = "/noteHandler/noteDetailImg?filePath=" + encodeURI(note.noteFile.filePath);
+        $("#imgDetail").html("<img src=" + url + " style='width: 100%; height: 100%;' />");
+        //定时扫描img是否加载完成
+        var loopTimer = setInterval(function(){
+            console.log($("#imgDetail img")[0].complete);
+            if ($("#imgDetail img")[0].complete){
+                $("#promptMsg").hide();
+                clearInterval(loopTimer);
+            }
+        }, 200);
     }
 </script>
 
