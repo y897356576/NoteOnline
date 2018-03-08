@@ -330,6 +330,9 @@
                 if (result.flag) {
                     alert("删除成功");
                     showNoteList();
+                    $("#noteTitle").hide();
+                    $("#noteParticulars").hide();
+                    $("#imgDetail").hide();
                 } else {
                     alert(result.errMsg);
                 }
