@@ -173,6 +173,7 @@
     function showNoteDetail(noteId) {
         if (!noteId) { return; }
         sessionStorage.setItem("noteId", noteId);
+        $("#promptMsg").show();
         $.ajax({
             type: "get",
             url: "/noteHandler/noteDetail/" + noteId,
@@ -182,6 +183,7 @@
                 if (!note) {
                     return;
                 }
+                $("#promptMsg").hide();
                 $("#noteTitle").show();
                 $("#noteTitle").html(note.noteName);
                 if ("jpg|jpeg|png|bmp|gif".indexOf(note.noteFile.fileType) >= 0) {
