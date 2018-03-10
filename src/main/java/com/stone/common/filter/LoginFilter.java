@@ -15,6 +15,8 @@ public class LoginFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        //web应用程序启动时，web服务器将创建Filter的实例对象，并调用其init方法，完成对象的初始化
+        //filter对象只会创建一次，init方法也只会执行一次
     }
 
     @Override
@@ -45,5 +47,6 @@ public class LoginFilter implements Filter {
 
     @Override
     public void destroy() {
+        //web容器调用destroy方法销毁Filter。此方法在Filter生命周期中仅执行一次。在destroy方法中，可以释放过滤器使用的资源。
     }
 }
