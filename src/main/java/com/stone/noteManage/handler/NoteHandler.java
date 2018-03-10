@@ -40,12 +40,16 @@ public class NoteHandler {
         User user = UserInfoUtil.getUserFromRedis(request);
         this.checkUserAvailable(user);
 
-        final String noteId = service.noteImport(user, genreName, file);
-
-        Map<String, Object> resultMap = new HashMap<String, Object>() {{
-            put("noteId", noteId);
-        }};
-        return resultMap;
+        Map<String, Object> result = new HashMap<>();
+        try {
+            String noteId = service.noteImport(user, genreName, file);
+            result.put("flag", true);
+            result.put("noteId", noteId);
+        } catch (Exception e) {
+            result.put("flag", false);
+            result.put("errMsg", e.getMessage());
+        }
+        return result;
     }
 
     @RequestMapping(value = "noteList", method = RequestMethod.GET)

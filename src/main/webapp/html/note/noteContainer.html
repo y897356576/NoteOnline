@@ -199,6 +199,9 @@
                 }
 
                 vmNote.noteTypes = noteTypes;
+            },
+            error: function () {
+                alert("笔记查询失败");
             }
         })
     }
@@ -234,6 +237,9 @@
                 }
                 //处理笔记内容Div的显示过程
                 processDetailDiv(note);
+            },
+            error: function () {
+                alert("笔记查询失败");
             }
         })
     }
@@ -310,10 +316,15 @@
             dataType: "json",
             success: function (result) {
                 promptHide();
-                alert("文件上传成功");
-                sessionStorage.setItem("noteId", result.noteId);
-                closeUploadDiv();
-                location.reload();
+                if (result.flag) {
+                    alert("文件上传成功");
+                    sessionStorage.setItem("noteId", result.noteId);
+                    closeUploadDiv();
+                    location.reload();
+                } else {
+                    $("#curtainLevel").show();
+                    alert(result.errMsg);
+                }
             },
             error: function () {
                 promptHide();
