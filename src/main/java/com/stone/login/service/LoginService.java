@@ -1,7 +1,7 @@
 package com.stone.login.service;
 
 import com.stone.common.model.DataStatus;
-import com.stone.common.redis.RedisShard;
+import com.stone.common.redis.RedisShardPool;
 import com.stone.common.util.EhcacheUtil;
 import com.stone.common.util.ObjMapTransUtil;
 import com.stone.core.exception.MyException;
@@ -77,9 +77,10 @@ public class LoginService {
         response.addCookie(cookie);
     }
     private void setLoginRedis(User user) {
-        Jedis jedis = RedisShard.getRedisNode(user.getId());
+        Jedis jedis = RedisShardPool.getJedisNode(user.getId());
         Map<String, String> userMap = ObjMapTransUtil.objToStringMap(user);
         jedis.hmset(user.getId() + "_user", userMap);
+        RedisShardPool.restoreJedisNode(jedis);
     }
     private void setLoginEhcache(User user) {
         Cache cache = EhcacheUtil.getCache("ehcacheFir");
@@ -112,11 +113,12 @@ public class LoginService {
         return userId;
     }
     private void removeLoginRedis(String userId) {
-        Jedis jedis = RedisShard.getRedisNode(userId);
+        Jedis jedis = RedisShardPool.getJedisNode(userId);
         Set<String> columns = jedis.hkeys(userId + "_user");
         if (CollectionUtils.isNotEmpty(columns)) {
             jedis.hdel(userId + "_user", columns.toArray(new String[]{}));
         }
+        RedisShardPool.restoreJedisNode(jedis);
     }
     private void removeLoginEhcache(String userId) {
         Cache cache = EhcacheUtil.getCache("ehcacheFir");

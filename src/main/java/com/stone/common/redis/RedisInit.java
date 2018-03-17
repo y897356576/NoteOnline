@@ -1,11 +1,10 @@
 package com.stone.common.redis;
 
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by admin on 2018/2/22.
@@ -15,21 +14,10 @@ public class RedisInit {
 
     @PostConstruct
     public static void doRedisInit() {
-        final Jedis jedis_0 = new Jedis("106.14.200.149", 6379);
-        jedis_0.auth("pwd");
-        final Jedis jedis_1 = new Jedis("106.14.200.149", 6379);
-        jedis_1.auth("pwd");
-        final Jedis jedis_2 = new Jedis("106.14.200.149", 6380);
-        jedis_2.auth("pwd");
-        final Jedis jedis_3 = new Jedis("106.14.200.149", 6380);
-        jedis_3.auth("pwd");
-        List<Jedis> js = new ArrayList<Jedis>(){{
-            add(jedis_0);
-            add(jedis_1);
-            add(jedis_2);
-            add(jedis_3);
-        }};
-        new RedisShard(js);
+        Set<String> ips = new HashSet<>();
+        ips.add("106.14.200.149:6379;pwd");
+        ips.add("106.14.200.149:6380;pwd");
+        new RedisShardPool(ips, 2);
     }
 
 }

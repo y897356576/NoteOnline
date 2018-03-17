@@ -20,9 +20,16 @@ public class RunnableMain_A {
         executor.setKeepAliveSeconds(300);  //线程池维护线程所允许的空闲时间
         executor.initialize();
 
+//        method_1A();
+//        method_1B();
+//        method_1C(executor);
+//        method_1D(executor);
+//        method_2A();
+//        method_3A(executor);
         method_4A(executor);
     }
 
+    //多个线程执行单个线程对象，对象内的属性公用（对象锁）
     private static void method_1A(){
         Runnable runnable = new RunnableTask_1();
         Thread thread1 = new Thread(runnable);
@@ -31,6 +38,7 @@ public class RunnableMain_A {
         thread2.start();
     }
 
+    //多个线程执行多个线程对象，对象内的属性不干扰（全局锁/公共锁）
     private static void method_1B(){
         Runnable runnable1 = new RunnableTask_1();
         Runnable runnable2 = new RunnableTask_1();
@@ -40,12 +48,14 @@ public class RunnableMain_A {
         thread2.start();
     }
 
+    //多个线程执行单个线程对象，对象内的属性公用（对象锁）
     private static void method_1C(ThreadPoolTaskExecutor executor){
         Runnable runnable = new RunnableTask_1();
         executor.execute(runnable);
         executor.execute(runnable);
     }
 
+    //多个线程执行多个线程对象，对象内的属性不干扰（全局锁/公共锁）
     private static void method_1D(ThreadPoolTaskExecutor executor){
         Runnable runnable1 = new RunnableTask_1();
         Runnable runnable2 = new RunnableTask_1();
@@ -53,6 +63,7 @@ public class RunnableMain_A {
         executor.execute(runnable2);
     }
 
+    //多个线程执行单个线程对象，对象方法内的属性不干扰（对象锁）
     private static void method_2A(){
         Runnable runnable = new RunnableTask_2();
         Thread thread1 = new Thread(runnable);
@@ -61,6 +72,7 @@ public class RunnableMain_A {
         thread2.start();
     }
 
+    //多个线程执行单个线程对象，对象内的ThreadLocal属性不干扰（对象锁）
     private static void method_3A(ThreadPoolTaskExecutor executor){
         Runnable runnable = new RunnableTask_3();
         executor.execute(runnable);
@@ -76,13 +88,13 @@ public class RunnableMain_A {
 
         executor.execute(runnable);
 
-//        doSleep(2100);
-//        user.setUserName("test2");
+        doSleep(2100);
+        user.setUserName("test2");
 
-        for (int i=0; i<10; i++){
-            System.out.println(String.format("User'name is %s", user.getUserName()));
+        /*for (int i=0; i<10; i++){
+            System.out.println(String.format("m: User'name is %s", user.getUserName()));
             doSleep(500);
-        }
+        }*/
     }
 
 

@@ -1,6 +1,6 @@
 package com.stone.common.listener;
 
-import com.stone.common.redis.RedisShard;
+import com.stone.common.redis.RedisShardPool;
 import org.apache.commons.collections4.CollectionUtils;
 import redis.clients.jedis.Jedis;
 
@@ -34,7 +34,7 @@ public class HttpSessionListenerProcessor implements HttpSessionListener {
      */
     private void removeRedisVal(HttpSessionEvent event) {
         String sessionId = event.getSession().getId();
-        Jedis jedis = RedisShard.getRedisNode(sessionId);
+        Jedis jedis = RedisShardPool.getJedisNode(sessionId);
         Set<String> columns = jedis.hkeys(sessionId + "_user");
         if (CollectionUtils.isNotEmpty(columns)) {
             jedis.hdel(sessionId + "_user", columns.toArray(new String[]{}));

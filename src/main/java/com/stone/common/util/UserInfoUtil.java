@@ -1,9 +1,8 @@
 package com.stone.common.util;
 
 import com.stone.common.redis.RedisInit;
-import com.stone.common.redis.RedisShard;
+import com.stone.common.redis.RedisShardPool;
 import com.stone.core.exception.MyException;
-import com.stone.core.factory.UserFactory;
 import com.stone.core.model.User;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.Jedis;
@@ -39,8 +38,9 @@ public class UserInfoUtil {
 
         User user = null;
         try {
-            Jedis jedis = RedisShard.getRedisNode(userId);
+            Jedis jedis = RedisShardPool.getJedisNode(userId);
             Map userMap = jedis.hgetAll(userId + "_user");
+            RedisShardPool.restoreJedisNode(jedis);
             if (userMap != null && userMap.size() > 0) {
                 user = (User) ObjMapTransUtil.mapToObj(userMap, User.class);
             }

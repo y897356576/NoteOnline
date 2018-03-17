@@ -19,8 +19,8 @@ public class RunnableTask_4 implements Runnable{
 
     public void run() {
         for(int i=1; i<=10; i++){
-//            System.out.println(String.format("User'name is %s", user.getUserName()));
-            if(i == 6){
+            System.out.println(String.format("t: User'name is %s", user.getUserName()));
+            if(i == 8){
                 user.setUserName("test3");
             }
             this.doSleep(500);
