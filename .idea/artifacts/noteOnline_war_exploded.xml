@@ -7,7 +7,6 @@
           <element id="module-output" name="noteOnline" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="bcprov-jdk15on-1.54" />
           <element id="library" level="project" name="org.hsqldb:hsqldb:2.4.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.9.RELEASE" />
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
