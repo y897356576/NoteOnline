@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,18 +33,23 @@ public class AsyncHandler {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public void testMethod_fir(){
+    public void testMethod_fir(HttpServletResponse response) throws IOException {
         Map<String, List<Integer>> map = new HashMap(){{
             put("1", new ArrayList<Integer>(){{ add(1); add(2); add(3); }});
             put("2", new ArrayList<Integer>(){{ add(4); add(5); add(6); }});
             put("3", new ArrayList<Integer>(){{ add(7); add(8); add(9); }});
         }};
 
-        asyncService.asyncMethod_fir_assist(map.get("3"));
+        try {
+            asyncService.asyncMethod_fir_assist(map.get("3"));
+        } catch (Exception e) {
+            System.out.println("Controller 异常捕获");
+        }
         map.get("3").remove(0);
         map.remove("3");
         System.out.println("mapSize:" + map.size());
         System.out.println("fir_end");
+        response.getWriter().write("Request End");
     }
 
 }

@@ -1,5 +1,6 @@
 package com.stone.demo.async.service;
 
+import com.stone.core.exception.MyException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class AsyncService {
             for (Integer i : list){
                 System.out.println("Count:" + i);
             }
+            throw new MyException("异步异常测试");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
