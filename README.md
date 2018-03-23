@@ -5,7 +5,8 @@
 
 前台为 Html + jQuery + Vue 编写（样式有点搓，后面考虑采用Hexo）  
 后台为 Spring + SpringMVC + Mybatis 框架  
-数据库为 Mysql, Redis(Ehcache)  
+数据库为 Mysql  
+缓存框架为 Redis(Ehcache)  
 
 线上地址 http://106.14.200.149/login.html  
 用户名密码均为‘shitou’  
