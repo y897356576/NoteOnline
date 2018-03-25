@@ -111,5 +111,6 @@
     <orderEntry type="library" name="Maven: org.restlet.jse:org.restlet:2.3.9" level="project" />
     <orderEntry type="library" name="Maven: org.restlet.jse:org.restlet.lib.org.json:2.0" level="project" />
     <orderEntry type="library" name="Maven: org.restlet.jse:org.restlet.ext.json:2.3.3" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:5.0.0.Alpha2" level="project" />
   </component>
 </module>

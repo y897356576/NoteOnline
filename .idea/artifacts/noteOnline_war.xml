@@ -3,11 +3,6 @@
     <output-path>$PROJECT_DIR$/target/artifacts/noteOnline_war</output-path>
     <root id="archive" name="noteOnline_war.war">
       <element id="artifact" artifact-name="noteOnline:war exploded" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="lib">
-          <element id="file-copy" path="E:/工作文件/jar包/bcprov-jdk15on-1.54.jar" />
-        </element>
-      </element>
     </root>
   </artifact>
 </component>
