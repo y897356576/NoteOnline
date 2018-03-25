@@ -19,16 +19,22 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    /**
+     * 在与一个客户端连接时触发
+     * @param ctx
+     * @throws Exception
+     */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("服务端与客户端 " + ctx.channel().toString() + " 建立链接\r\n");
+        //在与客户端建立连接后发送欢迎消息
         ctx.writeAndFlush(Unpooled.copiedBuffer("服务端向你表示欢迎\r\n".getBytes()));
     }
 
     /**
      *
-     * @param ctx 与客户端通道的上下文
-     * @param msg 客户端发送的信息主题
+     * @param ctx 与客户端通信的通道
+     * @param msg 客户端发送的信息主体
      * @throws Exception
      */
     @Override
