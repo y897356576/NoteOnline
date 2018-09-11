@@ -1,9 +1,9 @@
-package com.stone.demo.nettyCase;
+package com.stone.demo.SocketCase.nettyCase.case_1;
 
 /**
  * Created by admin on 2018/3/25.
  */
-public class NettyTest_1 {
+public class NettyTest_2 {
 
     public static void main(String[] args) {
         try {
