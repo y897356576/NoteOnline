@@ -65,56 +65,8 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
-    <!-- 注解配置事务，其支持注解 @Transactional -->
+    <!-- 注解配置事务，其支持注解 @Transactional，作用范围为当前配置文件的上下文 -->
     <tx:annotation-driven transaction-manager="transactionManager" />
-
-    <!-- sql会话工厂 -->
-    <!-- mybatis配置 -->
-    <bean id="sqlSessionFactory" name="sqlSessionFactoryBeanName" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <!-- 配置Mapper.xml文件所在目录的路径，在classpath后面的*必不可少，缺少型号的话后面的通配符不起作用。 -->
-        <!--<property name="mapperLocations" value="classpath*:mybatis/**/*Mapper.xml" />-->
-        <property name="mapperLocations">
-            <list>
-                <value>classpath*:mybatis/**/*Mapper.xml</value>
-            </list>
-        </property>
-        <!-- 需要另添加配置时可引入自己的配置文件 -->
-        <!--<property name="configLocation" value="classpath:config/mybatis.xml"/>-->
-        <!-- 为对象设置别名，可通过 Alias()实现 -->
-        <property name="typeAliasesPackage" value="com.stone"/>
-    </bean>
-
-    <!-- sql会话模板 -->
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg index="0" ref="sqlSessionFactory" />
-    </bean>
-
-    <!-- 配置mybatis通用mapper -->
-    <!-- 没有必要去指定 SqlSessionFactory 或 SqlSessionTemplate , 除非使用了一个以上的 DataSource -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.stone" />
-        <!--<property name="basePackage" value="com.stone.login.**.mapper, com.stone.register.**.mapper" />-->
-        <property name="annotationClass" value="com.stone.common.annotation.MybatisMapper" /><!-- 为Mapper设定注解 -->
-        <!--<property name="annotationClass" value="org.apache.ibatis.annotations.Mapper" />-->
-        <!--<property name="markerInterface" value="tk.mybatis.mapper.common.Mapper" />-->
-        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />-->
-        <!--<property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />-->
-        <!--<property name="properties">
-            <value>
-                mappers=tk.mybatis.mapper.common.Mapper
-            </value>
-        </property>-->
-    </bean>
-
-    <!-- 该包下的类支持注解，表示会被当作{@code mybatis mapper}处理 配置了之后表示可以自动引入mapper类-->
-    <!--<mybatis:scan base-package="cms.**.mapper" annotation="cms.kernel.annotation.MybatisMapper" factory-ref="" template-ref="" marker-interface=""/>-->
-
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="cms.**.mapper" p:sqlSessionFactory-ref="sqlSessionFactory" />-->
-
-    <!--<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource" />
-    </bean>-->
 
 
     <!-- 扫描控制器; use-default-filters默认为true时会扫描@Component、@Controller、@Service、@Repository等,为false时不扫描(与include配对使用) -->
@@ -172,7 +124,16 @@
     <cache:annotation-driven cache-manager="cacheManager" />-->
 
     <!-- 异步注解功能开启 -->
+    <!-- 定时任务注解开启 -->
     <task:annotation-driven/>
+    <!-- spring定时任务 -->
+    <!--<task:scheduler id="taskScheduler" pool-size="4"/>
+    <task:scheduled-tasks scheduler="taskScheduler">
+        <task:scheduled ref="aService" method="aMethod" fixed-delay="60000"/>
+        <task:scheduled ref="bService" method="bMethod" cron="0 0/30 * * * *"/>
+    </task:scheduled-tasks>-->
+
+    <import resource="mybatis.xml" />
 
     <import resource="component.xml" />
     <import resource="sendDing.xml" />

@@ -33,6 +33,7 @@
 
     <!-- spring mvc 静态资源 -->
     <!-- 在web.xml内springMVC的<url-pattern>为/时，web下的文件夹，配置<mvc:resource>访问这些静态资源时不被拦截 -->
+    <!--https://www.cnblogs.com/dflmg/p/6393416.html-->
     <!--<mvc:resources location="/common/" mapping="/common/**" />
     <mvc:resources location="/admin/" mapping="/admin/**" />
     <mvc:resources location="/front/" mapping="/front/**" />

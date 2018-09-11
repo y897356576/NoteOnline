@@ -8,9 +8,9 @@
         select * from user where id = #{id}
     </select>
 
-    <select id="getUserByName" parameterType="String" resultMap="userMap">
+    <!--<select id="getUserByName" parameterType="String" resultMap="userMap">
         select * from user where userName = #{userName}
-    </select>
+    </select>-->
 
     <resultMap id="userMap" type="user">
         <id column="id" property="id"/>
