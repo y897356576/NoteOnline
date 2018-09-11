@@ -2,12 +2,35 @@ package com.stone.demo.enumCase;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by 石头 on 2017/7/11.
  */
-enum Shrubbery {
-    GROUND, CRAWLING, HANGING
+public enum Shrubbery {
+    GROUND(1), CRAWLING(2), HANGING(3);
+
+    private Integer code;
+
+    Shrubbery(Integer code) {
+        this.code = code;
+    }
+
+    private static final Map<Integer, Shrubbery> ShrubberyMap = new HashMap<>();
+
+    public static Shrubbery getShrubberyByCode(Integer code) {
+        if(ShrubberyMap.isEmpty()) {
+            for (Shrubbery shrubbery : Shrubbery.values()) {
+                ShrubberyMap.put(shrubbery.code, shrubbery);
+            }
+        }
+        return ShrubberyMap.get(code);
+    }
+
+    public Integer getCode() {
+        return code;
+    }
 }
 
 

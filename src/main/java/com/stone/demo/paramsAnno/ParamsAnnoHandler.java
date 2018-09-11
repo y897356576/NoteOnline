@@ -2,6 +2,7 @@ package com.stone.demo.paramsAnno;
 
 import com.alibaba.fastjson.JSONObject;
 import com.stone.core.model.User;
+import com.stone.demo.servletContext.GetServletContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ public class ParamsAnnoHandler {
     @RequestMapping(method = RequestMethod.GET)
     public void getRequestAnnotationTest(@RequestParam(value = "paramFir")String param1, @RequestParam("paramSec")String param2,
                                          HttpServletRequest request, HttpServletResponse response){
+        new GetServletContext().getServletContext();
         System.out.println("param1:" + param1);
         System.out.println("param2:" + param2);
 //        response.setHeader("ResponseHeaderTest", "responseHeaderContent");

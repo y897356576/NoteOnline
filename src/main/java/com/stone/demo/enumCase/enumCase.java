@@ -14,7 +14,8 @@ public class enumCase {
 //        }
 //        getEnumToString();
 //        getEnumDescription();
-        enumMenthodCase();
+//        enumMenthodCase();
+        System.out.println(Shrubbery.getShrubberyByCode(2).name());
     }
 
     private static void enumPropertyInfo(){

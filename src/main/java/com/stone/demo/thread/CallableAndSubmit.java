@@ -10,7 +10,7 @@ public class CallableAndSubmit {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newCachedThreadPool();
 
-        Callable callable = new CallableExample();
+        CallableExample callable = new CallableExample();
 
         Future<Integer> future = executor.submit(callable);
         try {

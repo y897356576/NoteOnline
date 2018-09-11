@@ -63,6 +63,7 @@ public class ReflectCase {
             Field field = cla.getDeclaredField("userName");
             field.setAccessible(true);  //去掉private限制
             field.set(user_1, "testUserName");
+            System.out.println("Field_fieldName:" + field.getName());
             System.out.print("Field_userName:" + field.get(user_1));
 
             System.out.println("\n --------------------- \n");
