@@ -23,12 +23,11 @@ public class RedisShardPool { // S类封装了机器节点的信息 ，如name�
     private static TreeMap<Long, String> ipNodes; // 虚拟节点，TreeMap继承自SortedMap的有序map，可根据key获取上下节点
     private static Integer cliNum = 1;  //每台真实机器的客户端数量
     private static Map<String, List<JedisNode>> ipJedisMatch;  //每个服务器的客户端列表
-    private final int NODE_NUM = 10;  //每个IP节点关联的虚拟节点个数
+    private static final int NODE_NUM = 10;  //每个IP节点关联的虚拟节点个数
 
 
 
     public RedisShardPool(Set<String> ips, Integer cliNum) {
-        super();
         this.checkIps(ips);
         this.ips = ips;
         this.checkCliNum(cliNum);
@@ -53,7 +52,7 @@ public class RedisShardPool { // S类封装了机器节点的信息 ，如name�
         ipJedisMatch = new HashMap<>();
         for (String ip : ips) {
             if (ipJedisMatch.get(ip) == null) {
-                ipJedisMatch.put(ip, new ArrayList<>());
+                ipJedisMatch.put(ip, new ArrayList<JedisNode>());
             }
             for (Integer i = 0; i < cliNum; i++) {
                 Jedis jedis = createJedis(ip);

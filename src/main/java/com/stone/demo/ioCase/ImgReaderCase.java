@@ -8,10 +8,10 @@ import java.io.*;
 public class ImgReaderCase {
 
     public static void main(String[] args) {
-        String filePath = "E:\\Projects\\noteOnline\\src\\main\\webapp\\img\\bagd-hg.png";
-        String outputPath1 = "E:\\Projects\\noteOnline\\src\\main\\webapp\\img\\bagd-hg-copy1.png";
-        String outputPath2 = "E:\\Projects\\noteOnline\\src\\main\\webapp\\img\\bagd-hg-copy2.png";
-        String outputPath3 = "E:\\Projects\\noteOnline\\src\\main\\webapp\\img\\bagd-hg-copy3.png";
+        String filePath = "E:\\Projects\\NoteOnline\\src\\main\\webapp\\img\\bagd-hg.png";
+        String outputPath1 = "E:\\Projects\\NoteOnline\\src\\main\\webapp\\img\\bagd-hg-copy1.png";
+        String outputPath2 = "E:\\Projects\\NoteOnline\\src\\main\\webapp\\img\\bagd-hg-copy2.png";
+        String outputPath3 = "E:\\Projects\\NoteOnline\\src\\main\\webapp\\img\\bagd-hg-copy3.png";
         doCopyByStream(filePath, outputPath1);
         doCopyByReader(filePath, outputPath2);
         doCopyByReaderStream(filePath, outputPath3);

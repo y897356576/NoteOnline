@@ -20,7 +20,7 @@ public class DataStatusHandler extends BaseTypeHandler<DataStatus> {
                 return s;
             }
         }
-        throw new MyException("位置的枚举类型：" + code + "，请核对" + DataStatus.class.getSimpleName());
+        throw new MyException("未知的枚举类型：" + code + "，请核对" + DataStatus.class.getSimpleName());
     }
 
     @Override

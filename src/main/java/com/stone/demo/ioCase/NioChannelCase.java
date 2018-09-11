@@ -11,10 +11,10 @@ import java.nio.channels.FileLock;
 public class NioChannelCase {
 
     public static void main(String[] args) {
-//        String filePath = "E:\\Projects\\noteOnline\\src\\main\\webapp\\img\\bagd-hg.png";
-//        String outputPath = "E:\\Projects\\noteOnline\\src\\main\\webapp\\img\\bagd-hg-copy.png";
-        String filePath = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\NioChannelCase.java";
-        String outputPath = "E:\\Projects\\noteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\NioChannelCaseCopy.java";
+//        String filePath = "E:\\Projects\\NoteOnline\\src\\main\\webapp\\img\\bagd-hg.png";
+//        String outputPath = "E:\\Projects\\NoteOnline\\src\\main\\webapp\\img\\bagd-hg-copy.png";
+        String filePath = "E:\\Projects\\NoteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\NioChannelCase.java";
+        String outputPath = "E:\\Projects\\NoteOnline\\src\\main\\java\\com\\stone\\demo\\ioCase\\NioChannelCaseCopy.java";
 //        channelCase(filePath, outputPath);
         transferCase(filePath, outputPath);
     }
