@@ -1,7 +1,9 @@
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.stone.common.model.DataStatus;
 import model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
@@ -14,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
+import java.lang.Exception;
 import java.lang.reflect.*;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -21,6 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+import java.io.File;
+
+import java.math.BigDecimal;
 
 /**
  * Created by 石头 on 2017/6/22.
@@ -36,9 +42,68 @@ public class Test_A {
 //        applicationContext = new ClassPathXmlApplicationContext("/spring.xml");
     }
 
+    @Test
+    public void test() {
+        String s = null;
+        System.out.println("String:" + s);
+
+        /*String s = "{\"results\":[{\"id\":\"FF32BA9A-CBA2-4086-B1D6-089F04293550\",\"user\":null,\"userId\":\"3b36ce84ba8c4efc9bf259a3d696d558\",\"loanId\":\"54A6D7F3-FADF-457C-9E1A-E7CD788AF527\",\"bidMethod\":\"MANUAL\",\"amount\":9400,\"rate\":2400,\"duration\":{\"years\":0,\"months\":0,\"days\":1,\"totalDays\":1,\"totalMonths\":0},\"repayMethod\":\"BulletRepayment\",\"status\":\"OVERDUE\",\"submitTime\":1527227920000,\"updateTime\":null,\"creditAssignId\":null,\"originalAmount\":null,\"purpose\":null,\"source\":\"WEB\",\"timeSettled\":null,\"version\":null,\"amountInterest\":null,\"remark\":null,\"welfareAmount\":null,\"salesNo\":null,\"orderId\":null,\"loanTitle\":\"杞﹁\uE746杞︾垎鑳�,\"serial\":null,\"userLoginName\":\"an004\",\"repayments\":null,\"loanAmount\":10000,\"riskGrade\":null,\"userName\":null,\"serverTime\":null,\"productKey\":null,\"ticket_status\":null,\"ticket\":null,\"amountAddInterest\":null,\"key\":null,\"code\":null,\"loanInvest\":true,\"assignInvest\":false,\"investAmount\":9400},{\"id\":\"9D79070F-DA7B-4653-B09D-9BF8FC241D31\",\"user\":null,\"userId\":\"3b36ce84ba8c4efc9bf259a3d696d558\",\"loanId\":\"54A6D7F3-FADF-457C-9E1A-E7CD788AF527\",\"bidMethod\":\"MANUAL\",\"amount\":100,\"rate\":2400,\"duration\":{\"years\":0,\"months\":0,\"days\":1,\"totalDays\":1,\"totalMonths\":0},\"repayMethod\":\"BulletRepayment\",\"status\":\"OVERDUE\",\"submitTime\":1526881642000,\"updateTime\":null,\"creditAssignId\":null,\"originalAmount\":null,\"purpose\":null,\"source\":\"WEB\",\"timeSettled\":null,\"version\":null,\"amountInterest\":null,\"remark\":null,\"welfareAmount\":null,\"salesNo\":null,\"orderId\":null,\"loanTitle\":\"杞﹁\uE746杞︾垎鑳�,\"serial\":null,\"userLoginName\":\"an004\",\"repayments\":null,\"loanAmount\":10000,\"riskGrade\":null,\"userName\":null,\"serverTime\":null,\"productKey\":null,\"ticket_status\":null,\"ticket\":null,\"amountAddInterest\":null,\"key\":null,\"code\":null,\"loanInvest\":true,\"assignInvest\":false,\"investAmount\":100}],\"totalSize\":8,\"nowdate\":null,\"totalAmount\":null,\"listMobile\":null,\"validNumber\":0}";
+        System.out.println(s);
+        JSONObject json = JSONObject.parseObject(s);*/
+        //JSONObject rsp = JSON.parseObject(s);
+
+    }
+
+    @Test
+    public void test_27() {
+        List<String> strList = new ArrayList<String>(){{
+            add("a");
+            add("b");
+            add("c");
+        }};
+        String[] strArr = new String[]{"1", "2", "3"};
+        Collections.addAll(strList, strArr);
+        strList.addAll(Arrays.asList(strArr));
+    }
+
+    @Test
+    public void test_26() {
+        String s = "1,2,3,,,4,5,,";
+        System.out.println(Arrays.toString(s.split(",")));
+        System.out.println(Arrays.toString(s.split(",", -1)));
+    }
+
+    @Test
+    public void test_25() {
+        List<String> list = new ArrayList<String>(){{
+            add("1"); add("2"); add("3");
+        }};
+
+        /*for (String s : list) {
+            System.out.println("element:" + s);
+            list.remove(s);
+        }*/
+
+        Iterator<String> i = list.iterator();
+        String s;
+        while(i.hasNext()) {
+            s = i.next();
+            System.out.println("element:" + s);
+            i.remove();
+        }
+
+        System.out.println("size:" + list.size());
+    }
 
     @Test
     public void test_24() {
+        String a1 = "1279";
+        String a2 = "1279";
+        System.out.println(a1 == a2);
+        String s1 = "123";
+        String s2 = "1a";
+        System.out.println(s1.compareTo(s2));
+        System.out.println('2' - 'a');
     }
 
     @Test
@@ -172,8 +237,11 @@ public class Test_A {
 
 
     @Test
+    //java获取路径
     public void test_12() throws InterruptedException, ClassNotFoundException {
         System.out.println(getClass().getResource("/").getFile());
+        System.out.println(getClass().getResource("/").getPath());
+        System.out.println(System.getProperty("user.dir"));
 //        System.out.println(request.getRequestURL());
 //        System.out.println(request.getRequestURI());
     }
