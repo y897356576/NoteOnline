@@ -31,7 +31,7 @@ public class NioChannelCase {
             ByteBuffer bf = ByteBuffer.allocate(1024);
 
             while(fci.read(bf) != -1) {
-                bf.flip();  //反转此缓冲区使缓冲区，做好新序列信道读取或相对get操作的准备
+                bf.flip();  //将Buffer从写模式切换到读模式
                 fco.write(bf);
                 bf.clear(); //清除，为下一次写入做好准备
             }

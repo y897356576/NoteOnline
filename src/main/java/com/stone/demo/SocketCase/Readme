@@ -1,3 +1,6 @@
+
+https://blog.csdn.net/linuu/article/list/3
+
 服务端：
 EchoServerHandler 实现了业务逻辑；
 main()方法引导了服务器；
@@ -102,14 +105,42 @@ ByteBuf维护了两个指针，一个读指针，一个写指针；原生态的B
 
 
 Netty的server端流程：
-1）先初始化好boss和worker的NioEventLoopGroup，并初始化好Group中的每一个NioEventLoop，为每一个NioEventLoop都穿件一个selector对象
-2）Netty会在bind的动作上，去让boss的NioserverSocketChannel去绑定selector，并启动与boss捆绑在一起的thread，进入无尽的循环
-3）在这个生命不息，循环不止的方法中，主要做了两件事情，1是去select，不管是selectNow()方法还是select()方法，其主要目的就是去查看boss关注的selector是否有事件发生
+1）先初始化好boss和worker的NioEventLoopGroup，并初始化好Group中的每一个NioEventLoop，为每一个NioEventLoop都创建一个selector对象
+2）Netty会在bind的动作上，去让boss的NioServerSocketChannel去绑定selector，并启动与boss捆绑在一起的thread，进入无尽的循环
+3）在这个生命不息，循环不止的方法中，主要做了两件事情，1是去select，不管是selectNow()方法还是select()方法，
+        其主要目的就是去查看boss关注的selector是否有事件发生
 4）当有事件发生的时候，一般就是因为有client链接，如果有链接，boss线程就需要做的事情就是初始化封装好新来的SocketChannel
-5）封装好的NioSocketChannel也会有自己的Unsafe对象，这个对象是用来做一些其他的操作的，例如读操作，这与boss的Unsafe对象不一样，boss的Unsafe对象是NioMessageUnsafe是用来进行绑定channel
-6）NioSocketChannel用Boss线程管道中的ServerBootstrapAcceptor对象绑定确定属于自己的worker线程之后，绑定好worker线程的selector之后就开始调用自己的run方法用来监听selector上的IO事件
+5）封装好的NioSocketChannel也会有自己的Unsafe对象，这个对象是用来做一些其他的操作的，例如读操作，这与boss的Unsafe对象不一样，
+        boss的Unsafe对象是NioMessageUnsafe是用来进行绑定channel
+6）NioSocketChannel用Boss线程管道中的ServerBootstrapAcceptor对象绑定确定属于自己的worker线程之后，绑定好worker线程的selector
+        之后就开始调用自己的run方法用来监听selector上的IO事件
 7）要说明白的一点就是一个worker处理的channel在多链接的场景下，一个worker会处理不止一个SocketChannel
 
 
 
-https://blog.csdn.net/linuu/article/list/3
+
+
+http://ifeve.com/java-nio-all/
+
+ServerSocket绑定本地端口
+BIO：ServerSocket循环接收链接；
+    无链接则阻塞；有链接则获取新的Socket并创建新的线程处理该链接；
+    若执行到读写类的IO操作，则cpu执行IO操作而线程挂起，挂起的线程会占用资源最终影响并发量；
+NIO：为ServerSocket绑定选择器Selector；
+    Selector循环阻塞执行select()以获取需要执行的事件列表Set<SelectionKey>；
+    遍历判断SelectionKey是Accept还是Read/Write，Accept则新建SocketChannel并注册进Selector；Read/Write则执行；
+
+
+Channel的实现
+这些是Java NIO中最重要的通道的实现：
+FileChannel         从文件中读写数据
+DatagramChannel     能通过UDP读写网络中的数据
+SocketChannel       能通过TCP读写网络中的数据
+ServerSocketChannel 可以监听新进来的TCP连接，对每一个新进来的连接都会创建一个SocketChannel
+http://ifeve.com/selectors/
+
+
+
+BIO: ServerSocket、Socket
+NIO: Selector、Thread、ServerSocketChannel、SocketChannel
+Netty: EventLoopGroup、EventLoop、ChannelInitializer<SocketChannel>

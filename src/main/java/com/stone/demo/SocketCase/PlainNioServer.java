@@ -31,8 +31,8 @@ public class PlainNioServer {
                 ex.printStackTrace();
                 break;
             }
-            Set<SelectionKey> readyKeys = selector.selectedKeys();  //获取所有接收事件的SelectionKey 实例
-            Iterator<SelectionKey> iterator = readyKeys.iterator();
+            Set<SelectionKey> keys = selector.selectedKeys();  //获取所有接收事件的SelectionKey 实例
+            Iterator<SelectionKey> iterator = keys.iterator();
             while (iterator.hasNext()) {
                 SelectionKey key = iterator.next();
                 iterator.remove();
