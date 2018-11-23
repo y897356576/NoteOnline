@@ -42,8 +42,19 @@ import java.util.Map;
 /**
  * HttpClientUtil.java
  * 日期:2015-12-09 11:52
+ *
+ */
+
+/**
  * 自定义httpclient的util类
  * 历史:采用连接池的进行httpclient的连接
+ *
+ * 请求的目标后台为本次会话创建session，并将sessionId通过响应头返回给请求端
+ * 请求端保存sessionId（关闭会话？)
+ * 下次新开会话，再带上sessionId请求服务端
+ * 若服务端session未过期，则接续上一次的会话session数据
+ * 若服务端session已过期，则本次会话带的sessionId无效
+ * 电子口岸sessionId失效时间为1小时（可通过间隔循环访问为session保活）
  */
 
 public class HttpClientUtil {
