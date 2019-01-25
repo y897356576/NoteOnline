@@ -418,7 +418,7 @@ public class Test_A {
         }};
         String[] objArr = list.toArray(new String[list.size()]);
         list = Arrays.asList(objArr);
-        String s = StringUtils.join(list.toArray(new String[list.size()]), ",");
+        String s = StringUtils.join(list.toArray(new String[list.size()]), "','");
         System.out.println(s);
         System.out.println(s.length());
     }

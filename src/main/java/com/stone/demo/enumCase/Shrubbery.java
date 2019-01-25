@@ -46,19 +46,25 @@ enum SpaceShip {
 
 
 enum OzWitch {
-    EAST("Wicked Witch of the east, wearer of the ruby Slippers, crushed by Dorothy's house"),
-    SOUTH("Good by inference, but missing"),
-    WEST("Miss Gulch, aka the Wicked Witch of the West"),
-    NORTH("Glinda, the Good Witch of the North");
+    EAST("Wicked Witch of the east, wearer of the ruby Slippers, crushed by Dorothy's house",""),
+    SOUTH("Good by inference, but missing", ""),
+    WEST("Miss Gulch, aka the Wicked Witch of the West", ""),
+    NORTH("Glinda, the Good Witch of the North", "");
 
     private String description;
+    private String space;
 
-    private OzWitch(String description) {
+    private OzWitch(String description, String space) {
         this.description = description;
+        this.space = space;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    public String getSpace() {
+        return space;
     }
 }
 

@@ -19,7 +19,7 @@ public class RunnableTask_4 implements Runnable{
 
     public void run() {
         for(int i=1; i<=10; i++){
-            System.out.println(String.format("t: User'name is %s", user.getUserName()));
+            System.out.println(String.format(Thread.currentThread().getName() + ": User'name is %s", user.getUserName()));
             if(i == 8){
                 user.setUserName("test3");
             }

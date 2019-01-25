@@ -27,6 +27,7 @@ public class RunnableMain_A {
 //        method_2A();
 //        method_3A(executor);
         method_4A(executor);
+        System.out.println(Thread.currentThread().getName() + " 运行结束...");
     }
 
     //多个线程执行单个线程对象，对象内的属性公用（对象锁）

@@ -20,6 +20,7 @@ public class PlainNioServer {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
         ServerSocket serverSocket = serverChannel.socket();
+        //serverChannel.bind(new InetSocketAddress(port));
         serverSocket.bind(new InetSocketAddress(port));  //将服务器绑定到监听的端口
         Selector selector = Selector.open();    //打开Selector来处理Channel
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);   //将ServerSocket注册到Selector以接受连接
