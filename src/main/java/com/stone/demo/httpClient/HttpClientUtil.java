@@ -43,6 +43,12 @@ import java.util.Map;
  * HttpClientUtil.java
  * 日期:2015-12-09 11:52
  *
+ *     <dependency>
+ *       <groupId>org.apache.httpcomponents</groupId>
+ *       <artifactId>httpclient</artifactId>
+ *       <version>4.5.2</version>
+ *     </dependency>
+ *
  */
 
 /**
@@ -169,8 +175,8 @@ public class HttpClientUtil {
      * @return
      * @throws IOException
      */
-    public static String httpPost(String url, List<NameValuePair> paramList, String httpClientID) throws IOException {
-        CloseableHttpClient client = HttpClientUtil.httpClientInit(httpClientID);
+    public static String httpPost(String url, List<NameValuePair> paramList) throws IOException {
+        CloseableHttpClient client = HttpClients.custom().build();
         HttpPost httpPost = new HttpPost(url);
         if(paramList != null && !paramList.isEmpty()) {
             httpPost.setEntity(new UrlEncodedFormEntity(paramList, "UTF-8"));
@@ -179,13 +185,15 @@ public class HttpClientUtil {
         String content = EntityUtils.toString(response.getEntity(), DEFAULT_CHARSET);
         HttpClientUtils.closeQuietly(response);
         httpPost.releaseConnection();
-        paramList.clear();
+        if(paramList != null && !paramList.isEmpty()) {
+            paramList.clear();
+        }
         return content;
     }
 
 
     /**
-     * 通过http协议的POST发送带参数的一次性的请求
+     * http协议的post请求，以json形式发送参数
      * @throws IOException
      */
     public static String httpParamPost(String url, JSONObject jsonParam, String charset) throws IOException {
@@ -193,7 +201,7 @@ public class HttpClientUtil {
         httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8");
 
         if(jsonParam != null) {
-            StringEntity entity = new StringEntity(jsonParam.toString(), Charset.forName("UTF-8"));
+            StringEntity entity = new StringEntity(jsonParam.toString(), "UTF-8");
             entity.setContentType("application/json;charset=UTF-8");
             entity.setContentEncoding("UTF-8");
             httpPost.setEntity(entity);
@@ -225,7 +233,8 @@ public class HttpClientUtil {
     public static void main(String[] args) {
         String url = "https://blog.csdn.net/wangpeng047/article/details/19624529/";
         try {
-            String content = HttpClientUtil.httpGet(url);
+//            String content = HttpClientUtil.httpGet(url);
+            String content = HttpClientUtil.httpPost(url, null);
             System.out.println("Content:" + content);
         } catch (Exception e) {
             e.printStackTrace();
