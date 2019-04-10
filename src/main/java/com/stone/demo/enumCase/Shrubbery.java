@@ -19,12 +19,15 @@ public enum Shrubbery {
 
     private static final Map<Integer, Shrubbery> ShrubberyMap = new HashMap<>();
 
-    public static Shrubbery getShrubberyByCode(Integer code) {
+    static {
         if(ShrubberyMap.isEmpty()) {
             for (Shrubbery shrubbery : Shrubbery.values()) {
                 ShrubberyMap.put(shrubbery.code, shrubbery);
             }
         }
+    }
+
+    public static Shrubbery getShrubberyByCode(Integer code) {
         return ShrubberyMap.get(code);
     }
 

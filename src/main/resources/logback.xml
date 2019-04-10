@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration debug="true">
+
+    <!-- springProperty从springBoot配置文件内加载属性 -->
+    <!-- logging.filePath为空时，会在当前项目根目录生成日志文件 -->
+    <springProperty name="filePath" source="logging.filePath"/>
+
+    <!-- springBoot默认使用logback记录日志 -->
+    <!-- %-5level 显示日志级别，右边补充空格至5位 -->
+    <!-- ${PID} springBoot定义的系统变量，当前进程ID -->
+    <!-- [%15.15thread]若线程名称不足15位则左边填充空格，若超过15位则显示后15位 -->
+    <!-- [%-15.-15thread]若线程名称不足15位则右边填充空格，若超过15位则显示前15位 -->
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID} --- [%15.15thread]  %logger{40} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SysLogFile" class="ch.qos.logback.core.FileAppender">
+        <file>${filePath}SysLogFile.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID} --- [%15.15thread]  %logger{40} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ReqRspFile" class="ch.qos.logback.core.FileAppender">
+        <file>${filePath}ReqRspFile.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID} --- [%15.15thread]  %logger{40} : %msg%n</pattern>
+        </encoder>
+    </appender>
+    　　
+    <root level="INFO">
+        <appender-ref ref="console"/>
+    </root>
+
+    <!-- additivity为false，则只记录在本日志内；additivity为true，在root内也会有记录 -->
+    <!-- Logger myLogger = LoggerFactory.getLogger("SysLog"); -->
+    <logger name="SysLog" level="INFO" additivity="false">
+        <appender-ref ref="SysLogFile"/>
+    </logger>
+
+    <logger name="ReqRspLog" level="INFO" additivity="false">
+        <appender-ref ref="ReqRspFile"/>
+    </logger>
+
+</configuration>

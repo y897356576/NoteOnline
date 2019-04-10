@@ -99,12 +99,20 @@
             <result column="fileContentType" property="fileContentType"/>
             <result column="fileType" property="fileType"/>
         </association>
-        <collection property="contents" javaType="List" ofType="noteContent">
+        <!--<collection property="contents" javaType="List" ofType="noteContent">
             <id column="content_id" property="id"/>
             <result column="noteId" property="noteId"/>
             <result column="index" property="index"/>
             <result column="content" property="content"/>
-        </collection>
+        </collection>-->
+        <collection property="contents" javaType="List" ofType="noteContent" resultMap="contentMap"/>
+    </resultMap>
+    
+    <resultMap id="contentMap" type="noteContent">
+        <id column="content_id" property="id"/>
+        <result column="noteId" property="noteId"/>
+        <result column="index" property="index"/>
+        <result column="content" property="content"/>
     </resultMap>
 
     <update id="noteDelete">
