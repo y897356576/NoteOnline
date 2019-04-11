@@ -24,6 +24,9 @@ public class PlainBioServer {
                         InputStream in;
                         OutputStream out;
                         try {
+                            //等待数据准备好
+                            //Thread.sleep(2);
+
                             in = clientSocket.getInputStream();
                             byte[] bytes = new byte[1024];
                             int len;
@@ -38,12 +41,13 @@ public class PlainBioServer {
                             out.write("Hi!\r\n".getBytes(Charset.forName("UTF-8")));
                             out.flush();
                             clientSocket.close();
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         } finally {
                             try {
                                 clientSocket.close();
                             } catch (IOException ex) {
+                                ex.printStackTrace();
                             }
                         }
                     }
